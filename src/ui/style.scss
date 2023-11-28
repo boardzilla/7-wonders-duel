@@ -1,0 +1,99 @@
+#game {
+}
+
+#play-area {
+  #mat {
+    font-size: .5em;
+    text-align: center;
+  }
+
+  .military-track {
+    font-size: .6em;
+    text-align: center;
+  }
+
+  .Card {
+    z-index: 10;
+    > div {
+      border: .05em solid black;
+      background: white;
+      height: 100%;
+      font-size: .8em;
+      .header {
+        padding: .1em .4em;
+        color: white;
+        text-align: center;
+        height: 1.8em;
+        &.military {
+          background: #900;
+        }
+        &.raw {
+          background: #630;
+        }
+        &.manufactured {
+          background: #99a;
+        }
+        &.civilian {
+          background: #06f;
+        }
+        &.scientific {
+          background: #070;
+        }
+        &.commercial {
+          background: #a90;
+          color: black;
+        }
+        &.guild {
+          background: #60c;
+        }
+      }
+      .cost {
+        .link {
+          font-size: .5em;
+        }
+      }
+      .name {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+      }
+    }
+  }
+
+  .Wonder {
+    background: #ccf;
+    color: black;
+    padding: .2em;
+    .description {
+      font-size: .25em;
+    }
+    .Card {
+      position: absolute;
+      width: 100%;
+      transform: rotate(90deg);
+      right: -93%;
+      bottom: 0;
+      clip-path: polygon(0% 0%, 0% 20%, 100% 20%, 1000% 0%);
+    }
+  }
+
+  .ProgressToken {
+    background: #cfc;
+    color: black;
+    border-radius: 50%;
+    text-align: center;
+    padding: 1em;
+    font-size: .75em;
+    .description {
+      font-size: .35em;
+    }
+  }
+}
+
+.god-mode-enabled {
+  display: none;
+}
+
+.player-controls {
+}
