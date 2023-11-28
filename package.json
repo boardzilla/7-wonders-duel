@@ -1,11 +1,11 @@
 {
   "name": "7-wonders-duel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@boardzilla/core": "^0.0.28",
-    "@boardzilla/devtools": "~0.0.37",
+    "@boardzilla/core": "^0.0.30",
+    "@boardzilla/devtools": "^0.0.38",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
