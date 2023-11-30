@@ -23,9 +23,11 @@ for await (const card of cards) {
   const startTime = new Date().getTime()
   console.log("working on",name)
   const response = await openai.images.generate({
-    prompt: `I'd like it to show the following bustling with activity befitting the place. It should be roughly bronze age to iron age in appearance as though it could have been Roman, Greek or Egyptian. I'd like to style to be like a photograph taken in portrait mode with no cropping, but then was stylized slight, so as not to look like a photograph. It should have a painterly style applied to it, but still preserve the original photograph.\n\n${name}`,
+    prompt: `I'd like to show the following: ${name}.
+
+I'd like it to be a REALISTIC COLOR PHOTOGRAPH taken in portrait mode. It should have an appropriate amount of human activity. I want the time period to be from bronze age or iron age, or as though it could have been Roman, Greek or Egyptian. It should be reminiscent of a neoclassical painting. There MUST NOT BE ANY added borders, framing OR cropping. The photo MUST go to the edges and contain no text.`,
     size: "1024x1792",
-    model: "dall-e-3"
+    model: "dall-e-3",
   })
   console.log(response)
   console.log("Writing", filePath)
@@ -47,4 +49,5 @@ for await (const card of cards) {
     console.log("waiting", elapsed)
     await new Promise(resolve => setTimeout(resolve, elapsed))
   }
+  process.exit(1)
 }
