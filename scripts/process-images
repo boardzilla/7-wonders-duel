@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd images
+mogrify -format jpg -resize 25% *.png
