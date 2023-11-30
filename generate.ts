@@ -25,7 +25,9 @@ for await (const card of cards) {
   const response = await openai.images.generate({
     prompt: `I'd like to show the following: ${name}.
 
-I'd like it to be a REALISTIC COLOR PHOTOGRAPH taken in portrait mode. It should have an appropriate amount of human activity. I want the time period to be from bronze age or iron age, or as though it could have been Roman, Greek or Egyptian. It should be reminiscent of a neoclassical painting. There MUST NOT BE ANY added borders, framing OR cropping. The photo MUST go to the edges and contain no text.`,
+I'd like it to be a REALISTIC COLOR ILLUSTRATION as through from a photograph. It should have an appropriate amount of human activity, but LIMIT THE NUMBER OF HUMANS TO TWO. I want the time period to be from bronze age or iron age, or as though it could have been Roman, Greek or Egyptian.
+
+It is very important that there MUST NOT BE ANY added borders, framing OR cropping. The image MUST go to the edges and contain no text.`,
     size: "1024x1792",
     model: "dall-e-3",
   })
@@ -34,13 +36,14 @@ I'd like it to be a REALISTIC COLOR PHOTOGRAPH taken in portrait mode. It should
   await new Promise<void>((resolve, reject) => {
     const file = fs.createWriteStream(filePath);
     const request = http.get(response.data[0].url!, function(response) {
-      response.pipe(file);
+      response.pipe(file).on("finish", () => {
+        file.close();
+        console.log("Download Completed");
+        resolve()
+    })
       // after download completed close filestream
-      file.on("finish", () => {
-          file.close();
-          console.log("Download Completed");
-          resolve()
-      });
+      // file.on("finish", () => {
+      // });
       file.on('error', reject)
    });
   })
@@ -49,5 +52,5 @@ I'd like it to be a REALISTIC COLOR PHOTOGRAPH taken in portrait mode. It should
     console.log("waiting", elapsed)
     await new Promise(resolve => setTimeout(resolve, elapsed))
   }
-  process.exit(1)
+  // process.exit(1)
 }
