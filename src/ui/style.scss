@@ -109,7 +109,7 @@
       .shield {
         position: absolute;
         width: 5%;
-        top: 27.6%;
+        top: 16%;
         height: 60%;
         transition: left .5s;
         filter: drop-shadow(.02em .06em .06em #000c);
@@ -128,9 +128,9 @@
       height: 5%;
       left: 10%;
       color: white;
-      font-size: .65em;
+      font-size: .55em;
       position: absolute;
-      padding: 0.1em 0.4em;
+      padding: 0.25em 0.4em;
       border-radius: 0 0.4em 0.4em 0;
       overflow: hidden;
       white-space: nowrap;
@@ -155,6 +155,9 @@
       text-align: left;
       .svg-icon {
         filter: drop-shadow(0 .2em .05em #0006);
+      }
+      .vp {
+        transform: scale(1.1);
       }
     }
 
@@ -188,8 +191,29 @@
 
   :not([data-zoomed]) > .Card[data-name]:hover {
     z-index: 20;
-    transform: scale(1.25);
+    transform: scale(1.75);
     transition: transform .2s;
+  }
+
+  :not([data-zoomed]) > .ProgressToken[data-name]:hover {
+    z-index: 20;
+    transform: scale(2);
+    transform-origin: top;
+    transition: transform .2s;
+  }
+
+  :not([data-zoomed]) > .Wonder:hover {
+    z-index: 20;
+    transform: scale(1.5);
+    transition: transform .2s;
+  }
+
+  #mat[data-player="1"] .Wonder:hover {
+    transform-origin: left;
+  }
+
+  #mat[data-player="2"] .Wonder:hover {
+    transform-origin: right;
   }
 
   .Card {
@@ -198,7 +222,7 @@
     text-align: left;
 
     &.selectable > div {
-      box-shadow: 0 0 2em white, 0 0 1em #f66;
+      filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
     }
 
     > div {
@@ -249,21 +273,42 @@
       }
 
       .cost {
+        position: relative;
         padding: 0.2em;
         font-size: 1.2em;
         text-align: left;
-        height: 2.5%;
+        height: 0;
         display: inline-block;
         background: #fff;
         border-width: 0.05em 0.05em 0.05em 0;
         border-radius: 0 0.2em 0.2em 0;
+        border-color: #0008;
+        border-style: solid;
         > span {
           position: relative;
           top: -.63em;
           left: 0%;
         }
-        .link {
-          font-size: .5em;
+      }
+
+      .free-link {
+        position: relative;
+        padding: 0.2em;
+        font-size: 1.2em;
+        text-align: left;
+        height: 0;
+        display: inline-block;
+        background: #fff;
+        border-width: 0.05em 0.05em 0.05em 0;
+        border-radius: 0 0.2em 0.2em 0;
+        border-color: #0008;
+        border-style: solid;
+        .svg-icon {
+          background-color: #660;
+          border-radius: 50%;
+          border: 0.2em solid #660;
+          position: relative;
+          top: -0.58em;
         }
       }
 
@@ -634,7 +679,7 @@
     background-size: cover;
     color: black;
     padding: .2em;
-    box-shadow: -.2em -.3em .7em #000c;
+    box-shadow: -.2em -.1em .7em #000c;
     border-radius: .4em;
 
     > div {
@@ -644,73 +689,73 @@
 
     &[data-name="The Pyramids"] {
       background-image: url(./assets/pyramids.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #5308;
       }
     }
     &[data-name="The Great Lighthouse"] {
       background-image: url(./assets/lighthouse.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #0558;
       }
     }
     &[data-name="The Colossus"] {
       background-image: url(./assets/colossus.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #0358;
       }
     }
     &[data-name="Circus Maximus"] {
       background-image: url(./assets/circus.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #5008;
       }
     }
     &[data-name="The Mausoleum"] {
       background-image: url(./assets/mausoleum.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #3058;
       }
     }
     &[data-name="The Hanging Gardens"] {
       background-image: url(./assets/hanging-gardens.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #0608;
       }
     }
     &[data-name="The Temple of Artemis"] {
       background-image: url(./assets/temple-of-artemis.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #5508;
       }
     }
     &[data-name="The Great Library"] {
       background-image: url(./assets/great-library.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #7508;
       }
     }
     &[data-name="The Statue of Zeus"] {
       background-image: url(./assets/statue-of-zeus.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #2338;
       }
     }
     &[data-name="The Sphinx"] {
       background-image: url(./assets/sphinx.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #5208;
       }
     }
     &[data-name="Piraeus"] {
       background-image: url(./assets/piraeus.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #0358;
       }
     }
     &[data-name="The Appian Way"] {
       background-image: url(./assets/appian-way.jpg);
-      .rewards {
+      .wonder-features .rewards {
         background: #0448;
       }
     }
@@ -731,7 +776,10 @@
         left: 5%;
         line-height: 150%;
         background: #fff8;
+        border-width: 0 0.05em 0.05em 0.05em;
         border-radius: 0 0 .2em .2em;
+        border-color: #0008;
+        border-style: solid;
         padding-bottom: .7em;
         span {
           position: relative;
@@ -800,6 +848,9 @@
   }
 
   .ProgressToken {
+    &.selectable {
+      filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
+    }
     img {
       width: 100%;
       height: 100%;
@@ -812,6 +863,7 @@
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
     vertical-align: top;
     filter: drop-shadow(0 0 .1em #000c);
     margin: 0 .1em;
@@ -819,7 +871,7 @@
 
   span.vp {
     width: 1.5em;
-    height: 1.5em;
+    height: 1.3em;
     background-image: url(./assets/laurel.svg);
     text-align: center;
     font-weight: bold;
@@ -827,8 +879,6 @@
     text-shadow: 0 0 .1em white;
     .two-digit {
       font-size: .7em;
-      position: relative;
-      top: -7%;
     }
   }
 
@@ -847,8 +897,8 @@
 
   span.extra-turn {
     background-image: url(./assets/extra-turn.svg);
-    transform: scale(1.2);
-    transform-origin: left center;
+    width: 1.5em;
+    height: 1.5em;
   }
 
   span.take-progress-discard {
@@ -1085,4 +1135,8 @@
 }
 
 .player-controls {
+  font-size: .4em;
+  left: 24.5% !important;
+  right: unset !important;
+  top: 20% !important;
 }

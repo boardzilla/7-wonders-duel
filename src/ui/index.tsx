@@ -311,7 +311,7 @@ render(setup, {
               {card.science && <span className={`svg-icon science-${card.science}`}/>}
               {card.link && <div className="link"><span className={`svg-icon link-${card.link}`}/></div>}
               {card.trades && card.trades.map(t => <span className="trades" key={t}>{resourceIcon(t)}<span className="svg-icon coins">1</span></span>)}
-              {card.coinsPer && Object.entries(card.coinsPer).map(([type, amount]) => <span className={`card-type ${type}`} key={type}><span className="svg-icon coins">{amount}</span></span>)}
+              {card.coinsPer && card.type !== 'guild' && Object.entries(card.coinsPer).map(([type, amount]) => <span className={`card-type ${type}`} key={type}><span className="svg-icon coins">{amount}</span></span>)}
               {card.name === 'Moneylenders Guild' && <span className="svg-icon moneylenders"/>}
               {card.name === 'Merchants Guild' && <span className="svg-icon merchants"/>}
               {card.name === 'Shipowners Guild' && <span className="svg-icon shipowners"/>}
@@ -321,12 +321,14 @@ render(setup, {
               {card.name === 'Scientists Guild' && <span className="svg-icon scientists"/>}
             </div>
             {(!!card.coinCost || !!Object.values(card.cost).length) &&
-              <span className="cost">
-                {!!card.coinCost && <span className="svg-icon coins">{card.coinCost}</span>}
-                {Object.entries(card.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
-                {card.freeLink && <div className="link">Free with {card.freeLink}</div>}
-              </span>
+              <div>
+                <span className="cost">
+                  {!!card.coinCost && <span className="svg-icon coins">{card.coinCost}</span>}
+                  {Object.entries(card.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
+                </span>
+              </div>
             }
+            {card.freeLink && <span className="free-link"><span className={`svg-icon link-${card.freeLink}`}/></span>}
             <div className='name'>
               {card.name}
             </div>

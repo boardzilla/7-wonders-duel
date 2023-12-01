@@ -494,9 +494,9 @@ export const cards: Partial<Card>[] = [
 export const wonders: Partial<Wonder>[] = [
   {
     name: 'The Appian Way',
-    description: 'You take 3 coins from the bank.\n' +
-      'Your opponent loses 3 coins, which are returned to the bank.\n' +
-      'Immediately play a second turn.\n' +
+    description: 'You take 3 coins from the bank.\n\n' +
+      'Your opponent loses 3 coins, which are returned to the bank.\n\n' +
+      'Immediately play a second turn.\n\n' +
       'This Wonder is worth 3 victory points.',
     cost: {stone: 2, clay: 2, papyrus: 1},
     coins: 3,
@@ -505,8 +505,8 @@ export const wonders: Partial<Wonder>[] = [
     special: 'extra-turn',
   }, {
     name: 'Circus Maximus',
-    description: 'Place in the discard pile a grey card (manufactured goods) of your choice constructed by your opponent.\n' +
-      'This Wonder is worth 1 Shield.\n' +
+    description: 'Place in the discard pile a grey card (manufactured goods) of your choice constructed by your opponent.\n\n' +
+      'This Wonder is worth 1 Shield.\n\n' +
       'This Wonder is worth 3 victory points.',
     cost: {stone: 2, wood: 1, glass: 1},
     shields: 1,
@@ -514,30 +514,30 @@ export const wonders: Partial<Wonder>[] = [
     destroy: 'manufactured',
   }, {
     name: 'The Colossus',
-    description: 'This Wonder is worth 2 Shields.\n' +
+    description: 'This Wonder is worth 2 Shields.\n\n' +
       'This Wonder is worth 3 victory points.',
     cost: {clay: 3, glass: 1},
     shields: 2,
     vp: 3,
   }, {
     name: 'The Great Library',
-    description: 'Randomly draw 3 Progress tokens from among those discarded at the beginning of the game. Choose one, play it, and return the other 2 to the box.\n' +
+    description: 'Randomly draw 3 Progress tokens from among those discarded at the beginning of the game. Choose one, play it, and return the other 2 to the box.\n\n' +
       'This Wonder is worth 4 victory points.',
     cost: {wood: 3, papyrus: 1, glass: 1},
     vp: 4,
     special: 'take-progress-discard',
   }, {
     name: 'The Great Lighthouse',
-    description: 'This Wonder produces one unit of the resources shown (Stone, Clay, or Wood) for you each turn.\n' +
-      'Clarification: This production has no impact on the cost of trading.\n' +
+    description: 'This Wonder produces one unit of the resources shown (Stone, Clay, or Wood) for you each turn.\n\n' +
+      'Clarification: This production has no impact on the cost of trading.\n\n' +
       'This Wonder is worth 4 victory points.',
     cost: {wood: 1, stone: 1, papyrus: 2},
     producesOneOf: ['wood', 'stone', 'clay'],
     vp: 4,
   }, {
     name: 'The Hanging Gardens',
-    description: 'You take 6 coins from the bank.\n' +
-      'Immediately play a second turn.\n' +
+    description: 'You take 6 coins from the bank.\n\n' +
+      'Immediately play a second turn.\n\n' +
       'This Wonder is worth 3 victory points.',
     cost: {wood: 2, papyrus: 1, glass: 1},
     coins: 6,
@@ -545,17 +545,17 @@ export const wonders: Partial<Wonder>[] = [
     special: 'extra-turn',
   }, {
     name: 'The Mausoleum',
-    description: 'Take all of the cards which have been discarded since the beginning of the game and immediately construct one of your choice for free.\n' +
-      'Clarification: The cards discarded during setup are not part of the discard.\n' +
+    description: 'Take all of the cards which have been discarded since the beginning of the game and immediately construct one of your choice for free.\n\n' +
+      'Clarification: The cards discarded during setup are not part of the discard.\n\n' +
       'This Wonder is worth 2 victory points.',
     cost: {clay: 2, glass: 2, papyrus: 1},
     vp: 2,
     special: 'take-discards',
   }, {
     name: 'Piraeus',
-    description: 'This Wonder produces one unit of one of the resources shown (Glass or Papyrus) for you each turn.\n' +
-      'Clarification: This production has no impact on the cost of trading.\n' +
-      'Immediately play a second turn.\n' +
+    description: 'This Wonder produces one unit of one of the resources shown (Glass or Papyrus) for you each turn.\n\n' +
+      'Clarification: This production has no impact on the cost of trading.\n\n' +
+      'Immediately play a second turn.\n\n' +
       'This Wonder is worth 2 victory points.',
     cost: {wood: 2, stone: 1, clay: 1},
     producesOneOf: ['glass', 'papyrus'],
@@ -568,15 +568,15 @@ export const wonders: Partial<Wonder>[] = [
     vp: 9,
   }, {
     name: 'The Sphinx',
-    description: 'Immediately play a second turn.\n' +
+    description: 'Immediately play a second turn.\n\n' +
       'This Wonder is worth 6 victory points.',
     cost: {stone: 1, clay: 1, glass: 2},
     vp: 6,
     special: 'extra-turn',
   }, {
     name: 'The Statue of Zeus',
-    description: 'Put in the discard pile one brown card (Raw goods) of your choice constructed by their opponent.\n' +
-      'This Wonder is worth 1 Shield.\n' +
+    description: 'Put in the discard pile one brown card (Raw goods) of your choice constructed by their opponent.\n\n' +
+      'This Wonder is worth 1 Shield.\n\n' +
       'This Wonder is worth 3 victory points.',
     cost: {wood: 1, stone: 1, clay: 1, papyrus: 2},
     shields: 1,
@@ -584,7 +584,7 @@ export const wonders: Partial<Wonder>[] = [
     destroy: 'raw',
   }, {
     name: 'The Temple of Artemis',
-    description: 'Immediately take 12 coins from the Bank.\n' +
+    description: 'Immediately take 12 coins from the Bank.\n\n' +
       'Immediately play a second turn.',
     cost: {wood: 1, stone: 1, glass: 1, papyrus: 1},
     coins: 12,
@@ -595,7 +595,7 @@ export const wonders: Partial<Wonder>[] = [
 export const progressTokens: Partial<ProgressToken>[] = [
   {
     name: 'Agriculture',
-    description: 'Immediately take 6 coins from the Bank.\n' +
+    description: 'Immediately take 6 coins from the Bank.\n\n' +
       'The token is worth 4 victory points.',
     vp: 4,
     coins: 6,
@@ -605,8 +605,8 @@ export const progressTokens: Partial<ProgressToken>[] = [
     discount: 'wonder',
   }, {
     name: 'Economy',
-    description: 'You gain the money spent by your opponent when they trade for resources.\n' +
-      'Be careful, this is only for the money spent obtaining resources, not for the coins which are part of Building costs.\n' +
+    description: 'You gain the money spent by your opponent when they trade for resources.\n\n' +
+      'Be careful, this is only for the money spent obtaining resources, not for the coins which are part of Building costs.\n\n' +
       'Clarification: the trade discounts of your opponent (Stone Reserve, Wood Reserve, Clay Reserve, and Customs House cards) change the purchase price, but the Economy Progress token allows you to gain the actual money spent by your opponent.',
     special: 'gain-trade-costs',
   }, {
@@ -627,20 +627,20 @@ export const progressTokens: Partial<ProgressToken>[] = [
     vp: 7,
   }, {
     name: 'Strategy',
-    description: 'Once this token enters play, your new military Buildings (red cards) will benefit from 1 extra Shield.\n' +
-      'Example: a military Building with 2 shields will therefore allow the player to move the Conflict pawn 3 spaces towards the enemy capital.\n' +
-      'Clarification: \n' +
-      '• This Progress does not apply to Wonders which have the Shield symbol.\n' +
+    description: 'Once this token enters play, your new military Buildings (red cards) will benefit from 1 extra Shield.\n\n' +
+      'Example: a military Building with 2 shields will therefore allow the player to move the Conflict pawn 3 spaces towards the enemy capital.\n\n' +
+      'Clarification: \n\n' +
+      '• This Progress does not apply to Wonders which have the Shield symbol.\n\n' +
       '• This Progress has no effect on military cards built before it came into play.',
     special: 'shield-bonus',
   }, {
     name: 'Theology',
-    description: 'All future Wonders constructed by you are all treated as though they have the “Play Again” effect.\n' +
+    description: 'All future Wonders constructed by you are all treated as though they have the “Play Again” effect.\n\n' +
       'Be careful, Wonders which already have this effect are not affected (a given Wonder cannot have the “Play Again” effect twice).',
     special: 'extra-turn',
   }, {
     name: 'Urbanism',
-    description: 'Immediately take 6 coins from the Bank.\n' +
+    description: 'Immediately take 6 coins from the Bank.\n\n' +
       'Each time you construct a Building for free through linking (free construction condition, chain), you gain 4 coins.',
     coins: 6,
     special: 'free-link-bonus',

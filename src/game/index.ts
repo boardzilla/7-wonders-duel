@@ -549,16 +549,12 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         }
         field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
         game.message('Age {{age}} has begun!', {age});
-        if (board.militaryTrack === 0) {
-          game.players.next();
-        } else {
-          game.players.setCurrent(game.players[board.militaryTrack > 0 ? 0 : 1]);
-        }
       },
 
       eachPlayer({
         name: 'player',
         continueUntil: () => !field.has(Card),
+        startingPlayer: () => board.militaryTrack === 0 ? game.players.current()[0] : game.players[board.militaryTrack > 0 ? 0 : 1],
         do: [
           playerActions({
             player: ({ player }) => player,
