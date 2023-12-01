@@ -1,6 +1,11 @@
 #!/bin/bash
 
 cd images
-mogrify -format jpg -resize 25% *.png
+for file in *; do
+  cwebp -resize 512 896 -q 80 -m 6 "$file" -o "${file%.png}.webp"
+done
+
 cd wonders
-mogrify -format jpg -resize 50% *.png
+for file in *; do
+  cwebp -q 80 -m 6 "$file" -o "${file%.png}.webp"
+done
