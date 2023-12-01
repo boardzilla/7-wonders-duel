@@ -2,3 +2,5 @@
 
 cd images
 mogrify -format jpg -resize 25% *.png
+cd wonders
+mogrify -format jpg -resize 50% *.png
