@@ -4,7 +4,7 @@
   "description": "Science? Military? What will you draft to win this head-to-head version of 7 Wonders?",
   "minPlayers": 2,
   "maxPlayers": 2,
-  "image": "image.jpg",
+  "image": "src/ui/assets/image.jpg",
   "ui": {
     "root": ".",
     "build": {

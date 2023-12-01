@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   shape-rendering="geometricPrecision"
+   text-rendering="geometricPrecision"
+   image-rendering="optimizeQuality"
+   fill-rule="evenodd"
+   clip-rule="evenodd"
+   viewBox="0 0 512 511.995"
+   version="1.1"
+   id="svg5"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5">
+    <linearGradient
+       id="linearGradient1">
+      <stop
+         style="stop-color:#9c732d;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#d3aa65;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="147.44316"
+       y1="491.29205"
+       x2="362.34576"
+       y2="36.928886"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <path
+     fill="#ECCA43"
+     fill-rule="nonzero"
+     d="M256 0c70.685 0 134.689 28.659 181.015 74.984C483.341 121.31 512 185.315 512 256c0 70.684-28.659 134.689-74.985 181.015-46.326 46.322-110.33 74.98-181.015 74.98-70.685 0-134.689-28.658-181.015-74.98C28.659 390.689 0 326.684 0 256c0-70.685 28.659-134.69 74.985-181.016C121.307 28.659 185.311 0 256 0z"
+     id="path1" />
+  <ellipse
+     fill="#F7E259"
+     cx="256"
+     cy="255.998"
+     rx="250.992"
+     ry="250.991"
+     id="ellipse1" />
+  <path
+     fill="#F8D548"
+     d="M503.753 215.692A252.691 252.691 0 01506.989 256c0 138.614-112.371 250.988-250.989 250.988S5.007 394.614 5.007 256c0-21.857 2.801-43.056 8.051-63.271l246.435 183.476 244.26-160.513z"
+     id="path2" />
+  <path
+     fill="#d7925b"
+     fill-rule="nonzero"
+     d="m 255.99969,28.058378 c 62.93565,0 119.92634,25.515923 161.17675,66.76518 41.24926,41.245792 66.76518,98.236472 66.76518,161.172132 0,62.93912 -25.51592,119.93096 -66.76518,161.1756 -41.25041,41.24925 -98.2411,66.76633 -161.17675,66.76633 -62.93566,0 -119.92634,-25.51708 -161.172132,-66.76633 -41.249257,-41.24926 -66.76518,-98.23995 -66.76518,-161.1756 0,-62.93566 25.515923,-119.92634 66.76518,-161.172132 41.245792,-41.249257 98.236472,-66.76518 161.172132,-66.76518 z"
+     id="path3"
+     style="stroke-width:1.15661;fill:#8c5122;fill-opacity:1" />
+  <circle
+     fill="#eda140"
+     cx="256.00085"
+     cy="255.99684"
+     r="222.14848"
+     id="circle3"
+     style="stroke-width:1.15661;fill:url(#linearGradient2);fill-opacity:1" />
+</svg>

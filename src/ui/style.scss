@@ -1,10 +1,180 @@
+@import url(https://fontlibrary.org//face/cinzel);
+
 #game {
+  font-family: 'CinzelBold';
 }
 
 #play-area {
+  #field {
+    #military-track {
+      background-image: url(./assets/military-track.jpg);
+      background-size: cover;
+      position: absolute;
+      left: 24%;
+      width: 52%;
+      height: 10%;
+      top: 10%;
+      clip-path: polygon(4% 0%, 0% 50%, 4% 100%, 96% 100%, 100% 50%, 96% 0%);
+      .band {
+        height: 100%;
+        position: absolute;
+        &.l4 {
+          background: #f008;
+          width: 6.8%;
+          left: 0;
+        }
+        &.l3 {
+          background: #f448;
+          width: 15.2%;
+          left: 6.8%;
+          border-left: .01em solid #0008;
+        }
+        &.l2 {
+          background: #f888;
+          width: 15.2%;
+          left: 22%;
+          border-left: .01em solid #0008;
+        }
+        &.l1 {
+          background: #faa8;
+          width: 10.1%;
+          left: 37.2%;
+          border-left: .01em solid #0008;
+        }
+        &.c {
+          background: #fff8;
+          width: 5.4%;
+          left: 47.3%;
+          border-left: .01em solid #0008;
+          border-right: .01em solid #0008;
+        }
+        &.r1 {
+          background: #faa8;
+          width: 10.1%;
+          left: 52.7%;
+          border-right: .01em solid #0008;
+        }
+        &.r2 {
+          background: #f888;
+          width: 15.2%;
+          left: 62.8%;
+          border-right: .01em solid #0008;
+        }
+        &.r3 {
+          background: #f448;
+          width: 15.2%;
+          left: 78%;
+          border-right: .01em solid #0008;
+        }
+        &.r4 {
+          background: #f008;
+          width: 6.8%;
+          left: 93.2%;
+        }
+      }
+      img.icons {
+        position: absolute;
+        width: 96%;
+        height: auto;
+        margin: 5% 2%;
+      }
+      img.reward-left5 {
+        position: absolute;
+        width: 13.6%;
+        left: 7.6%;
+        top: 68.5%;
+        filter: drop-shadow(.01em .03em .03em #000c);
+      }
+      img.reward-left2 {
+        position: absolute;
+        width: 13.6%;
+        left: 22.9%;
+        top: 68.5%;
+        filter: drop-shadow(.01em .03em .03em #000c);
+      }
+      img.reward-right2 {
+        position: absolute;
+        width: 13.6%;
+        left: 63.5%;
+        top: 68.5%;
+        filter: drop-shadow(.01em .03em .03em #000c);
+      }
+      img.reward-right5 {
+        position: absolute;
+        width: 13.6%;
+        left: 78.8%;
+        top: 68.5%;
+        filter: drop-shadow(.01em .03em .03em #000c);
+      }
+      .shield {
+        position: absolute;
+        width: 5%;
+        top: 27.6%;
+        height: 60%;
+        transition: left .5s;
+        filter: drop-shadow(.02em .06em .06em #000c);
+      }
+    }
+  }
+
   #mat {
     font-size: .5em;
     text-align: center;
+
+    .player-name {
+      top: 0;
+      width: 35%;
+      text-align: right;
+      height: 5%;
+      left: 10%;
+      color: white;
+      font-size: .65em;
+      position: absolute;
+      padding: 0.1em 0.4em;
+      border-radius: 0 0.4em 0.4em 0;
+      overflow: hidden;
+      white-space: nowrap;
+      filter: drop-shadow(0 .2em .05em #0006)
+    }
+
+    .avatar {
+      height: 15%;
+      width: auto;
+      position: absolute;
+      left: 1%;
+      top: 0;
+      border-radius: 50%;
+      border: .2em solid;
+      filter: drop-shadow(0 .2em .05em #0006)
+    }
+
+    .score {
+      font-size: 1em;
+      margin-left: 47%;
+      width: 90%;
+      text-align: left;
+      .svg-icon {
+        filter: drop-shadow(0 .2em .05em #0006);
+      }
+    }
+
+    &[data-player="2"] {
+      .player-name {
+        text-align: left;
+        right: 10%;
+        left: auto;
+        border-radius: 0.4em 0 0 0.4em;
+      }
+
+      .avatar {
+        right: 1%;
+        left: auto;
+      }
+
+      .score {
+        margin-left: 32%;
+      }
+    }
   }
 
   .military-track {
@@ -12,20 +182,43 @@
     text-align: center;
   }
 
+  [data-zoomed] .Card.selectable > div {
+    box-shadow: none;
+  }
+
+  :not([data-zoomed]) > .Card[data-name]:hover {
+    z-index: 20;
+    transform: scale(1.25);
+    transition: transform .2s;
+  }
+
   .Card {
     z-index: 10;
+    perspective: 40vw;
+    text-align: left;
+
+    &.selectable > div {
+      box-shadow: 0 0 2em white, 0 0 1em #f66;
+    }
+
     > div {
-      border: .05em solid black;
-      background: white;
+      width: 100%;
       height: 100%;
+      transition: 0.6s;
+      transform-style: preserve-3d;
+      position: relative;
       font-size: .8em;
+
       .header {
-        padding: .1em .4em;
+        padding: 0.2em 0.4em 0;
         color: white;
+        height: 20%;
         text-align: center;
-        height: 1.8em;
+        font-size: 1.5em;
+        margin-bottom: .7em;
+        position: relative;
         &.military {
-          background: #900;
+          background: #c00;
         }
         &.raw {
           background: #630;
@@ -46,28 +239,556 @@
         &.guild {
           background: #60c;
         }
+
+        .link {
+          position: absolute;
+          right: 5%;
+          font-size: .6em;
+          top: 25%;
+        }
       }
+
       .cost {
+        padding: 0.2em;
+        font-size: 1.2em;
+        text-align: left;
+        height: 2.5%;
+        display: inline-block;
+        background: #fff;
+        border-width: 0.05em 0.05em 0.05em 0;
+        border-radius: 0 0.2em 0.2em 0;
+        > span {
+          position: relative;
+          top: -.63em;
+          left: 0%;
+        }
         .link {
           font-size: .5em;
         }
       }
+
       .name {
         position: absolute;
-        width: 100%;
+        left: 5%;
+        bottom: 5%;
+        width: 90%;
         text-align: center;
-        bottom: 0;
+        background: #fffc;
+        border-radius: .5em;
+        border: .1em solid #000c;
+        padding: 0.1em 0.1em 0.2em;
       }
+
+      .front, .back {
+        border: .05em solid black;
+        border-radius: 0.5em;
+        overflow: hidden;
+        background: white;
+        box-shadow: -.1em -.2em .5em #0008;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+      }
+
+      /* front pane, placed above back */
+      .front {
+        z-index: 2;
+        /* for firefox 31 */
+        transform: rotateY(0deg);
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          filter: contrast(.5) brightness(1.2) saturate(.6);
+        }
+      }
+
+      /* back, initially hidden pane */
+      .back {
+        transform: rotateY(180deg);
+      }
+    }
+
+    &[data-name="Lumber Yard"] .front::before {
+      background-image: url(../../images-ill2/Lumber\ Yard.png);
+    }
+
+    &[data-name="Sawmill"] .front::before {
+      background-image: url(../../images-ill2/Sawmill.png);
+    }
+
+    &[data-name="Stone Pit"] .front::before {
+      background-image: url(../../images-ill2/Stone\ Pit.png);
+    }
+
+    &[data-name="Clay Pool"] .front::before {
+      background-image: url(../../images-ill2/Clay\ Pool.png);
+    }
+
+    &[data-name="Shelf Quarry"] .front::before {
+      background-image: url(../../images-ill2/Shelf\ Quarry.png);
+    }
+
+    &[data-name="Logging Camp"] .front::before {
+      background-image: url(../../images-ill2/Logging\ Camp.png);
+    }
+
+    &[data-name="Brickyard"] .front::before {
+      background-image: url(../../images-ill2/Brickyard.png);
+    }
+
+    &[data-name="Quarry"] .front::before {
+      background-image: url(../../images-ill2/Quarry.png);
+    }
+
+    &[data-name="Clay Pit"] .front::before {
+      background-image: url(../../images-ill2/Clay\ Pit.png);
+    }
+
+    &[data-name="Glassworks"] .front::before {
+      background-image: url(../../images-ill2/Glassworks.png);
+    }
+
+    &[data-name="Press"] .front::before {
+      background-image: url(../../images-ill2/Press.png);
+    }
+
+    &[data-name="Guard Tower"] .front::before {
+      background-image: url(../../images-ill2/Guard\ Tower.png);
+    }
+
+    &[data-name="Workshop"] .front::before {
+      background-image: url(../../images-ill2/Workshop.png);
+    }
+
+    &[data-name="Apothecary"] .front::before {
+      background-image: url(../../images-ill2/Apothecary.png);
+    }
+
+    &[data-name="Stone Reserve"] .front::before {
+      background-image: url(../../images-ill2/Stone\ Reserve.png);
+    }
+
+    &[data-name="Chamber Of Commerce"] .front::before {
+      background-image: url(../../images-ill2/Chamber\ Of\ Commerce.png);
+    }
+
+    &[data-name="Forum"] .front::before {
+      background-image: url(../../images-ill2/Forum.png);
+    }
+
+    &[data-name="Clay Reserve"] .front::before {
+      background-image: url(../../images-ill2/Clay\ Reserve.png);
+    }
+
+    &[data-name="Port"] .front::before {
+      background-image: url(../../images-ill2/Port.png);
+    }
+
+    &[data-name="Caravansery"] .front::before {
+      background-image: url(../../images-ill2/Caravansery.png);
+    }
+
+    &[data-name="Customs House"] .front::before {
+      background-image: url(../../images-ill2/Customs\ House.png);
+    }
+
+    &[data-name="Tribunal"] .front::before {
+      background-image: url(../../images-ill2/Tribunal.png);
+    }
+
+    &[data-name="Wood Reserve"] .front::before {
+      background-image: url(../../images-ill2/Wood\ Reserve.png);
+    }
+
+    &[data-name="Armory"] .front::before {
+      background-image: url(../../images-ill2/Armory.png);
+    }
+
+    &[data-name="Glass-Blower"] .front::before {
+      background-image: url(../../images-ill2/Glass-Blower.png);
+    }
+
+    &[data-name="Drying Room"] .front::before {
+      background-image: url(../../images-ill2/Drying\ Room.png);
+    }
+
+    &[data-name="Arsenal"] .front::before {
+      background-image: url(../../images-ill2/Arsenal.png);
+    }
+
+    &[data-name="Merchants Guild"] .front::before {
+      background-image: url(../../images-ill2/Merchants\ Guild.png);
+    }
+
+    &[data-name="Shipowners Guild"] .front::before {
+      background-image: url(../../images-ill2/Shipowners\ Guild.png);
+    }
+
+    &[data-name="Builders Guild"] .front::before {
+      background-image: url(../../images-ill2/Builders\ Guild.png);
+    }
+
+    &[data-name="Magistrates Guild"] .front::before {
+      background-image: url(../../images-ill2/Magistrates\ Guild.png);
+    }
+
+    &[data-name="Scientists Guild"] .front::before {
+      background-image: url(../../images-ill2/Scientists\ Guild.png);
+    }
+
+    &[data-name="Moneylenders Guild"] .front::before {
+      background-image: url(../../images-ill2/Moneylenders\ Guild.png);
+    }
+
+    &[data-name="Tacticians Guild"] .front::before {
+      background-image: url(../../images-ill2/Tacticians\ Guild.png);
+    }
+
+    &[data-name="Courthouse"] .front::before {
+      background-image: url(../../images-ill2/Courthouse.png);
+    }
+
+    &[data-name="Academy"] .front::before {
+      background-image: url(../../images-ill2/Academy.png);
+    }
+
+    &[data-name="Study"] .front::before {
+      background-image: url(../../images-ill2/Study.png);
+    }
+
+    &[data-name="Palace"] .front::before {
+      background-image: url(../../images-ill2/Palace.png);
+    }
+
+    &[data-name="Town Hall"] .front::before {
+      background-image: url(../../images-ill2/Town\ Hall.png);
+    }
+
+    &[data-name="Obelisk"] .front::before {
+      background-image: url(../../images-ill2/Obelisk.png);
+    }
+
+    &[data-name="Walls"] .front::before {
+      background-image: url(../../images-ill2/Walls.png);
+    }
+
+    &[data-name="Stable"] .front::before {
+      background-image: url(../../images-ill2/Stable.png);
+    }
+
+    &[data-name="Lighthouse"] .front::before {
+      background-image: url(../../images-ill2/Lighthouse.png);
+    }
+
+    &[data-name="Scriptorium"] .front::before {
+      background-image: url(../../images-ill2/Scriptorium.png);
+    }
+
+    &[data-name="Theater"] .front::before {
+      background-image: url(../../images-ill2/Theater.png);
+    }
+
+    &[data-name="Tavern"] .front::before {
+      background-image: url(../../images-ill2/Tavern.png);
+    }
+
+    &[data-name="Brewery"] .front::before {
+      background-image: url(../../images-ill2/Brewery.png);
+    }
+
+    &[data-name="Altar"] .front::before {
+      background-image: url(../../images-ill2/Altar.png);
+    }
+
+    &[data-name="Baths"] .front::before {
+      background-image: url(../../images-ill2/Baths.png);
+    }
+
+    &[data-name="Archery Range"] .front::before {
+      background-image: url(../../images-ill2/Archery\ Range.png);
+    }
+
+    &[data-name="Garrison"] .front::before {
+      background-image: url(../../images-ill2/Garrison.png);
+    }
+
+    &[data-name="Pharmacist"] .front::before {
+      background-image: url(../../images-ill2/Pharmacist.png);
+    }
+
+    &[data-name="Parade Ground"] .front::before {
+      background-image: url(../../images-ill2/Parade\ Ground.png);
+    }
+
+    &[data-name="Palisade"] .front::before {
+      background-image: url(../../images-ill2/Palisade.png);
+    }
+
+    &[data-name="Horse Breeders"] .front::before {
+      background-image: url(../../images-ill2/Horse\ Breeders.png);
+    }
+
+    &[data-name="Library"] .front::before {
+      background-image: url(../../images-ill2/Library.png);
+    }
+
+    &[data-name="Statue"] .front::before {
+      background-image: url(../../images-ill2/Statue.png);
+    }
+
+    &[data-name="Gardens"] .front::before {
+      background-image: url(../../images-ill2/Gardens.png);
+    }
+
+    &[data-name="Arena"] .front::before {
+      background-image: url(../../images-ill2/Arena.png);
+    }
+
+    &[data-name="Temple"] .front::before {
+      background-image: url(../../images-ill2/Temple.png);
+    }
+
+    &[data-name="Rostrum"] .front::before {
+      background-image: url(../../images-ill2/Rostrum.png);
+    }
+
+    &[data-name="Pantheon"] .front::before {
+      background-image: url(../../images-ill2/Pantheon.png);
+    }
+
+    &[data-name="Senate"] .front::before {
+      background-image: url(../../images-ill2/Senate.png);
+    }
+
+    &[data-name="Aqueduct"] .front::before {
+      background-image: url(../../images-ill2/Aqueduct.png);
+    }
+
+    &[data-name="School"] .front::before {
+      background-image: url(../../images-ill2/School.png);
+    }
+
+    &[data-name="University"] .front::before {
+      background-image: url(../../images-ill2/University.png);
+    }
+
+    &[data-name="Siege Workshop"] .front::before {
+      background-image: url(../../images-ill2/Siege\ Workshop.png);
+    }
+
+    &[data-name="Barracks"] .front::before {
+      background-image: url(../../images-ill2/Barracks.png);
+    }
+
+    &[data-name="Dispensary"] .front::before {
+      background-image: url(../../images-ill2/Dispensary.png);
+    }
+
+    &[data-name="Laboratory"] .front::before {
+      background-image: url(../../images-ill2/Laboratory.png);
+    }
+
+    &[data-name="Observatory"] .front::before {
+      background-image: url(../../images-ill2/Observatory.png);
+    }
+
+    &[data-name="Circus"] .front::before {
+      background-image: url(../../images-ill2/Circus.png);
+    }
+
+    &[data-name="Fortifications"] .front::before {
+      background-image: url(../../images-ill2/Fortifications.png);
+    }
+
+    &[data-age="1"] .back {
+      background: linear-gradient(10deg, #520, #a40);
+    }
+
+    &[data-age="2"] .back {
+      background: linear-gradient(10deg, #268, #4af);
+    }
+
+    &[data-age="3"] .back {
+      background: linear-gradient(10deg, #628, #a4f);
+    }
+
+    &[data-age="3"][data-guild="true"] .back {
+      background: linear-gradient(10deg, #416, #73c);
+    }
+
+    &:not([data-type]) > div {
+      transform: rotateY(180deg);
     }
   }
 
   .Wonder {
-    background: #ccf;
+    background-size: cover;
     color: black;
     padding: .2em;
-    .description {
-      font-size: .25em;
+    box-shadow: -.2em -.3em .7em #000c;
+    border-radius: .4em;
+
+    > div {
+      width: 100%;
+      height: 100%;
     }
+
+    &[data-name="The Pyramids"] {
+      background-image: url(./assets/pyramids.jpg);
+      .rewards {
+        background: #5308;
+      }
+    }
+    &[data-name="The Great Lighthouse"] {
+      background-image: url(./assets/lighthouse.jpg);
+      .rewards {
+        background: #0558;
+      }
+    }
+    &[data-name="The Colossus"] {
+      background-image: url(./assets/colossus.jpg);
+      .rewards {
+        background: #0358;
+      }
+    }
+    &[data-name="Circus Maximus"] {
+      background-image: url(./assets/circus.jpg);
+      .rewards {
+        background: #5008;
+      }
+    }
+    &[data-name="The Mausoleum"] {
+      background-image: url(./assets/mausoleum.jpg);
+      .rewards {
+        background: #3058;
+      }
+    }
+    &[data-name="The Hanging Gardens"] {
+      background-image: url(./assets/hanging-gardens.jpg);
+      .rewards {
+        background: #0608;
+      }
+    }
+    &[data-name="The Temple of Artemis"] {
+      background-image: url(./assets/temple-of-artemis.jpg);
+      .rewards {
+        background: #5508;
+      }
+    }
+    &[data-name="The Great Library"] {
+      background-image: url(./assets/great-library.jpg);
+      .rewards {
+        background: #7508;
+      }
+    }
+    &[data-name="The Statue of Zeus"] {
+      background-image: url(./assets/statue-of-zeus.jpg);
+      .rewards {
+        background: #2338;
+      }
+    }
+    &[data-name="The Sphinx"] {
+      background-image: url(./assets/sphinx.jpg);
+      .rewards {
+        background: #5208;
+      }
+    }
+    &[data-name="Piraeus"] {
+      background-image: url(./assets/piraeus.jpg);
+      .rewards {
+        background: #0358;
+      }
+    }
+    &[data-name="The Appian Way"] {
+      background-image: url(./assets/appian-way.jpg);
+      .rewards {
+        background: #0448;
+      }
+    }
+
+    &.selectable {
+      box-shadow: 0 0 2em white, 0 0 1em #f66;
+    }
+
+    &.selected {
+      z-index: 10;
+    }
+
+    .wonder-features {
+      .cost {
+        position: absolute;
+        width: 2%;
+        top: 0;
+        left: 5%;
+        line-height: 150%;
+        background: #fff8;
+        border-radius: 0 0 .2em .2em;
+        padding-bottom: .7em;
+        span {
+          position: relative;
+          top: .2em;
+          left: -.25em;
+        }
+        .svg-icon {
+          filter: drop-shadow(.1em .1em .1em #0006) drop-shadow(-.1em -.1em .1em #0006) drop-shadow(.1em -.1em .1em #0006) drop-shadow(-.1em .1em .1em #0006);
+        }
+      }
+
+      .rewards {
+        position: absolute;
+        width: 12%;
+        top: 5%;
+        height: 90%;
+        right: 3%;
+        background: #3308;
+        font-size: 1.2em;
+        padding: 2% 1%;
+        text-align: center;
+        line-height: 1.2em;
+        border: .1em solid black;
+        border-radius: 0.4em;
+        .destroy-amount {
+          position: absolute;
+          color: #c00;
+          left: 0;
+          top: 8%;
+          width: 100%;
+          text-shadow: 0 0 .1em white;
+        }
+        .svg-icon {
+          margin: .2em 0;
+          filter: drop-shadow(0 0 .1em #fffc);
+        }
+        .slash {
+          color: #ccc;
+          font-weight: bold;
+          transform: translate(0.4em, -0.45em) rotate(45deg);
+          height: 0;
+        }
+      }
+
+      .name {
+        position: absolute;
+        left: 20%;
+        bottom: 5%;
+        width: 60%;
+        text-align: center;
+        background: #fff8;
+        border: .1em solid black;
+        border-radius: .5em;
+        padding: 0.1em 0.1em 0.2em;
+      }
+    }
+
     .Card {
       position: absolute;
       width: 100%;
@@ -79,14 +800,282 @@
   }
 
   .ProgressToken {
-    background: #cfc;
-    color: black;
-    border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  span.svg-icon {
+    width: 1.2em;
+    height: 1.2em;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: top;
+    filter: drop-shadow(0 0 .1em #000c);
+    margin: 0 .1em;
+  }
+
+  span.vp {
+    width: 1.5em;
+    height: 1.5em;
+    background-image: url(./assets/laurel.svg);
     text-align: center;
-    padding: 1em;
-    font-size: .75em;
-    .description {
-      font-size: .35em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 .1em white;
+    .two-digit {
+      font-size: .7em;
+      position: relative;
+      top: -7%;
+    }
+  }
+
+  span.coins {
+    height: 1.3em;
+    width: 1.3em;
+    color: #ffc;
+    text-shadow: -0.02em -0.02em 0.01em #660, 0.02em 0.02em 0.01em #fff;
+    background-image: url(./assets/coin.svg);
+    text-align: center;
+    font-weight: bold;
+    &.destroy {
+      clip-path: polygon(0% 40%, 0% 0%, 110% 0%, 110% 100%, 0% 100%, 0% 60%, 40% 40%, 40% 80%, 110% 60%, 110% 40%, 60% 60%, 60% 20%);
+    }
+  }
+
+  span.extra-turn {
+    background-image: url(./assets/extra-turn.svg);
+    transform: scale(1.2);
+    transform-origin: left center;
+  }
+
+  span.take-progress-discard {
+    background-image: url(./assets/take-progress-discard.svg);
+  }
+
+  span.take-discard {
+    background-image: url(./assets/take-discard.svg);
+  }
+
+  span.stone {
+    background-image: url(./assets/stone.svg);
+  }
+
+  span.clay {
+    background-image: url(./assets/clay.svg);
+  }
+
+  span.wood {
+    background-image: url(./assets/log.svg);
+  }
+
+  span.glass {
+    background-image: url(./assets/glass.svg);
+  }
+
+  span.papyrus {
+    background-image: url(./assets/papyrus.svg);
+  }
+
+  span.shield {
+    width: 1em;
+    background-image: url(./assets/shield.svg);
+  }
+
+  span.link-scriptorium {
+    background-image: url(./assets/book.svg);
+  }
+
+  span.link-stable {
+    background-image: url(./assets/horseshoe.svg);
+  }
+
+  span.link-garrison {
+    background-image: url(./assets/broadsword.svg);
+  }
+
+  span.link-archery-range {
+    background-image: url(./assets/archery-target.svg);
+  }
+
+  span.link-parade-ground {
+    background-image: url(./assets/crested-helmet.svg);
+  }
+
+  span.link-pharmacist {
+    background-image: url(./assets/big-gear.svg);
+  }
+
+  span.link-garrison {
+    background-image: url(./assets/broadsword.svg);
+  }
+
+  span.link-school {
+    background-image: url(./assets/lyre.svg);
+  }
+
+  span.link-garrison {
+    background-image: url(./assets/broadsword.svg);
+  }
+
+  span.link-laboratory {
+    background-image: url(./assets/magic-lamp.svg);
+  }
+
+  span.link-theater {
+    background-image: url(./assets/duality-mask.svg);
+  }
+
+  span.link-statue {
+    background-image: url(./assets/ionic-column.svg);
+  }
+
+  span.link-altar {
+    background-image: url(./assets/moon.svg);
+  }
+
+  span.link-pantheon {
+    background-image: url(./assets/spikes-full.svg);
+  }
+
+  span.link-baths {
+    background-image: url(./assets/drop.svg);
+  }
+
+  span.link-rostrum {
+    background-image: url(./assets/greek-temple.svg);
+  }
+
+  span.link-tavern {
+    background-image: url(./assets/painted-pottery.svg);
+  }
+
+  span.link-brewery {
+    background-image: url(./assets/barrel.svg);
+  }
+
+  span.science-writing {
+    background-image: url(./assets/quill-ink.svg);
+  }
+
+  span.science-wheel {
+    background-image: url(./assets/wheel.svg);
+  }
+
+  span.science-chemistry {
+    background-image: url(./assets/pestle-mortar.svg);
+  }
+
+  span.science-math {
+    background-image: url(./assets/math.svg);
+  }
+
+  span.science-astronomy {
+    background-image: url(./assets/orrery.svg);
+  }
+
+  span.science-sundial {
+    background-image: url(./assets/sundial.svg);
+  }
+
+  span.science-law {
+    background-image: url(./assets/scales.svg);
+  }
+
+  span.merchants {
+    background-image: url(./assets/merchants-guild.svg);
+    width: 2em;
+  }
+
+  span.moneylenders {
+    background-image: url(./assets/moneylenders-guild.svg);
+    width: 2em;
+  }
+
+  span.builders {
+    background-image: url(./assets/builders-guild.svg);
+    width: 2em;
+  }
+
+  span.scientists {
+    background-image: url(./assets/scientists-guild.svg);
+    width: 2em;
+  }
+
+  span.magistrates {
+    background-image: url(./assets/magistrates-guild.svg);
+    width: 2em;
+  }
+
+  span.tacticians {
+    background-image: url(./assets/tacticians-guild.svg);
+    width: 2em;
+  }
+
+  span.shipowners {
+    background-image: url(./assets/shipowners-guild.svg);
+    width: 2em;
+  }
+
+  .trades {
+    position: relative;
+    .coins {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: scale(.5) translateX(-0.6em);
+      transform-origin: left top;
+    }
+  }
+
+  .card-type {
+    position: relative;
+    display: inline-block;
+    height: 1.2em;
+    width: 0.9em;
+    border: 0.05em solid white;
+    border-radius: 0.1em;
+    &.wonder {
+      border: none;
+      width: 1.8em;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url(./assets/pyramid.svg);
+    }
+    &.military {
+      background: #c00;
+    }
+    &.raw {
+      background: #630;
+    }
+    &.manufactured {
+      background: #99a;
+    }
+    &.civilian {
+      background: #06f;
+    }
+    &.scientific {
+      background: #070;
+    }
+    &.commercial {
+      background: #a90;
+    }
+    &.guild {
+      background: #60c;
+    }
+
+    &.destroy {
+      clip-path: polygon(0% 40%, 0% 0%, 110% 0%, 110% 100%, 0% 100%, 0% 60%, 40% 40%, 40% 80%, 110% 60%, 110% 40%, 60% 60%, 60% 20%);
+    }
+
+    .coins {
+      position: absolute;
+      left: 65%;
+      top: 40%;
+      transform: scale(.5) translateX(-0.6em);
+      transform-origin: left top;
     }
   }
 }

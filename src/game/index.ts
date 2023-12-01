@@ -7,7 +7,6 @@ import {
   createBoardClasses,
   Player,
   playerActions,
-  whileLoop,
   eachPlayer,
   forEach,
   Do,
@@ -239,6 +238,7 @@ export class Card extends Building {
   type: 'raw' | 'manufactured' | 'civilian' | 'scientific' | 'commercial' | 'military' | 'guild'
   built: boolean = true;
   age: number;
+  guild: boolean = false;
   trades: ResourceType[];
   science: 'astronomy' | 'wheel' | 'sundial' | 'chemistry' | 'math' | 'writing';
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
@@ -254,14 +254,14 @@ export class Card extends Building {
   }
 }
 
-Card.hideAllExcept('age');
+Card.hideAllExcept('age', 'guild');
 
 export class Wonder extends Building {
   type: 'wonder' = 'wonder';
   description: string;
   built: boolean = false;
-  special?: 'extra-turn' | 'take-discards' | 'take-progress';
-  destroy?: {type: Card['type'], amount: number};
+  special?: 'extra-turn' | 'take-discards' | 'take-progress-discard';
+  destroy?: Card['type'];
   destroyCoins?: number;
 }
 
@@ -361,6 +361,10 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
+  for (const player of board.players) {
+    board.create(Space, 'mat', { player });
+  }
+
   const deck = board.create(Space, 'deck');
   const discard = board.create(Space, 'discard');
   const field = board.create(Space, 'field');
@@ -369,10 +373,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
   for (const wonder of wonders) board.pile.create(Wonder, wonder.name!, wonder);
   for (const progress of progressTokens) board.pile.create(ProgressToken, progress.name!, progress);
   deck.all(Card).hideFromAll();
-
-  for (const player of board.players) {
-    board.create(Space, 'mat', { player });
-  }
 
   game.defineActions({
     pickWonder: () => action({
@@ -440,9 +440,16 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       wonder.built = true;
       card.built = false;
       wonder.giveRewardsTo(player);
-      if (wonder.destroyCoins) player.other().coins = Math.max(0, player.other().coins - wonder.destroyCoins);
-      if (wonder.destroy) return { name: 'destroyBuildings', args: wonder.destroy };
-      if (wonder.special === 'take-progress') return { name: 'takeProgress' };
+      if (wonder.destroyCoins) {
+        player.other().coins = Math.max(0, player.other().coins - wonder.destroyCoins);
+        game.message(`{{player}} destroys {{amount}} coins`, {player, amount: wonder.destroyCoins});
+      }
+      if (wonder.destroy) return { name: 'destroyBuildings', args: { type: wonder.destroy } };
+      if (wonder.special === 'take-progress-discard') {
+        field.all(ProgressToken).putInto(deck);
+        board.pile.firstN(3, ProgressToken).putInto(field);
+        return { name: 'takeProgressDiscard' };
+      }
       if (wonder.special === 'take-discards') return { name: 'takeDiscards' };
     }).message(
       '{{player}} used {{card}} to build {{wonder}}!'
@@ -456,6 +463,20 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ).do(({ token }) => {
       player.checkScience();
       player.addVpBonus(token.vpPer);
+    }).message(
+      `{{player}} gains the {{token}} Progress Token`
+    ),
+
+    takeProgressDiscard: player => action({
+      prompt: 'Select a progress token',
+    }).move(
+      'token', field.all(ProgressToken),
+      'mat', board.first('mat', {player})
+    ).do(({ token }) => {
+      player.checkScience();
+      player.addVpBonus(token.vpPer);
+      field.all(ProgressToken).putInto(board.pile);
+      deck.all(ProgressToken).putInto(field);
     }).message(
       `{{player}} gains the {{token}} Progress Token`
     ),
@@ -476,19 +497,20 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       `{{player}} takes {{card}} from discard`
     ),
 
-    destroyBuildings: player => action<{ type: Card['type'], amount: number }>({
+    destroyBuildings: player => action<{ type: Card['type'] }>({
       prompt: 'Choose buildings to destroy',
     }).chooseOnBoard(
-      'cards',
+      'card',
       ({ type }) => player.other().all(Card, {type, built: true}),
-      {
-        number: ({ amount }) => amount,
-      }
     ).do(
-      ({ cards }) => cards.forEach(c => c.remove())
+      ({ card }) => card.remove()
     ).message(
-      `{{player}} destroys {{cards}}`
+      `{{player}} destroys {{card}}`
     ),
+
+    pass: () => action({
+      prompt: 'Choose opponent to start'
+    })
   });
 
   game.defineFlow([
@@ -526,30 +548,34 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
           cards[i].putInto(board.first(CardSlot, cardPosition[age - 1][i])!);
         }
         field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
+        game.message('Age {{age}} has begun!', {age});
+        if (board.militaryTrack === 0) {
+          game.players.next();
+        } else {
+          game.players.setCurrent(game.players[board.militaryTrack > 0 ? 0 : 1]);
+        }
       },
 
-      whileLoop({
-        while: () => field.has(Card),
-        do: eachPlayer({
-          name: 'player',
-          do: [
-            playerActions({
-              player: ({ player }) => player,
-              prompt: 'Choose Card',
-              actions: [
-                {name: 'buy', do: () => board.revealUncovered()},
-                {name: 'buildWonder', do: ({ player, buildWonder }) => {
-                  board.revealUncovered();
-                  if (buildWonder.wonder?.special?.includes('extra-turn')) {
-                    game.message('{{player}} takes an extra turn', {player});
-                    return Do.repeat
-                  }
-                }},
-                {name: 'discard', do: () => board.revealUncovered()},
-              ]
-            }),
-          ]
-        })
+      eachPlayer({
+        name: 'player',
+        continueUntil: () => !field.has(Card),
+        do: [
+          playerActions({
+            player: ({ player }) => player,
+            prompt: 'Choose Card',
+            actions: [
+              {name: 'buy', do: () => board.revealUncovered()},
+              {name: 'buildWonder', do: ({ player, buildWonder }) => {
+                board.revealUncovered();
+                if (buildWonder.wonder?.special?.includes('extra-turn')) {
+                  game.message('{{player}} takes an extra turn', {player});
+                  return Do.repeat
+                }
+              }},
+              {name: 'discard', do: () => board.revealUncovered()},
+            ]
+          }),
+        ]
       })
     ]})
   ]);

@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="207.92606mm"
+   height="113.80602mm"
+   viewBox="0 0 207.92606 113.80602"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <rect
+       x="539.96759"
+       y="502.93011"
+       width="207.60487"
+       height="293.37589"
+       id="rect3" />
+    <rect
+       x="174.46606"
+       y="734.90173"
+       width="463.94327"
+       height="104.28977"
+       id="rect2" />
+    <rect
+       x="235.87032"
+       y="749.52179"
+       width="386.94427"
+       height="83.821686"
+       id="rect1" />
+    <linearGradient
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="147.44316"
+       y1="491.29205"
+       x2="362.34576"
+       y2="36.928886"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.09125905,0,0,0.09125905,91.749588,225.58045)" />
+    <linearGradient
+       id="linearGradient1">
+      <stop
+         style="stop-color:#9c732d;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#d3aa65;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <rect
+       x="539.96759"
+       y="502.93011"
+       width="207.60487"
+       height="293.37589"
+       id="rect3-9" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter32"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feComposite
+         id="feComposite54"
+         result="comp2"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter70"
+       x="-0.19850187"
+       y="-0.14133333"
+       width="1.3970037"
+       height="1.2826667">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(249,237,183)"
+         id="feFlood69" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="3.000000"
+         id="feGaussianBlur69" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="1.000000"
+         dy="1.000000"
+         id="feOffset69" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite69" />
+      <feComposite
+         result="fbSourceGraphic"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite70" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix70" />
+      <feFlood
+         id="feFlood70"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(249,237,183)" />
+      <feGaussianBlur
+         id="feGaussianBlur70"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="3.000000" />
+      <feOffset
+         id="feOffset70"
+         result="offset"
+         in="blur"
+         dx="1.000000"
+         dy="1.000000" />
+      <feComposite
+         id="feComposite71"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite72"
+         result="fbSourceGraphic"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix82" />
+      <feFlood
+         id="feFlood82"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)" />
+      <feGaussianBlur
+         id="feGaussianBlur82"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="1.000000" />
+      <feOffset
+         id="feOffset82"
+         result="offset"
+         in="blur"
+         dx="-1.000000"
+         dy="-1.000000" />
+      <feComposite
+         id="feComposite82"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite83"
+         result="fbSourceGraphic"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix83" />
+      <feFlood
+         id="feFlood83"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)" />
+      <feGaussianBlur
+         id="feGaussianBlur83"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="1.000000" />
+      <feOffset
+         id="feOffset83"
+         result="offset"
+         in="blur"
+         dx="-1.000000"
+         dy="-1.000000" />
+      <feComposite
+         id="feComposite84"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite85"
+         result="comp2"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter88"
+       x="-0.027509674"
+       y="-0.033824515"
+       width="1.0550193"
+       height="1.067649">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)"
+         id="feFlood87" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="1.000000"
+         id="feGaussianBlur87" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="0.000000"
+         dy="0.000000"
+         id="feOffset87" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="offset"
+         in2="flood"
+         id="feComposite87" />
+      <feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite88" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter88-8"
+       x="-0.027509675"
+       y="-0.033824515"
+       width="1.0550193"
+       height="1.067649">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)"
+         id="feFlood87-8" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="1.000000"
+         id="feGaussianBlur87-1" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="0.000000"
+         dy="0.000000"
+         id="feOffset87-7" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="offset"
+         in2="flood"
+         id="feComposite87-2" />
+      <feComposite
+         result="comp2"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite88-3" />
+    </filter>
+    <rect
+       x="539.96759"
+       y="502.93011"
+       width="207.60487"
+       height="293.37589"
+       id="rect3-0" />
+    <rect
+       x="539.96759"
+       y="502.93011"
+       width="207.60487"
+       height="293.37589"
+       id="rect3-9-4" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter70-8"
+       x="-0.19850187"
+       y="-0.14133333"
+       width="1.3970037"
+       height="1.2826667">
+      <feFlood
+         result="flood"
+         in="SourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(249,237,183)"
+         id="feFlood69-0" />
+      <feGaussianBlur
+         result="blur"
+         in="SourceGraphic"
+         stdDeviation="3.000000"
+         id="feGaussianBlur69-3" />
+      <feOffset
+         result="offset"
+         in="blur"
+         dx="1.000000"
+         dy="1.000000"
+         id="feOffset69-9" />
+      <feComposite
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset"
+         id="feComposite69-4" />
+      <feComposite
+         result="fbSourceGraphic"
+         operator="over"
+         in="SourceGraphic"
+         in2="comp1"
+         id="feComposite70-5" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix70-1" />
+      <feFlood
+         id="feFlood70-1"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(249,237,183)" />
+      <feGaussianBlur
+         id="feGaussianBlur70-0"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="3.000000" />
+      <feOffset
+         id="feOffset70-7"
+         result="offset"
+         in="blur"
+         dx="1.000000"
+         dy="1.000000" />
+      <feComposite
+         id="feComposite71-0"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite72-4"
+         result="fbSourceGraphic"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix82-5" />
+      <feFlood
+         id="feFlood82-1"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)" />
+      <feGaussianBlur
+         id="feGaussianBlur82-4"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="1.000000" />
+      <feOffset
+         id="feOffset82-2"
+         result="offset"
+         in="blur"
+         dx="-1.000000"
+         dy="-1.000000" />
+      <feComposite
+         id="feComposite82-4"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite83-0"
+         result="fbSourceGraphic"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix83-6" />
+      <feFlood
+         id="feFlood83-7"
+         result="flood"
+         in="fbSourceGraphic"
+         flood-opacity="1.000000"
+         flood-color="rgb(85,71,7)" />
+      <feGaussianBlur
+         id="feGaussianBlur83-1"
+         result="blur"
+         in="fbSourceGraphic"
+         stdDeviation="1.000000" />
+      <feOffset
+         id="feOffset83-5"
+         result="offset"
+         in="blur"
+         dx="-1.000000"
+         dy="-1.000000" />
+      <feComposite
+         id="feComposite84-9"
+         result="comp1"
+         operator="in"
+         in="flood"
+         in2="offset" />
+      <feComposite
+         id="feComposite85-1"
+         result="comp2"
+         operator="over"
+         in="fbSourceGraphic"
+         in2="comp1" />
+    </filter>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-5.0809632,-150.76384)">
+    <g
+       id="layer1-7"
+       transform="matrix(1.1047324,0,0,1.1047324,28.297504,70.412267)"
+       style="stroke:#ffffff;stroke-width:5;stroke-dasharray:none;stroke-opacity:1">
+      <path
+         style="fill:#c3b22f;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="m 96.871805,75.508441 -58.511676,48.450269 22.783293,46.9482 z"
+         id="path1-3" />
+      <path
+         style="fill:#645f17;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="M 97.657847,75.233753 164.69864,146.03001 62.181689,173.2509 Z"
+         id="path2" />
+    </g>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text1"
+       style="white-space:pre;shape-inside:url(#rect1);display:inline;fill:#028000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linejoin:round" />
+    <g
+       id="g4"
+       style="filter:url(#filter88-8)"
+       transform="matrix(0.94235512,0,0,0.94235512,12.122495,75.837487)">
+      <g
+         id="g2"
+         transform="matrix(0.1317788,0,0,0.1317788,-139.33829,91.401215)">
+        <g
+           id="group-R5">
+          <path
+             id="path7"
+             d="m 18800.8,15570 c -145,-101.1 -168.4,-211.2 -172.1,-241.7 -23,-13.6 -44.4,-25.6 -64,-36.2 30.7,51.2 59.8,103.3 86.5,156.5 44.4,90.8 82.9,184.2 115.2,279.7 3.6,10.5 7.1,21 10.5,31.5 25.1,78.6 61.5,153.2 110.1,219.8 3.3,4.4 6.5,8.9 9.6,13.3 l -0.1,-0.1 c 406.1,222.3 219.8,675.5 219.8,675.5 6.1,-100.1 -90.5,-176.4 -189.8,-358.9 -84.4,-155.3 -56.1,-264.2 -45.8,-293.2 -20.8,-32 -40.2,-60.1 -57,-83.4 6.7,29.2 12.8,58.5 18.5,87.8 19.3,98.8 30,199.1 34.9,299.4 l 1.6,37.7 c 0.7,12.5 1.1,25 0.9,37.6 l -0.1,75.3 c -0.6,25.1 -2.2,50.1 -3.2,75.2 -0.7,12.5 -0.9,25.1 -2,37.6 l -3.5,37.4 v 0 c -2.2,24.8 -0.9,49.9 4.1,74.3 l 29,143.2 v -0.1 c 296,355.9 -43.7,709 -43.7,709 42.4,-90.8 -19.3,-197.3 -44.7,-403.5 -21.5,-175.5 44.8,-266.3 65.1,-289.5 -8.4,-41.6 -17,-77.9 -24.7,-107.5 l -3.3,23.3 c -2.9,24.9 -8.7,49.3 -13.2,74 l -7.1,36.8 c -2.3,12.3 -4.7,24.6 -7.9,36.7 -12.1,48.6 -23.1,97.4 -38.6,145.1 l -10.9,35.9 -5.4,17.9 -6.3,17.7 -25.2,70.6 c -16,41 -32.7,81.8 -50.6,122 -32,72.2 -52,149.4 -56.4,228.2 -1.1,18.3 -2.5,36.3 -4.3,53.9 l 0.1,-0.1 c 159.3,434.6 -279.3,653.2 -279.3,653.2 70.5,-71.3 48.1,-192.4 93.4,-395.1 38.7,-172.5 131.7,-235.8 158.5,-250.9 8.5,-59 13.1,-108.4 15.5,-143 -0.7,1.2 -1.3,2.5 -2,3.7 l -17.7,33 c -5.9,10.9 -12.8,21.4 -19.1,32.1 l -38.7,64 -41.7,62 c -7.1,10.3 -13.8,20.8 -21.1,30.9 l -22.3,29.9 c -23,32 -47.3,62.9 -72.5,93.2 l 0.1,-0.1 c -35.1,44.5 -83.1,108.6 -124.8,155 -19.6,21.7 -36.8,45.6 -49.3,72.1 -182.5,384.6 -628.1,276.5 -628.1,276.5 100.1,-6.4 163.8,-111.8 332.5,-232.9 133.4,-95.8 239.1,-90.1 277.6,-83.5 4.6,-1.5 10.2,-3.3 14.9,-4.8 l 51,-53.4 c 66.6,-73.3 130.4,-149.2 186.2,-231 l 21.4,-30.2 c 6.9,-10.3 13.4,-20.8 20.1,-31.2 l 39.7,-62.6 16.8,-29.4 c -44.3,37.6 -88.9,70.4 -133.1,98.8 l 0.2,-0.1 c -240.3,395.7 -684.7,189.3 -684.7,189.3 99.7,10.6 180.3,-82.5 367,-173.5 159,-77.4 266.5,-44.2 295,-32.6 63.6,-37.3 116.5,-73.8 147.1,-95.8 19.3,-13.9 35.6,-31.8 46.4,-53 0,-0.1 0.1,-0.2 0.1,-0.3 l 16.7,-33.1 c 46.1,-87.3 83.2,-179 116.6,-271.7 l 23.1,-70.1 5.8,-17.6 4.8,-17.8 9.8,-35.6 c 14.1,-47.2 23.7,-95.6 34.3,-143.6 2.9,-11.9 4.9,-24.1 6.9,-36.2 l 0.1,-0.7 c -30,46.1 -61.5,88.2 -93.7,126.3 l 0.1,-0.1 c -114,448.7 -599.4,381.3 -599.4,381.3 98.5,-19 148.4,-131.6 300.3,-273.2 129.3,-120.6 241.8,-120.3 272.5,-117.5 34.8,-37.9 63.3,-71.8 84.4,-98 29.2,-36.4 48.5,-80.2 52.8,-126.6 0,-0.3 0,-0.5 0,-0.8 l 8.4,-73.2 2.1,-18.3 1.2,-18.4 2.4,-36.8 2.4,-36.7 c 0.9,-12.3 0.7,-24.5 1.1,-36.8 0.4,-24.6 1.3,-49.1 1.2,-73.6 l -1.8,-73.6 c -0.1,-12.2 -0.8,-24.5 -1.7,-36.7 l -2.6,-36.7 c -4,-52.9 -9.6,-105.8 -17.3,-158.3 -10.5,44.1 -22.7,86.1 -36.5,125.6 l 0.1,-0.1 c 53.6,459.8 -423.8,570.1 -423.8,570.1 85.2,-52.9 91.6,-175.9 182.9,-362.4 77.8,-158.8 183,-198.7 212.6,-207.1 11.4,-28.6 21.2,-55 29.4,-78.4 20.2,-57.5 24.5,-119.6 11.4,-179 -0.1,-0.3 -0.2,-0.7 -0.3,-0.9 -20.9,-95.6 -46.7,-190.1 -80.7,-281.7 -33.8,-91.7 -73.2,-181.1 -118.3,-267.6 -13.4,-25 -27.4,-49.7 -41.8,-74.3 8.3,51.9 13,101.8 14.8,149.7 v -0.2 c 218.4,408.2 -185.4,685.8 -185.4,685.8 59.9,-80.5 20.8,-197.2 37.4,-404.3 14.2,-176.2 97.5,-251.9 122,-270.5 0,-6.8 0,-13.4 -0.1,-19.9 -0.6,-112.1 -34.9,-221.8 -99.9,-313.1 -0.3,-0.5 -0.6,-0.9 -0.9,-1.4 -56.2,-79.6 -119.3,-153.9 -185.8,-224.7 -17,-17.3 -33,-35.6 -50.8,-52.1 l -52.6,-50.5 c -0.8,0.7 -0.6,0.5 -1.4,1.2 16,28.4 30.4,56.7 43.4,84.5 v -0.1 c 359.5,291.6 94.9,704 94.9,704 23.9,-97.4 -57.4,-189.8 -122.2,-387.2 -55.2,-167.9 -7.8,-269.9 7.5,-296.6 -10.6,-25.4 -20.8,-48.7 -30.4,-69.4 -23.3,-50.8 -57.6,-96 -101.7,-130.4 -0.2,-0.2 -0.5,-0.4 -0.7,-0.5 -75.8,-60.5 -154.8,-117 -238.3,-166 -48.6,-28.7 -98.2,-55.6 -148.7,-80.7 21.1,21.6 40.6,43.5 58.5,65.3 l -0.1,-0.1 c 344.4,158.9 217.6,539.8 217.6,539.8 -0.6,-82.1 -83.8,-139.1 -175.2,-282.7 -77.8,-122.1 -60.8,-212.7 -54,-237 -11.2,-14.9 -21.9,-28.7 -31.9,-41.2 -32.9,-41.2 -75.3,-74.1 -123.8,-94.6 -0.3,-0.1 -0.5,-0.3 -0.7,-0.3 -89.2,-37.4 -180.6,-68.9 -273.5,-94.7 l -1.1,-0.3 h -0.2 c -25.2,-7.2 -43.8,-29.6 -44.4,-55.8 -1,-44.8 40.4,-73.3 79.1,-61.5 97.6,29.8 193.3,65.6 286.2,107.3 92.8,42.2 182.2,91.4 268.3,145.4 51.9,32.4 102.1,67.5 150.7,104.5 66,50.3 145.3,80.2 228.1,87.3 h -0.2 c 432.2,-165.9 657.4,269.3 657.4,269.3 -72.4,-69.4 -193.1,-45.1 -396.5,-87.5 -173,-36 -237.8,-128 -253.2,-154.6 -41.6,-5.4 -78.4,-8.8 -108.7,-11.1 27.5,24.2 54.1,49.4 80.9,74.3 l 53.5,54.1 c 18.1,17.7 34.4,37.2 51.6,55.7 67.4,75.6 131.1,154.7 187.3,238.8 1.1,1.7 2.3,3.4 3.4,5.1 27.6,41.2 65.3,74.5 109.5,97 7.2,3.6 14.3,7.4 21.4,11.1 l -0.1,-0.1 c 462.6,17.3 498.5,506 498.5,506 -39.2,-92.2 -159.8,-117.3 -330.1,-236.2"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="matrix(0.13333333,0,0,-0.13333333,0,2666.6667)" />
+          <path
+             id="path8"
+             d="m 14551.8,15570 c 145,-101.1 168.4,-211.2 172.1,-241.7 23,-13.6 44.4,-25.6 64,-36.2 -30.7,51.2 -59.7,103.3 -86.5,156.5 -44.4,90.8 -82.8,184.2 -115.2,279.7 -3.6,10.5 -7.1,21 -10.4,31.5 -25.2,78.6 -61.6,153.2 -110.2,219.8 -3.2,4.4 -6.4,8.9 -9.6,13.3 l 0.1,-0.1 c -406.1,222.3 -219.7,675.5 -219.7,675.5 -6.2,-100.1 90.4,-176.4 189.7,-358.9 84.4,-155.3 56.1,-264.2 45.8,-293.2 20.8,-32 40.2,-60.1 57,-83.4 -6.6,29.2 -12.8,58.5 -18.5,87.8 -19.3,98.8 -30,199.1 -34.9,299.4 l -1.6,37.7 c -0.7,12.5 -1.1,25 -0.9,37.6 l 0.1,75.3 c 0.6,25.1 2.2,50.1 3.2,75.2 0.7,12.5 0.9,25.1 2,37.6 l 3.5,37.4 v 0 c 2.3,24.8 0.9,49.9 -4.1,74.3 l -29,143.2 v -0.1 c -296,355.9 43.7,709 43.7,709 -42.4,-90.8 19.4,-197.3 44.7,-403.5 21.5,-175.5 -44.8,-266.3 -65.1,-289.5 8.4,-41.6 17.1,-77.9 24.7,-107.5 l 3.3,23.3 c 2.9,24.9 8.7,49.3 13.2,74 l 7.1,36.8 c 2.3,12.3 4.7,24.6 7.9,36.7 12.1,48.6 23.2,97.4 38.7,145.1 l 10.8,35.9 5.4,17.9 6.3,17.7 25.3,70.6 c 15.9,41 32.6,81.8 50.5,122 32.1,72.2 52,149.4 56.5,228.2 1,18.3 2.4,36.3 4.2,53.9 l -0.1,-0.1 c -159.3,434.6 279.3,653.2 279.3,653.2 -70.5,-71.3 -48.1,-192.4 -93.4,-395.1 -38.7,-172.5 -131.6,-235.8 -158.5,-250.9 -8.5,-59 -13.1,-108.4 -15.5,-143 0.7,1.2 1.3,2.5 2,3.7 l 17.8,33 c 5.8,10.9 12.7,21.4 19,32.1 l 38.7,64 41.8,62 c 7,10.3 13.8,20.8 21,30.9 l 22.3,29.9 c 23.1,32 47.3,62.9 72.5,93.2 l -0.1,-0.1 c 35.1,44.5 83.1,108.6 124.8,155 19.6,21.7 36.8,45.6 49.3,72.1 182.5,384.6 628.1,276.5 628.1,276.5 -100,-6.4 -163.8,-111.8 -332.5,-232.9 -133.4,-95.8 -239.1,-90.1 -277.6,-83.5 -4.6,-1.5 -10.2,-3.3 -14.8,-4.8 l -51.1,-53.4 c -66.5,-73.3 -130.4,-149.2 -186.1,-231 l -21.5,-30.2 c -6.9,-10.3 -13.4,-20.8 -20.1,-31.2 l -39.7,-62.6 -16.8,-29.4 c 44.3,37.6 88.9,70.4 133.1,98.8 l -0.2,-0.1 c 240.3,395.7 684.8,189.3 684.8,189.3 -99.8,10.6 -180.4,-82.5 -367.1,-173.5 -158.9,-77.4 -266.4,-44.2 -295,-32.6 -63.6,-37.3 -116.5,-73.8 -147.1,-95.8 -19.3,-13.9 -35.6,-31.8 -46.3,-53 -0.1,-0.1 -0.2,-0.2 -0.2,-0.3 l -16.7,-33.1 c -46.1,-87.3 -83.2,-179 -116.6,-271.7 l -23.1,-70.1 -5.8,-17.6 -4.8,-17.8 -9.8,-35.6 c -14,-47.2 -23.6,-95.6 -34.3,-143.6 -2.9,-11.9 -4.9,-24.1 -6.9,-36.2 l -0.1,-0.7 c 30,46.1 61.5,88.2 93.7,126.3 l -0.1,-0.1 c 114,448.7 599.4,381.3 599.4,381.3 -98.5,-19 -148.3,-131.6 -300.3,-273.2 -129.3,-120.6 -241.8,-120.3 -272.5,-117.5 -34.8,-37.9 -63.3,-71.8 -84.4,-98 -29.2,-36.4 -48.5,-80.2 -52.7,-126.6 -0.1,-0.3 -0.1,-0.5 -0.1,-0.8 l -8.4,-73.2 -2.1,-18.3 -1.2,-18.4 -2.4,-36.8 -2.4,-36.7 c -0.8,-12.3 -0.7,-24.5 -1.1,-36.8 -0.3,-24.6 -1.3,-49.1 -1.2,-73.6 l 1.8,-73.6 c 0.1,-12.2 0.8,-24.5 1.8,-36.7 l 2.5,-36.7 c 4,-52.9 9.6,-105.8 17.3,-158.3 10.5,44.1 22.7,86.1 36.5,125.6 l -0.1,-0.1 c -53.6,459.8 423.8,570.1 423.8,570.1 -85.2,-52.9 -91.5,-175.9 -182.9,-362.4 -77.8,-158.8 -183,-198.7 -212.6,-207.1 -11.4,-28.6 -21.2,-55 -29.4,-78.4 -20.2,-57.5 -24.5,-119.6 -11.3,-179 0,-0.3 0.1,-0.7 0.2,-0.9 21,-95.6 46.7,-190.1 80.7,-281.7 33.8,-91.7 73.3,-181.1 118.3,-267.6 13.5,-25 27.5,-49.7 41.8,-74.3 -8.3,51.9 -12.9,101.8 -14.8,149.7 v -0.2 c -218.4,408.2 185.4,685.8 185.4,685.8 -59.9,-80.5 -20.7,-197.2 -37.4,-404.3 -14.2,-176.2 -97.4,-251.9 -121.9,-270.5 -0.1,-6.8 -0.1,-13.4 0,-19.9 0.7,-112.1 35,-221.8 99.9,-313.1 0.3,-0.5 0.6,-0.9 1,-1.4 56.1,-79.6 119.2,-153.9 185.7,-224.7 17,-17.3 33,-35.6 50.9,-52.1 l 52.5,-50.5 c 0.8,0.7 0.6,0.5 1.4,1.2 -16,28.4 -30.4,56.7 -43.4,84.5 v -0.1 c -359.5,291.6 -94.8,704 -94.8,704 -24,-97.4 57.3,-189.8 122.1,-387.2 55.3,-167.9 7.9,-269.9 -7.5,-296.6 10.6,-25.4 20.9,-48.7 30.4,-69.4 23.3,-50.8 57.6,-96 101.7,-130.4 0.3,-0.2 0.5,-0.4 0.7,-0.5 75.8,-60.5 154.8,-117 238.4,-166 48.5,-28.7 98.1,-55.6 148.6,-80.7 -21,21.6 -40.6,43.5 -58.5,65.3 l 0.1,-0.1 c -344.4,158.9 -217.6,539.8 -217.6,539.8 0.6,-82.1 83.9,-139.1 175.2,-282.7 77.8,-122.1 60.8,-212.7 54,-237 11.2,-14.9 21.9,-28.7 31.9,-41.2 32.9,-41.2 75.3,-74.1 123.8,-94.6 0.3,-0.1 0.5,-0.3 0.8,-0.3 89.1,-37.4 180.5,-68.9 273.4,-94.7 l 1.1,-0.3 h 0.2 c 25.2,-7.2 43.8,-29.6 44.4,-55.8 1,-44.8 -40.4,-73.3 -79.1,-61.5 -97.6,29.8 -193.3,65.6 -286.2,107.3 -92.8,42.2 -182.2,91.4 -268.3,145.4 -51.9,32.4 -102.1,67.5 -150.7,104.5 -66,50.3 -145.3,80.2 -228.1,87.3 h 0.2 c -432.2,-165.9 -657.4,269.3 -657.4,269.3 72.4,-69.4 193.1,-45.1 396.5,-87.5 173.1,-36 237.8,-128 253.3,-154.6 41.6,-5.4 78.4,-8.8 108.6,-11.1 -27.4,24.2 -54.1,49.4 -80.9,74.3 l -53.4,54.1 c -18.2,17.7 -34.4,37.2 -51.7,55.7 -67.4,75.6 -131.1,154.7 -187.3,238.8 -1.1,1.7 -2.3,3.4 -3.4,5.1 -27.6,41.2 -65.3,74.5 -109.5,97 -7.2,3.6 -14.3,7.4 -21.4,11.1 l 0.1,-0.1 c -462.5,17.3 -498.5,506 -498.5,506 39.2,-92.2 159.8,-117.3 330.1,-236.2"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             transform="matrix(0.13333333,0,0,-0.13333333,0,2666.6667)" />
+        </g>
+      </g>
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,-15.73078,-3.6103428)"
+         id="text3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:200px;font-family:Cinzel;-inkscape-font-specification:'Cinzel, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;white-space:pre;shape-inside:url(#rect3-0);display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.77953;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"><tspan
+           x="582.16961"
+           y="672.73681"
+           id="tspan1">2</tspan></text>
+    </g>
+    <path
+       style="fill:#646464;fill-opacity:1;stroke:#ffffff;stroke-width:6.706;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 21.315126,163.24535 8.1822879,195.20192 H 32.259158 Z"
+       id="path4" />
+    <path
+       style="fill:#646464;fill-opacity:1;stroke:#ffffff;stroke-width:6.706;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 53.916875,241.83614 67.049709,209.87957 H 42.972835 Z"
+       id="path4-8" />
+    <rect
+       style="fill:#646464;fill-opacity:1;stroke:#ffffff;stroke-width:4.94668;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect4"
+       width="60.707909"
+       height="5.1666303"
+       x="-177.34937"
+       y="139.62746"
+       transform="rotate(-56.76583)" />
+  </g>
+</svg>
