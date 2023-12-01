@@ -16,7 +16,6 @@
     "commander": "^11.1.0",
     "esbuild": "^0.19.2",
     "esbuild-sass-plugin": "^2.15.0",
-    "openai": "^4.20.1",
     "typescript": "^5.2.2"
   },
   "scripts": {
