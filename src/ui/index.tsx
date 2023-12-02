@@ -299,7 +299,6 @@ render(setup, {
 
     board.all(Card).appearance({
       aspectRatio: .75,
-      zoomable: true,
       render: card => (
         <div>
           <div className="front">
@@ -338,5 +337,7 @@ render(setup, {
         </div>
       ),
     });
+
+    board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });
   }
 });

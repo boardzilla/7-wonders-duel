@@ -91,6 +91,7 @@ class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDu
     {track: 3, coins: 2},
     {track: 6, coins: 5},
   ];
+  firstMoveOfAge = false;
 
   adjustMilitary(amount: number) {
     this.militaryTrack += amount;
@@ -509,7 +510,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ),
 
     pass: () => action({
-      prompt: 'Choose opponent to start'
+      prompt: 'Give opponent first move',
+      condition: board.firstMoveOfAge
     })
   });
 
@@ -549,6 +551,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         }
         field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
         game.message('Age {{age}} has begun!', {age});
+        if (age > 1) board.firstMoveOfAge = true;
       },
 
       eachPlayer({
@@ -556,21 +559,24 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         continueUntil: () => !field.has(Card),
         startingPlayer: () => board.militaryTrack === 0 ? game.players.current()[0] : game.players[board.militaryTrack > 0 ? 0 : 1],
         do: [
+          () => board.revealUncovered(),
           playerActions({
             player: ({ player }) => player,
             prompt: 'Choose Card',
             actions: [
-              {name: 'buy', do: () => board.revealUncovered()},
+              'buy',
+              'discard',
+              'pass',
               {name: 'buildWonder', do: ({ player, buildWonder }) => {
-                board.revealUncovered();
                 if (buildWonder.wonder?.special?.includes('extra-turn')) {
                   game.message('{{player}} takes an extra turn', {player});
+                  board.firstMoveOfAge = false
                   return Do.repeat
                 }
-              }},
-              {name: 'discard', do: () => board.revealUncovered()},
+              }}
             ]
           }),
+          () => { board.firstMoveOfAge = false }
         ]
       })
     ]})

@@ -266,6 +266,7 @@ export const cards: Partial<Card>[] = [
     link: 'stable',
     type: 'military',
     age: 1,
+    shields: 1,
     cost: {wood: 1},
   }, {
     name: 'Lighthouse',

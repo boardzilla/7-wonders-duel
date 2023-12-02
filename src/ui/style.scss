@@ -1,6 +1,5 @@
 @import url(https://fontlibrary.org//face/cinzel);
 
-
 #game {
   font-family: 'CinzelBold';
 }
@@ -8,7 +7,7 @@
 #play-area {
   #field {
     #military-track {
-      background-image: url(./assets/military-track.webp);
+      background-image: url(./assets/military-track.jpg);
       background-size: cover;
       position: absolute;
       left: 24%;
@@ -190,30 +189,38 @@
     box-shadow: none;
   }
 
+  [data-zoomed] > .Card[data-name] {
+    transition: none;
+  }
+
   :not([data-zoomed]) > .Card[data-name]:hover {
     z-index: 20;
     transform: scale(1.75);
-    transition: transform .2s;
+  }
+
+  [data-zoomed] > .ProgressToken {
+    transition: none;
   }
 
   :not([data-zoomed]) > .ProgressToken[data-name]:hover {
     z-index: 20;
     transform: scale(2);
-    transform-origin: top;
-    transition: transform .2s;
+  }
+
+  [data-zoomed] > .Wonder {
+    transition: none;
   }
 
   :not([data-zoomed]) > .Wonder:hover {
     z-index: 20;
     transform: scale(1.5);
-    transition: transform .2s;
   }
 
-  #mat[data-player="1"] .Wonder:hover {
+  #mat[data-player="1"] .Wonder {
     transform-origin: left;
   }
 
-  #mat[data-player="2"] .Wonder:hover {
+  #mat[data-player="2"] .Wonder {
     transform-origin: right;
   }
 
@@ -221,6 +228,7 @@
     z-index: 10;
     perspective: 40vw;
     text-align: left;
+    transition: transform .2s;
 
     &.selectable > div {
       filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
@@ -230,7 +238,9 @@
       width: 100%;
       height: 100%;
       transition: 0.6s;
-      transform-style: preserve-3d;
+      @media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+        transform-style: preserve-3d;
+      }
       position: relative;
       font-size: .8em;
 
@@ -672,91 +682,93 @@
     }
 
     &:not([data-type]) > div {
+      transform-style: preserve-3d;
       transform: rotateY(180deg);
     }
   }
 
   .Wonder {
-    background-size: cover;
     color: black;
     padding: .2em;
     box-shadow: -.2em -.1em .7em #000c;
     border-radius: .4em;
+    transition: transform .2s;
 
-    > div {
+    .wonder-features {
       width: 100%;
       height: 100%;
+      background-size: cover;
     }
 
-    &[data-name="The Pyramids"] {
+    &[data-name="The Pyramids"] .wonder-features {
       background-image: url(./assets/pyramids.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #5308;
       }
     }
-    &[data-name="The Great Lighthouse"] {
+    &[data-name="The Great Lighthouse"] .wonder-features {
       background-image: url(./assets/lighthouse.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #0558;
       }
     }
-    &[data-name="The Colossus"] {
+    &[data-name="The Colossus"] .wonder-features {
       background-image: url(./assets/colossus.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #0358;
       }
     }
-    &[data-name="Circus Maximus"] {
+    &[data-name="Circus Maximus"] .wonder-features {
       background-image: url(./assets/circus.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #5008;
       }
     }
-    &[data-name="The Mausoleum"] {
+    &[data-name="The Mausoleum"] .wonder-features {
       background-image: url(./assets/mausoleum.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #3058;
       }
     }
-    &[data-name="The Hanging Gardens"] {
+    &[data-name="The Hanging Gardens"] .wonder-features {
       background-image: url(./assets/hanging-gardens.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #0608;
       }
     }
-    &[data-name="The Temple of Artemis"] {
+    &[data-name="The Temple of Artemis"] .wonder-features {
       background-image: url(./assets/temple-of-artemis.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #5508;
       }
     }
-    &[data-name="The Great Library"] {
+    &[data-name="The Great Library"] .wonder-features {
       background-image: url(./assets/great-library.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #7508;
       }
     }
-    &[data-name="The Statue of Zeus"] {
+    &[data-name="The Statue of Zeus"] .wonder-features {
       background-image: url(./assets/statue-of-zeus.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #2338;
       }
     }
-    &[data-name="The Sphinx"] {
+    &[data-name="The Sphinx"] .wonder-features {
       background-image: url(./assets/sphinx.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #5208;
       }
     }
-    &[data-name="Piraeus"] {
+    &[data-name="Piraeus"] .wonder-features {
       background-image: url(./assets/piraeus.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #0358;
       }
     }
-    &[data-name="The Appian Way"] {
+    &[data-name="The Appian Way"] .wonder-features {
       background-image: url(./assets/appian-way.jpg);
-      .wonder-features .rewards {
+      .rewards {
         background: #0448;
       }
     }
@@ -841,14 +853,17 @@
     .Card {
       position: absolute;
       width: 100%;
-      transform: rotate(90deg);
+      transform: rotate(90deg) !important;
+      z-index: -10 !important;
       right: -93%;
       bottom: 0;
-      clip-path: polygon(0% 0%, 0% 20%, 100% 20%, 1000% 0%);
+      /* clip-path: polygon(0% 0%, 0% 20%, 100% 20%, 1000% 0%); */
     }
   }
 
   .ProgressToken {
+    transition: transform .2s;
+    transform-origin: top;
     &.selectable {
       filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
     }
@@ -880,6 +895,7 @@
     text-shadow: 0 0 .1em white;
     .two-digit {
       font-size: .7em;
+      vertical-align: 0.1em;
     }
   }
 
