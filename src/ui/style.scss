@@ -231,7 +231,7 @@
     transition: transform .2s;
 
     &.selectable > div {
-      filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
+      filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white);
     }
 
     > div {
@@ -353,7 +353,7 @@
       .front {
         z-index: 2;
         /* for firefox 31 */
-        transform: rotateY(0deg);
+        /* transform: rotateY(0deg); */
 
         &::before {
           content: "";
@@ -688,16 +688,15 @@
   }
 
   .Wonder {
-    color: black;
-    padding: .2em;
-    box-shadow: -.2em -.1em .7em #000c;
-    border-radius: .4em;
     transition: transform .2s;
 
     .wonder-features {
       width: 100%;
       height: 100%;
       background-size: cover;
+      color: black;
+      filter: drop-shadow(-.2em -.1em .4em #000c);
+      border-radius: .4em;
     }
 
     &[data-name="The Pyramids"] .wonder-features {
@@ -773,8 +772,8 @@
       }
     }
 
-    &.selectable {
-      box-shadow: 0 0 2em white, 0 0 1em #f66;
+    &.selectable .wonder-features {
+      filter: drop-shadow(0 0 .4em #fff8);
     }
 
     &.selected {
@@ -865,7 +864,7 @@
     transition: transform .2s;
     transform-origin: top;
     &.selectable {
-      filter: drop-shadow(0 0 .4em white) drop-shadow(0 0 .2em white) drop-shadow(0 0 .1em #f668);
+      filter: drop-shadow(0 0 1em #fff8) drop-shadow(0 0 .6em #fff8);
     }
     img {
       width: 100%;

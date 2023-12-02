@@ -6,7 +6,7 @@ import { render, times } from '@boardzilla/core';
 import { default as setup, Card, CardSlot, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
-import '@boardzilla/core/dist/ui/assets/index.css';
+import '@boardzilla/core/index.css';
 
 import militaryTrackSvg from './assets/military-track.svg';
 import militaryReward2Svg from './assets/military-reward-2.svg';
