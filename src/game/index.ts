@@ -579,6 +579,10 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
           () => { board.firstMoveOfAge = false }
         ]
       })
-    ]})
+    ]}),
+    () => {
+      game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1]);
+      game.message(`{{winner}} wins a civilian victory!`, {winner: game.winner[0]});
+    }
   ]);
 });
