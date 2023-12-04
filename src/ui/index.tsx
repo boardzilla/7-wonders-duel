@@ -180,10 +180,10 @@ render(setup, {
     });
 
     p2mat.layout(ProgressToken, {
-      area: { left: 0, top: 7, height: 8, width: 45 },
+      area: { left: 33, top: 7, height: 8, width: 45 },
       gap: 2,
       rows: 1,
-      alignment: 'right'
+      alignment: 'right',
     });
 
     board.first('discard')!.layout(Card, {
@@ -220,10 +220,10 @@ render(setup, {
           <div className="band r3"/>
           <div className="band r4"/>
           <img src={militaryTrackSvg} className="icons"/>
-          {board.militaryRewards.find(r => r.track === -6) && <img src={militaryReward5Svg} className="reward-left5"/>}
-          {board.militaryRewards.find(r => r.track === -3) && <img src={militaryReward2Svg} className="reward-left2"/>}
-          {board.militaryRewards.find(r => r.track === 3) && <img src={militaryReward2Svg} className="reward-right2"/>}
-          {board.militaryRewards.find(r => r.track === 6) && <img src={militaryReward5Svg} className="reward-right5"/>}
+          {board.militaryRewards.find(r => r.track === 6) && <img src={militaryReward5Svg} className="reward-left5"/>}
+          {board.militaryRewards.find(r => r.track === 3) && <img src={militaryReward2Svg} className="reward-left2"/>}
+          {board.militaryRewards.find(r => r.track === -3) && <img src={militaryReward2Svg} className="reward-right2"/>}
+          {board.militaryRewards.find(r => r.track === -6) && <img src={militaryReward5Svg} className="reward-right5"/>}
           <span className="svg-icon shield" style={{left: 46.01 + (-5.10125 * board.militaryTrack) + '%'}}/>
         </div>
       )

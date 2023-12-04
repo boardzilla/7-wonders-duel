@@ -95,7 +95,7 @@ export const cards: Partial<Card>[] = [
     age: 3,
     cost: {papyrus: 2},
     vp: 3,
-    vpPer: {'manufactured': 3},
+    coinsPer: {'manufactured': 3},
   }, {
     name: 'Forum',
     type: 'commercial',
@@ -114,8 +114,8 @@ export const cards: Partial<Card>[] = [
     type: 'commercial',
     age: 3,
     cost: {wood: 1, glass: 1, papyrus: 1},
-    vp: 2,
-    vpPer: {raw: 2},
+    vp: 3,
+    coinsPer: {raw: 2},
   }, {
     name: 'Caravansery',
     type: 'commercial',
@@ -177,8 +177,8 @@ export const cards: Partial<Card>[] = [
     guild: true,
     age: 3,
     cost: {stone: 1, clay: 1, glass: 1, papyrus: 1},
-    coinsPer: {raw: 1, manufactured: 1},
-    vpPer: {raw: 1, manufactured: 1},
+    coinsPer: {raw: 1},
+    vpPer: {raw: 1},
   }, {
     name: 'Builders Guild',
     type: 'guild',
@@ -273,6 +273,7 @@ export const cards: Partial<Card>[] = [
     freeLink: 'tavern',
     type: 'commercial',
     age: 3,
+    cost: {clay: 2, glass: 1},
     coinsPer: {commercial: 1},
   }, {
     name: 'Scriptorium',

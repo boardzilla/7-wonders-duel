@@ -31,11 +31,18 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
 
     for (const [type, vp] of Object.entries(this.vpPer) as [Card['type'] | 'wonder' | 'progress', number][]) {
       if (type === 'wonder') {
-        score += this.all(Wonder, {built: true}).length * vp;
+        score += Math.max(this.all(Wonder, {built: true}).length, this.other().all(Wonder, {built: true}).length) * vp;
       } else if (type === 'progress') {
         score += this.all(ProgressToken).length * vp;
       } else {
-        score += this.all(Card, {type, built: true}).length * vp;
+        if (type === 'raw') {
+          score += Math.max(
+            this.all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
+            this.other().all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length
+          ) * vp;
+        } else {
+          score += Math.max(this.all(Card, {type, built: true}).length, this.other().all(Card, {type, built: true}).length) * vp;
+        }
       }
     }
 
@@ -68,10 +75,10 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 
   checkScience() {
-    const numberOfScience = new Set(this.all(Piece).map(p => 'science' in p ? p.science : undefined)).size;
+    const numberOfScience = new Set(this.all(Piece).filter(p => 'science' in p).map(p => 'science' in p ? p.science : undefined)).size;
     this.science = numberOfScience;
     if (numberOfScience >= 6) {
-      this.game.message(`${this} wins by scientific supremacy!`);
+      this.game.message(`{{player}} wins by scientific supremacy!`, {player: this});
       this.game.finish(this);
     }
   }
@@ -106,17 +113,15 @@ class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDu
   }
 
   militaryVp() {
-    if (this.militaryTrack < -6 || this.militaryTrack > 6) return 10;
-    if (this.militaryTrack < -3 || this.militaryTrack > 3) return 5;
+    if (this.militaryTrack <= -6 || this.militaryTrack >= 6) return 10;
+    if (this.militaryTrack <= -3 || this.militaryTrack >= 3) return 5;
     return this.militaryTrack === 0 ? 0 : 2;
   }
 
   revealUncovered() {
-    for (const card of this.first('field')!.all(Card)) {
-      if (card.isUncovered() && !card.isVisible()) {
-        this.game.message('{{card}} was revealed', {card});
-        card.showToAll();
-      }
+    for (const card of this.first('field')!.all(Card, c => !c.isVisible() && c.isUncovered())) {
+      this.game.message('{{card}} was revealed', {card});
+      card.showToAll();
     }
   }
 }
@@ -164,7 +169,18 @@ export class Building extends Piece {
     }
 
     for (const [type, amount] of Object.entries(this['coinsPer']) as [Building['type'], number][]) {
-      const most = Math.max(player.all(Building, {type}).length, player.other().all(Building, {type}).length);
+      let most: number;
+      if (type === 'raw') {
+        most = Math.max(
+          player.all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
+          this.type === 'guild' ? player.other().all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length : 0,
+        );
+      } else {
+        most = Math.max(
+          player.all(Building, {type, built: true}).length,
+          this.type === 'guild' ? player.other().all(Building, {type, built: true}).length : 0
+        );
+      }
       if (most) {
         this.game.message('{{player}} gains {{amount}} coins per {{most}} {{type}} buildings', {player, most, amount, type});
         player.coins += amount * most;
@@ -178,7 +194,7 @@ export class Building extends Piece {
   }
 
   costFor(player: SevenWondersDuelPlayer) {
-    if (this.freeLink && player.has(Card, {link: this.freeLink})) return 0;
+    if (this.freeLink && player.has(Card, {link: this.freeLink, built: true})) return 0;
     return (this.coinCost ?? 0) + this.tradeCostsFor(player);
   }
 
@@ -399,9 +415,11 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ).do(({ card }) => {
       card.giveRewardsTo(player);
       player.addVpBonus(card.vpPer);
-      if (card.science && player.all(Card, {science: card.science, built: true}).length === 2) {
+      if (card.science) {
         player.checkScience();
-        return {name: 'takeProgress'}
+        if (player.all(Card, {science: card.science, built: true}).length === 2) {
+          return {name: 'takeProgress'};
+        }
       }
     }).message(
       '{{player}} bought {{card}} and paid {{cost}}', ({ card }) => ({ cost: card.costFor(player) })
@@ -568,7 +586,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
               'discard',
               'pass',
               {name: 'buildWonder', do: ({ player, buildWonder }) => {
-                if (buildWonder.wonder?.special?.includes('extra-turn')) {
+                if (buildWonder.wonder?.special?.includes('extra-turn') || player.has(ProgressToken, {special: 'extra-turn'})) {
                   game.message('{{player}} takes an extra turn', {player});
                   board.firstMoveOfAge = false
                   return Do.repeat
