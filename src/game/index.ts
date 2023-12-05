@@ -580,18 +580,22 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
           () => board.revealUncovered(),
           playerActions({
             player: ({ player }) => player,
+            name: 'play',
             prompt: 'Choose Card',
             actions: [
               'buy',
               'discard',
               'pass',
-              {name: 'buildWonder', do: ({ player, buildWonder }) => {
-                if (buildWonder.wonder?.special?.includes('extra-turn') || player.has(ProgressToken, {special: 'extra-turn'})) {
-                  game.message('{{player}} takes an extra turn', {player});
-                  board.firstMoveOfAge = false
-                  return Do.repeat
+              {
+                name: 'buildWonder',
+                do: ({ player, buildWonder }) => {
+                  if (buildWonder.wonder?.special?.includes('extra-turn') || player.has(ProgressToken, {special: 'extra-turn'})) {
+                    game.message('{{player}} takes an extra turn', {player});
+                    board.firstMoveOfAge = false
+                    return Do.repeat
+                  }
                 }
-              }}
+              }
             ]
           }),
           () => { board.firstMoveOfAge = false }

@@ -14,6 +14,23 @@
   }
 }
 
+@keyframes built {
+  0% {
+    filter: brightness(1) drop-shadow(0 0 0 #fff) drop-shadow(0 0 0 #fff);
+    transform: scale(1);
+  }
+
+  95% {
+    filter: brightness(1.75) drop-shadow(0 0 2em #fff) drop-shadow(0 0 5em #fff);
+    transform: scale(1.4);
+  }
+
+  100% {
+    filter: brightness(1) drop-shadow(0 0 0 #fff) drop-shadow(0 0 0 #fff);
+    transform: scale(1);
+  }
+}
+
 #game {
   font-family: 'CinzelBold';
 }
@@ -714,6 +731,11 @@
       border-radius: .4em;
     }
 
+    &.newly-built {
+      animation: built 2s;
+      z-index: 10;
+    }
+
     &[data-name="The Pyramids"] .wonder-features {
       background-image: url(./assets/pyramids.jpg);
       .rewards {
@@ -1162,13 +1184,13 @@
   }
 }
 
-.god-mode-enabled {
-  display: none;
-}
-
 .player-controls {
   font-size: .4em;
-  left: 24.5% !important;
-  right: unset !important;
-  top: 20% !important;
+  background: #fffcdc;
+  box-shadow: inset 0 0 2em #0116, .2em .2em 1em #0008;
+  button {
+    background: #448;
+    color: #fffcdc;
+    box-shadow: inset -0.2em -0.2em 0.5em -0.2em #000c, inset 0.2em 0.2em 0.5em -0.2em #fffc;
+  }
 }

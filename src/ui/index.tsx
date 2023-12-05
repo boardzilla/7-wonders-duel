@@ -294,7 +294,11 @@ render(setup, {
             {wonder.vp ? <span className="svg-icon vp">{wonder.vp}</span> : null}{' '}
           </div>
         </div>
-      )
+      ),
+      effects: [{
+        attributes: {built: true},
+        className: 'newly-built'
+      }]
     });
 
     board.all(Card).appearance({
@@ -305,7 +309,7 @@ render(setup, {
             <div className={`header ${card.type}`}>
               {card.coins && <span className="svg-icon coins">{card.coins}</span>}
               {Object.entries(card.produces).map(([resource, amount]) => resourceIcon(resource, amount))}
-              {card.producesOneOf.map((resource, i) => <>{i > 0 ? <span>/</span> : ''}{resourceIcon(resource)}</>)}
+              {card.producesOneOf.map((resource, i) => <span key={i}>{i > 0 ? '/' : ''}{resourceIcon(resource)}</span>)}
               {card.shields !== undefined && times(card.shields, n => <span key={n} className="svg-icon shield"/>)}
               {card.vp ? <span className="svg-icon vp">{card.vp}</span> : null}{' '}
               {card.science && <span className={`svg-icon science-${card.science}`}/>}
@@ -339,5 +343,31 @@ render(setup, {
     });
 
     board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });
+
+    board.layoutStep('play', {
+      element: field,
+      left: 10,
+      top: 24
+    });
+
+    board.layoutStep('out-of-turn', {
+      element: field,
+      left: 10,
+      top: 24
+    });
+
+    if (board.game.players.current()[0] === board.game.players[0]) {
+      board.layoutAction('buildWonder', {
+        element: board.first('mat', {mine: true}),
+        left: 36,
+        top: 18,
+      });
+    } else {
+      board.layoutAction('buildWonder', {
+        element: board.first('mat', {mine: true}),
+        right: 36,
+        top: 18,
+      });
+    }
   }
 });
