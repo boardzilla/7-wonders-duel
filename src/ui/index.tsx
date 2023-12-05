@@ -2,7 +2,7 @@
  * age start options
  */
 import React from 'react';
-import { render, times } from '@boardzilla/core';
+import { render, times, toggleSetting } from '@boardzilla/core';
 import { default as setup, Card, CardSlot, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
@@ -27,7 +27,10 @@ const resourceIcon = (resource: string, amount = 1):React.JSX.Element => (
 );
 
 render(setup, {
-  layout: board => {
+  settings: {
+    realtimeVp: toggleSetting('Show VP in real-time')
+  },
+  layout: (board, player) => {
     const deck = board.first('deck')!;
     const field = board.first('field')!;
     const p1mat = board.first('mat')!
@@ -200,7 +203,7 @@ render(setup, {
           </div>
           <img className="avatar" style={{borderColor: mat.player!.color}} src={mat.player!.avatar}/>
           <div className="score">
-            <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>
+            {board.gameSetting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
             <span style={{marginLeft: '.2em'}} className="svg-icon coins">{mat.player!.coins}</span>
           </div>
         </div>
@@ -256,7 +259,7 @@ render(setup, {
       aspectRatio: 1,
       zoomable: true,
       render: token => (
-        <div className="progress-token" title={token.description}>
+        <div className="progress-token">
           {token.name === 'Urbanism' && <img src={urbanismToken}/>}
           {token.name === 'Theology' && <img src={theologyToken}/>}
           {token.name === 'Philosophy' && <img src={philosophyToken}/>}
@@ -268,14 +271,15 @@ render(setup, {
           {token.name === 'Agriculture' && <img src={agricultureToken}/>}
           {token.name === 'Strategy' && <img src={strategyToken}/>}
         </div>
-      )
+      ),
+      tooltip: token => <>{token.description.split('\n').map(p => <p>{p}</p>)}</>
     });
 
     board.all(Wonder).appearance({
       aspectRatio: 2,
       zoomable: true,
       render: wonder => (
-        <div className="wonder-features" title={wonder.description}>
+        <div className="wonder-features">
           <div className="name">{wonder.name}</div>
           <div className="cost">
             {wonder.coinCost ? <span className="svg-icon coins">{wonder.coinCost}</span> : null}
@@ -298,7 +302,8 @@ render(setup, {
       effects: [{
         attributes: {built: true},
         className: 'newly-built'
-      }]
+      }],
+      tooltip: wonder => <>{wonder.description.split('\n').map(p => <p>{p}</p>)}</>
     });
 
     board.all(Card).appearance({
@@ -344,6 +349,12 @@ render(setup, {
 
     board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });
 
+    board.layoutAction('pickWonder', {
+      element: field,
+      left: 10,
+      bottom: 15
+    });
+
     board.layoutStep('play', {
       element: field,
       left: 10,
@@ -356,15 +367,15 @@ render(setup, {
       top: 24
     });
 
-    if (board.game.players.current()[0] === board.game.players[0]) {
+    if (player.position === 1) {
       board.layoutAction('buildWonder', {
-        element: board.first('mat', {mine: true}),
+        element: board.first('mat', {mine: true})!,
         left: 36,
         top: 18,
       });
     } else {
       board.layoutAction('buildWonder', {
-        element: board.first('mat', {mine: true}),
+        element: board.first('mat', {mine: true})!,
         right: 36,
         top: 18,
       });
