@@ -171,6 +171,8 @@ export const cards: Partial<Card>[] = [
     cost: {wood: 1, clay: 1, glass: 1, papyrus: 1},
     coinsPer: {commercial: 1},
     vpPer: {commercial: 1},
+    description: 'At the time it is constructed, this card earns you 1 coin for each yellow card in the city which has the most yellow cards.\n\n' +
+      'At the end of the game, this card is worth 1 victory point for each yellow card in the city which has the most yellow cards.',
   }, {
     name: 'Shipowners Guild',
     type: 'guild',
@@ -179,6 +181,9 @@ export const cards: Partial<Card>[] = [
     cost: {stone: 1, clay: 1, glass: 1, papyrus: 1},
     coinsPer: {raw: 1},
     vpPer: {raw: 1},
+    description: 'At the time it is constructed, this card grants you 1 coin for each brown and each grey card in the city which has the most brown and grey cards.\n\n' +
+      'At the end of the game, this card is worth 1 victory point for each brown and grey card in the city which has the most brown and grey cards.\n\n' +
+      'Clarification: the player is forced to choose one, and only one, city for both colors of cards.',
   }, {
     name: 'Builders Guild',
     type: 'guild',
@@ -186,6 +191,7 @@ export const cards: Partial<Card>[] = [
     age: 3,
     cost: {stone: 2, wood: 1, clay: 1, glass: 1},
     vpPer: {wonder: 2},
+    description: 'At the end of the game, this card is worth 2 victory points for each Wonder constructed in the city which has the most wonders.',
   }, {
     name: 'Magistrates Guild',
     type: 'guild',
@@ -194,6 +200,8 @@ export const cards: Partial<Card>[] = [
     cost: {wood: 2, clay: 1, papyrus: 1},
     coinsPer: {civilian: 1},
     vpPer: {civilian: 1},
+    description: 'At the time it is constructed, this card earns you 1 coin for each blue card in the city which has the most blue cards.\n\n' +
+      'At the end of the game, this card is worth 1 victory point for each blue card in the city which has the most blue cards.',
   }, {
     name: 'Scientists Guild',
     type: 'guild',
@@ -202,6 +210,8 @@ export const cards: Partial<Card>[] = [
     cost: {clay: 2, wood: 2},
     coinsPer: {scientific: 1},
     vpPer: {scientific: 1},
+    description: 'At the time it is constructed, this card earns you 1 coin for each green card in the city which has the most green cards.\n\n' +
+      'At the end of the game, this card is worth 1 victory point for each green card in the city which has the most green cards.',
   }, {
     name: 'Moneylenders Guild',
     type: 'guild',
@@ -209,6 +219,7 @@ export const cards: Partial<Card>[] = [
     age: 3,
     cost: {stone: 2, wood: 2},
     special: 'vp-per-coins',
+    description: 'At the end of the game, this card is worth 1 victory point for each set of 3 coins in the richest city',
   }, {
     name: 'Tacticians Guild',
     type: 'guild',
@@ -217,6 +228,8 @@ export const cards: Partial<Card>[] = [
     cost: {stone: 2, clay: 1, papyrus: 1},
     coinsPer: {military: 1},
     vpPer: {military: 1},
+    description: 'At the time it is constructed, this card earns you 1 coin for each red card in the city which has the most red cards.\n\n' +
+      'At the end of the game, this card is worth 1 victory point for each red card in the city which has the most red cards.',
   }, {
     name: 'Courthouse',
     type: 'military',

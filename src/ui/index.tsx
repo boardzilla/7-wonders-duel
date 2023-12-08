@@ -33,13 +33,15 @@ render(setup, {
   layout: (board, player) => {
     const deck = board.first('deck')!;
     const field = board.first('field')!;
-    const p1mat = board.first('mat')!
-    const p2mat = board.last('mat')!
+    const p1 = board.game.players[0];
+    const p2 = board.game.players[1];
+    const p1mat = p1.my('mat')!
+    const p2mat = p2.my('mat')!
 
     board.disableDefaultAppearance();
 
     board.appearance({
-      aspectRatio: 1.6,
+      aspectRatio: 8 / 5,
     });
 
     board.layout('deck', { });
@@ -65,126 +67,140 @@ render(setup, {
       render: false
     });
 
-    p1mat.layout(board.all(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
-      area: { left: 0, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
+    p1mat.layout('buildings', {
+      area: { left: 0, top: 75, height: 25, width: 100 },
     });
 
-    p1mat.layout(board.all(Card, {type: 'scientific'}), {
-      area: { left: 13.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
+    p2mat.layout('buildings', {
+      area: { left: 0, top: 75, height: 25, width: 100 },
     });
 
-    p1mat.layout(board.all(Card, {type: 'civilian'}), {
-      area: { left: 27, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p1mat.layout(board.all(Card, {type: 'military'}), {
-      area: { left: 40.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p1mat.layout(board.all(Card, {type: 'commercial'}), {
-      area: { left: 54, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p1mat.layout(board.all(Card, {type: 'guild'}), {
-      area: { left: 67.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
-      area: { left: 20.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, {type: 'scientific'}), {
-      area: { left: 34, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, {type: 'civilian'}), {
-      area: { left: 47.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, {type: 'military'}), {
-      area: { left: 61, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, {type: 'commercial'}), {
-      area: { left: 74.5, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p2mat.layout(board.all(Card, {type: 'guild'}), {
-      area: { left: 88, top: 75, height: 25, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
-
-    p1mat.layout(Wonder, {
+    p1mat.layout('wonders', {
       area: { left: 2, top: 18, height: 55, width: 34 },
+    });
+
+    p2mat.layout('wonders', {
+      area: { left: 64, top: 18, height: 55, width: 34 },
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+      area: { left: 0, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'scientific'}), {
+      area: { left: 13.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'civilian'}), {
+      area: { left: 27, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'military'}), {
+      area: { left: 40.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'commercial'}), {
+      area: { left: 54, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'guild'}), {
+      area: { left: 67.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+      area: { left: 20.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'scientific'}), {
+      area: { left: 34, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'civilian'}), {
+      area: { left: 47.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'military'}), {
+      area: { left: 61, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'commercial'}), {
+      area: { left: 74.5, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'guild'}), {
+      area: { left: 88, top: 0, height: 100, width: 12 },
+      columns: 1,
+      offsetRow: {x: 0, y: 25},
+      alignment: 'top',
+      scaling: 'fill',
+    });
+
+    p1.my('wonders')!.layout(Wonder, {
       gap: .5,
       columns: 1,
       alignment: 'top left',
     });
 
-    p2mat.layout(Wonder, {
-      area: { left: 64, top: 18, height: 55, width: 34 },
+    p2.my('wonders')!.layout(Wonder, {
       gap: .5,
       columns: 1,
       alignment: 'top right',
     });
 
     p1mat.layout(ProgressToken, {
-      area: { left: 22, top: 7, height: 8, width: 45 },
-      gap: 2,
-      columns: 1,
+      area: { left: 22, top: 7, height: 8, width: 43 },
+      gap: .5,
+      rows: 1,
       alignment: 'top left',
     });
 
     p2mat.layout(ProgressToken, {
-      area: { left: 33, top: 7, height: 8, width: 45 },
-      gap: 2,
+      area: { left: 35, top: 7, height: 8, width: 43 },
+      gap: .5,
       rows: 1,
       alignment: 'right',
     });
@@ -257,7 +273,6 @@ render(setup, {
 
     board.all(ProgressToken).appearance({
       aspectRatio: 1,
-      zoomable: true,
       render: token => (
         <div className="progress-token">
           {token.name === 'Urbanism' && <img src={urbanismToken}/>}
@@ -272,7 +287,7 @@ render(setup, {
           {token.name === 'Strategy' && <img src={strategyToken}/>}
         </div>
       ),
-      tooltip: token => <>{token.description.split('\n').map(p => <p>{p}</p>)}</>
+      tooltip: token => <>{token.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
     board.all(Wonder).appearance({
@@ -303,11 +318,11 @@ render(setup, {
         attributes: {built: true},
         className: 'newly-built'
       }],
-      tooltip: wonder => <>{wonder.description.split('\n').map(p => <p>{p}</p>)}</>
+      tooltip: wonder => <>{wonder.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
     board.all(Card).appearance({
-      aspectRatio: .75,
+      aspectRatio: 3 / 4,
       render: card => (
         <div>
           <div className="front">
@@ -320,7 +335,9 @@ render(setup, {
               {card.science && <span className={`svg-icon science-${card.science}`}/>}
               {card.link && <div className="link"><span className={`svg-icon link-${card.link}`}/></div>}
               {card.trades && card.trades.map(t => <span className="trades" key={t}>{resourceIcon(t)}<span className="svg-icon coins">1</span></span>)}
-              {card.coinsPer && card.type !== 'guild' && Object.entries(card.coinsPer).map(([type, amount]) => <span className={`card-type ${type}`} key={type}><span className="svg-icon coins">{amount}</span></span>)}
+              {card.coinsPer && card.type !== 'guild' && Object.entries(card.coinsPer).map(
+                ([type, amount]) => <span className={`card-type ${type}`} key={type}><span className="svg-icon coins">{amount}</span></span>
+              )}
               {card.name === 'Moneylenders Guild' && <span className="svg-icon moneylenders"/>}
               {card.name === 'Merchants Guild' && <span className="svg-icon merchants"/>}
               {card.name === 'Shipowners Guild' && <span className="svg-icon shipowners"/>}
@@ -345,6 +362,7 @@ render(setup, {
           <div className="back"></div>
         </div>
       ),
+      tooltip: card => card.description ? <>{card.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</> : null
     });
 
     board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });

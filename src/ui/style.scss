@@ -3,6 +3,9 @@
 
 #game {
   font-family: 'CinzelBold';
+  #setup {
+    font-family: 'LibertinusSerifRegular';
+  }
 }
 
 @keyframes pulse {
@@ -1066,6 +1069,10 @@
     background-image: url(./assets/barrel.svg);
   }
 
+  span.link-palisade {
+    background-image: url(./assets/tower-flag.svg);
+  }
+
   span.science-writing {
     background-image: url(./assets/quill-ink.svg);
   }
@@ -1193,10 +1200,19 @@
 .player-controls {
   font-size: .4em;
   background: #fffcdc;
+  color: #330;
+  html.dark & {
+    background: #aa8;
+    color: #110;
+  }
   box-shadow: inset 0 0 2em #0116, .2em .2em 1em #0008;
   button {
     background: #448;
     color: #fffcdc;
+  html.dark & {
+    background: #114;
+    color: #cc9;
+  }
     box-shadow: inset -0.2em -0.2em 0.5em -0.2em #000c, inset 0.2em 0.2em 0.5em -0.2em #fffc;
   }
 }

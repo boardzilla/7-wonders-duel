@@ -19,9 +19,9 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
 
   score() {
-    let score = this.all(Card, {built: true}).sum('vp') +
-      this.all(Wonder, {built: true}).sum('vp') +
-      this.all(ProgressToken).sum('vp') +
+    let score = this.allMy(Card, {built: true}).sum('vp') +
+      this.allMy(Wonder, {built: true}).sum('vp') +
+      this.allMy(ProgressToken).sum('vp') +
       (this.position === (this.board.militaryVp() < 0 ? 1 : 2) ? this.board.militaryVp() : 0) +
       Math.floor(this.coins / 3);
 
@@ -31,17 +31,17 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
 
     for (const [type, vp] of Object.entries(this.vpPer) as [Card['type'] | 'wonder' | 'progress', number][]) {
       if (type === 'wonder') {
-        score += Math.max(this.all(Wonder, {built: true}).length, this.other().all(Wonder, {built: true}).length) * vp;
+        score += Math.max(this.allMy(Wonder, {built: true}).length, this.other().allMy(Wonder, {built: true}).length) * vp;
       } else if (type === 'progress') {
-        score += this.all(ProgressToken).length * vp;
+        score += this.allMy(ProgressToken).length * vp;
       } else {
         if (type === 'raw') {
           score += Math.max(
-            this.all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
-            this.other().all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length
+            this.allMy(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
+            this.other().allMy(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length
           ) * vp;
         } else {
-          score += Math.max(this.all(Card, {type, built: true}).length, this.other().all(Card, {type, built: true}).length) * vp;
+          score += Math.max(this.allMy(Card, {type, built: true}).length, this.other().allMy(Card, {type, built: true}).length) * vp;
         }
       }
     }
@@ -52,12 +52,12 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   costPer(resource: ResourceType) {
     // count all resources produced by other player
     if (this.has(Card, c => c.trades?.includes(resource))) return 1;
-    return 2 + this.other().all(Card, c => c.built && (c.type === 'raw' || c.type === 'manufactured'))
+    return 2 + this.other().allMy(Card, c => c.built && (c.type === 'raw' || c.type === 'manufactured'))
       .sum(c => c.produces[resource] || 0)
   }
 
   discardValue() {
-    return 2 + this.all(Card, {type: 'commercial', built: true}).length
+    return 2 + this.allMy(Card, {type: 'commercial', built: true}).length
   }
 
   awardShields(shields: number) {
@@ -75,7 +75,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 
   checkScience() {
-    const numberOfScience = new Set(this.all(Piece).filter(p => 'science' in p).map(p => 'science' in p ? p.science : undefined)).size;
+    const numberOfScience = new Set(this.allMy(Piece).filter(p => 'science' in p).map(p => 'science' in p ? p.science : undefined)).size;
     this.science = numberOfScience;
     if (numberOfScience >= 6) {
       this.game.message(`{{player}} wins by scientific supremacy!`, {player: this});
@@ -150,6 +150,7 @@ export class Building extends Piece {
   shields?: number = 0;
   coins?: number;
   vp?: number = 0;
+  description: string;
 
   giveRewardsTo(player: SevenWondersDuelPlayer) {
     player.coins -= this.costFor(player);
@@ -172,13 +173,13 @@ export class Building extends Piece {
       let most: number;
       if (type === 'raw') {
         most = Math.max(
-          player.all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
-          this.type === 'guild' ? player.other().all(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length : 0,
+          player.allMy(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length,
+          this.type === 'guild' ? player.other().allMy(Card, c => ['raw', 'manufactured'].includes(c.type) && c.built).length : 0,
         );
       } else {
         most = Math.max(
-          player.all(Building, {type, built: true}).length,
-          this.type === 'guild' ? player.other().all(Building, {type, built: true}).length : 0
+          player.allMy(Building, {type, built: true}).length,
+          this.type === 'guild' ? player.other().allMy(Building, {type, built: true}).length : 0
         );
       }
       if (most) {
@@ -204,7 +205,7 @@ export class Building extends Piece {
     let neededTypes = Object.keys(resourcesNeeded) as ResourceType[];
 
     // reduce base costs by all resources produced by this player
-    for (const producer of player.all(Building, {built: true})) {
+    for (const producer of player.allMy(Building, {built: true})) {
       for (const resource of neededTypes) {
         resourcesNeeded[resource]! -= producer.produces[resource] || 0;
       }
@@ -221,7 +222,7 @@ export class Building extends Piece {
     neededTypes.sort((a, b) => costs[a]! < costs[b]! ? 1 : -1)
 
     // then reduce base costs by any optional resources produced by this player, whichever is more expensive
-    for (const producer of player.all(Building, c => c.built && c.producesOneOf.length > 1)) {
+    for (const producer of player.allMy(Building, c => c.built && c.producesOneOf.length > 1)) {
       for (const resource of neededTypes) {
         if (resourcesNeeded[resource]! > 0 && producer.producesOneOf.includes(resource)) {
           resourcesNeeded[resource]! -= 1;
@@ -275,7 +276,6 @@ Card.hideAllExcept('age', 'guild');
 
 export class Wonder extends Building {
   type: 'wonder' = 'wonder';
-  description: string;
   built: boolean = false;
   special?: 'extra-turn' | 'take-discards' | 'take-progress-discard';
   destroy?: Card['type'];
@@ -290,6 +290,12 @@ export class ProgressToken extends Piece {
   discount?: Building['type']
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
   special?: 'gain-trade-costs' | 'extra-turn' | 'shield-bonus' | 'free-link-bonus';
+
+  giveRewardsTo(player: SevenWondersDuelPlayer) {
+    if (this.coins) player.coins += this.coins;
+    player.checkScience();
+    player.addVpBonus(this.vpPer);
+  }
 }
 
 const cardPosition = [
@@ -379,7 +385,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
   for (const player of board.players) {
-    board.create(Space, 'mat', { player });
+    const mat = board.create(Space, 'mat', { player });
+    mat.create(Space, 'wonders', { player });
+    mat.create(Space, 'buildings', { player });
   }
 
   const deck = board.create(Space, 'deck');
@@ -392,11 +400,11 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
   deck.all(Card).hideFromAll();
 
   game.defineActions({
-    pickWonder: () => action({
+    pickWonder: player => action({
       prompt: 'Choose a Wonder',
     }).move(
       'wonder', field.all(Wonder),
-      'mat', board.first('mat', {mine: true})
+      'wonders', player.my('wonders')
     ).message(
       '{{player}} chose {{wonder}}'
     ),
@@ -405,7 +413,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       prompt: 'Buy',
     }).move(
       'card', field.all(Card, c => c.isUncovered() && c.costFor(player) <= player.coins),
-      'mat', board.first('mat', {mine: true}),
+      'buildings', player.my('buildings'),
       {
         confirm: [
           'Buy {{card}} for {{cost}}',
@@ -417,7 +425,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       player.addVpBonus(card.vpPer);
       if (card.science) {
         player.checkScience();
-        if (player.all(Card, {science: card.science, built: true}).length === 2) {
+        if (player.allMy(Card, {science: card.science, built: true}).length === 2) {
           return {name: 'takeProgress'};
         }
       }
@@ -448,7 +456,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       condition: board.all(Wonder, {built: true}).length < 7
     }).move(
       'card', field.all(Card, c => c.isUncovered()),
-      'wonder', board.first('mat', {mine: true})!.all(Wonder, {built: false}, wonder => wonder.costFor(player) <= player.coins),
+      'wonder', player.allMy(Wonder, {built: false}, wonder => wonder.costFor(player) <= player.coins),
       {
         confirm: [
           'Build {{wonder}} for {{cost}}',
@@ -463,7 +471,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         player.other().coins = Math.max(0, player.other().coins - wonder.destroyCoins);
         game.message(`{{player}} destroys {{amount}} coins`, {player, amount: wonder.destroyCoins});
       }
-      if (wonder.destroy) return { name: 'destroyBuildings', args: { type: wonder.destroy } };
+      if (wonder.destroy && player.other().has(Card, {type: wonder.destroy, built: true})) {
+        return { name: 'destroyBuildings', args: { type: wonder.destroy } };
+      }
       if (wonder.special === 'take-progress-discard') {
         field.all(ProgressToken).putInto(deck);
         board.pile.firstN(3, ProgressToken).putInto(field);
@@ -478,10 +488,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       prompt: 'Select a progress token',
     }).move(
       'token', field.all(ProgressToken),
-      'mat', board.first('mat', {player})
+      'mat', player.my('mat')
     ).do(({ token }) => {
-      player.checkScience();
-      player.addVpBonus(token.vpPer);
+      token.giveRewardsTo(player);
     }).message(
       `{{player}} gains the {{token}} Progress Token`
     ),
@@ -490,10 +499,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       prompt: 'Select a progress token',
     }).move(
       'token', field.all(ProgressToken),
-      'mat', board.first('mat', {player})
+      'mat', player.my('mat')
     ).do(({ token }) => {
-      player.checkScience();
-      player.addVpBonus(token.vpPer);
+      token.giveRewardsTo(player);
       field.all(ProgressToken).putInto(board.pile);
       deck.all(ProgressToken).putInto(field);
     }).message(
@@ -504,11 +512,11 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       prompt: 'Select a discarded building',
     }).move(
       'card', discard.all(Card),
-      'mat', board.first('mat', {player})
+      'buildings', player.my('buildings')
     ).do(({ card }) => {
       card.giveRewardsTo(player);
       player.addVpBonus(card.vpPer);
-      if (card.science && player.all(Card, {science: card.science, built: true}).length === 2) {
+      if (card.science && player.allMy(Card, {science: card.science, built: true}).length === 2) {
         player.checkScience();
         return {name: 'takeProgress'}
       }
@@ -520,7 +528,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       prompt: 'Choose buildings to destroy',
     }).chooseOnBoard(
       'card',
-      ({ type }) => player.other().all(Card, {type, built: true}),
+      ({ type }) => player.other().allMy(Card, {type, built: true}),
     ).do(
       ({ card }) => card.remove()
     ).message(
