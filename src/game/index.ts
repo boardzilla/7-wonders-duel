@@ -1,6 +1,3 @@
-/**
- * decide who starts next age
- */
 import {
   createGame,
   Board,
@@ -578,6 +575,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
         game.message('Age {{age}} has begun!', {age});
         if (age > 1) board.firstMoveOfAge = true;
+        if (age === 1) game.players[0].setCurrent();
       },
 
       eachPlayer({

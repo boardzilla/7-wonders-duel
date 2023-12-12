@@ -1,6 +1,3 @@
-/**
- * age start options
- */
 import React from 'react';
 import { render, times, toggleSetting } from '@boardzilla/core';
 import { default as setup, Card, CardSlot, Wonder, ProgressToken } from '../game/index.js';
@@ -61,6 +58,12 @@ render(setup, {
       area: {
         top: 75, left: 42, width: 16, height: 23
       },
+      drawer: {
+        closeDirection: 'down',
+        tab: board => `Discards (${board.first('discard')!.all(Card).length})`,
+        openIf: actions => actions.some(a => a.name === 'takeDiscards'),
+        closeIf: actions => actions.every(a => a.name !== 'takeDiscards'),
+      }
     });
 
     deck?.appearance({
@@ -207,6 +210,7 @@ render(setup, {
 
     board.first('discard')!.layout(Card, {
       rows: 1,
+      margin: 1,
       columns: {min: 4},
       scaling: 'fill',
     });
