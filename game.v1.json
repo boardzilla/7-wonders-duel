@@ -1,10 +1,7 @@
 {
   "name": "7-wonders-duel",
-  "friendlyName": "7 Wonders Duel",
-  "description": "Science? Military? What will you draft to win this head-to-head version of 7 Wonders?",
   "minPlayers": 2,
   "maxPlayers": 2,
-  "image": "src/ui/assets/image.jpg",
   "ui": {
     "root": ".",
     "build": {
