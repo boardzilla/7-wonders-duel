@@ -381,6 +381,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
+  const field = board.create(Space, 'field');
+
   for (const player of board.players) {
     const mat = board.create(Space, 'mat', { player });
     mat.create(Space, 'wonders', { player });
@@ -389,7 +391,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
   const deck = board.create(Space, 'deck');
   const discard = board.create(Space, 'discard');
-  const field = board.create(Space, 'field');
   field.createGrid({ rows: 7, columns: 11}, CardSlot, 'card-slot', (row, column) => ({ row, column }));
   for (const card of cards) deck.create(Card, card.name!, card);
   for (const wonder of wonders) board.pile.create(Wonder, wonder.name!, wonder);

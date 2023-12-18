@@ -24,10 +24,19 @@ const resourceIcon = (resource: string, amount = 1):React.JSX.Element => (
 );
 
 render(setup, {
+  boardSizes: (_screenX, _screenY, mobile) => mobile ? {
+    name: 'mobile',
+    aspectRatio: 2.2,
+  } : {
+    name: 'desktop',
+    aspectRatio: 8 / 5,
+  },
+
   settings: {
     realtimeVp: toggleSetting('Show VP in real-time')
   },
-  layout: (board, player) => {
+
+  layout: (board, player, boardSize) => {
     const deck = board.first('deck')!;
     const field = board.first('field')!;
     const p1 = board.game.players[0];
@@ -37,26 +46,40 @@ render(setup, {
 
     board.disableDefaultAppearance();
 
-    board.appearance({
-      aspectRatio: 8 / 5,
-    });
-
     board.layout('deck', { });
 
-    board.layout('mat', {
-      area: { top: 2, height: 96, left: 2, width: 96 },
-    });
+    if (boardSize === 'desktop') {
+      board.layout('mat', {
+        area: { top: 2, height: 96, left: 2, width: 96 },
+      });
+    } else {
+      board.layout(p1mat, {
+        area: { top: 2, height: 96, left: 2, width: 35 },
+      });
+      board.layout(p2mat, {
+        area: { top: 2, height: 96, left: 63, width: 35 },
+      });
+    }
 
-    board.layout('field', {
-      area: {
-        top: 2, left: 18, width: 64, height: 78
-      },
-      alignment: 'center',
-    });
+    if (boardSize === 'desktop') {
+      board.layout('field', {
+        area: {
+          top: 2, left: 18, width: 64, height: 78
+        },
+        alignment: 'center',
+      });
+    } else {
+      board.layout('field', {
+        area: {
+          top: 2, left: 20, width: 60, height: 98
+        },
+        alignment: 'center',
+      });
+    }
 
     board.layout('discard', {
       area: {
-        top: 75, left: 42, width: 16, height: 23
+        top: 60, left: 30, width: 40, height: 40
       },
       drawer: {
         closeDirection: 'down',
@@ -70,128 +93,261 @@ render(setup, {
       render: false
     });
 
-    p1mat.layout('buildings', {
-      area: { left: 0, top: 75, height: 25, width: 100 },
-    });
+    if (boardSize === 'desktop') {
+      p1mat.layout('buildings', {
+        area: { left: 0, top: 75, height: 25, width: 100 },
+      });
 
-    p2mat.layout('buildings', {
-      area: { left: 0, top: 75, height: 25, width: 100 },
-    });
+      p2mat.layout('buildings', {
+        area: { left: 0, top: 75, height: 25, width: 100 },
+      });
 
-    p1mat.layout('wonders', {
-      area: { left: 2, top: 18, height: 55, width: 34 },
-    });
+      p1mat.layout('wonders', {
+        area: { left: 0, top: 15, height: 60, width: 38 },
+      });
 
-    p2mat.layout('wonders', {
-      area: { left: 64, top: 18, height: 55, width: 34 },
-    });
+      p2mat.layout('wonders', {
+        area: { left: 62, top: 15, height: 60, width: 38 },
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
-      area: { left: 0, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+        area: { left: 0, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'scientific'}), {
-      area: { left: 13.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'scientific'}), {
+        area: { left: 13.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'civilian'}), {
-      area: { left: 27, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'civilian'}), {
+        area: { left: 27, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'military'}), {
-      area: { left: 40.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'military'}), {
+        area: { left: 40.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'commercial'}), {
-      area: { left: 54, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'commercial'}), {
+        area: { left: 54, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p1.my('buildings')!.layout(p1.allMy(Card, {type: 'guild'}), {
-      area: { left: 67.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'guild'}), {
+        area: { left: 67.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
-      area: { left: 20.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+        area: { left: 20.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'scientific'}), {
-      area: { left: 34, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'scientific'}), {
+        area: { left: 34, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'civilian'}), {
-      area: { left: 47.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'civilian'}), {
+        area: { left: 47.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'military'}), {
-      area: { left: 61, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'military'}), {
+        area: { left: 61, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'commercial'}), {
-      area: { left: 74.5, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'commercial'}), {
+        area: { left: 74.5, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
 
-    p2.my('buildings')!.layout(p2.allMy(Card, {type: 'guild'}), {
-      area: { left: 88, top: 0, height: 100, width: 12 },
-      columns: 1,
-      offsetRow: {x: 0, y: 25},
-      alignment: 'top',
-      scaling: 'fill',
-    });
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'guild'}), {
+        area: { left: 88, top: 0, height: 100, width: 12 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+    } else {
+      p1mat.layout('buildings', {
+        area: { left: 10, top: 18, height: 82, width: 40 },
+      });
+
+      p2mat.layout('buildings', {
+        area: { left: 50, top: 18, height: 82, width: 40 },
+      });
+
+      p1mat.layout('wonders', {
+        area: { left: 0, top: 18, height: 82, width: 50 },
+        drawer: {
+          closeDirection: 'left',
+          tab: () => `Wonders`,
+          openIf: actions => {
+            const names = actions.map(a => a.name);
+            return player.position === 1 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
+          },
+        }
+      });
+
+      p2mat.layout('wonders', {
+        area: { left: 50, top: 18, height: 82, width: 50 },
+        drawer: {
+          closeDirection: 'right',
+          tab: () => `Wonders`,
+          openIf: actions => {
+            const names = actions.map(a => a.name);
+            return player.position === 2 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
+          },
+        }
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+        area: { left: 0, top: 0, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'scientific'}), {
+        area: { left: 55, top: 0, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'civilian'}), {
+        area: { left: 0, top: 35, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'military'}), {
+        area: { left: 55, top: 35, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'commercial'}), {
+        area: { left: 0, top: 70, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p1.my('buildings')!.layout(p1.allMy(Card, {type: 'guild'}), {
+        area: { left: 55, top: 70, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
+        area: { left: 0, top: 0, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'scientific'}), {
+        area: { left: 55, top: 0, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'civilian'}), {
+        area: { left: 0, top: 35, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'military'}), {
+        area: { left: 55, top: 35, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'commercial'}), {
+        area: { left: 0, top: 70, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+
+      p2.my('buildings')!.layout(p2.allMy(Card, {type: 'guild'}), {
+        area: { left: 55, top: 70, height: 30, width: 45 },
+        columns: 1,
+        offsetRow: {x: 0, y: 25},
+        alignment: 'top',
+        scaling: 'fill',
+      });
+    }
 
     p1.my('wonders')!.layout(Wonder, {
-      gap: .5,
+      area: { left: 2, width: 88, top: 5, height: 90 },
+      gap: 1,
       columns: 1,
-      alignment: 'top left',
+      alignment: 'left',
     });
 
     p2.my('wonders')!.layout(Wonder, {
-      gap: .5,
+      area: { left: 2, width: 88, top: 5, height: 90 },
+      gap: 1,
       columns: 1,
-      alignment: 'top right',
+      alignment: 'right',
     });
 
     p1mat.layout(ProgressToken, {
@@ -253,15 +409,29 @@ render(setup, {
     });
 
     board.all(CardSlot).appearance({
-      render: () => null
+      render: () => null,
+      aspectRatio: 1,
     });
 
-    field.layout(CardSlot, {
-      area: { left: 10, width: 80, top: 24, height: 70 },
-      rows: 7,
-      columns: 11,
-      gap: -4.6,
-    });
+    if (boardSize === 'desktop') {
+      field.layout(CardSlot, {
+        area: { left: 10, width: 80, top: 24, height: 70 },
+        rows: 7,
+        columns: 11,
+        offsetColumn: {x: 45, y: 0},
+        offsetRow: {x: 0, y: 45},
+      });
+
+    } else {
+
+      field.layout(CardSlot, {
+        area: { left: 0, width: 100, top: 18, height: 80 },
+        rows: 7,
+        columns: 11,
+        offsetColumn: {x: 45, y: 0},
+        offsetRow: {x: 0, y: 30},
+      });
+    }
 
     field.layout(Wonder, {
       area: { left: 10, width: 80, top: 0, height: 100 },
@@ -371,15 +541,37 @@ render(setup, {
 
     board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });
 
-    board.layoutAction('pickWonder', {
-      element: field,
-      left: 10,
-      bottom: 15
-    });
+    if (boardSize === 'mobile') {
+      board.layoutAction('buy', {
+        element: field,
+        left: 0,
+        top: 24
+      });
+
+      board.layoutAction('discard', {
+        element: field,
+        left: 0,
+        top: 24
+      });
+
+      board.layoutAction('pickWonder', {
+        element: field,
+        left: 10,
+        bottom: 8,
+      });
+
+    } else {
+
+      board.layoutAction('pickWonder', {
+        element: field,
+        left: 10,
+        bottom: 15
+      });
+    }
 
     board.layoutStep('play', {
       element: field,
-      left: 10,
+      left: 5,
       top: 24
     });
 
@@ -391,14 +583,14 @@ render(setup, {
 
     if (player.position === 1) {
       board.layoutAction('buildWonder', {
-        element: board.first('mat', {mine: true})!,
-        left: 36,
+        element: field,
+        left: 10,
         top: 18,
       });
     } else {
       board.layoutAction('buildWonder', {
-        element: board.first('mat', {mine: true})!,
-        right: 36,
+        element: field,
+        right: 10,
         top: 18,
       });
     }
