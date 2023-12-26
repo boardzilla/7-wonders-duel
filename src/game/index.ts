@@ -16,7 +16,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
 
   score() {
-    let score = this.allMy(Card, {built: true}).sum('vp') +
+    let score: number = this.allMy(Card, {built: true}).sum('vp') +
       this.allMy(Wonder, {built: true}).sum('vp') +
       this.allMy(ProgressToken).sum('vp') +
       (this.position === (this.board.militaryVp() < 0 ? 1 : 2) ? this.board.militaryVp() : 0) +
@@ -84,8 +84,6 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
     Object.assign(this.vpPer, vpPer);
   }
 };
-
-//const Board = createBoardClass(SevenWondersDuelPlayer);
 
 class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDuelBoard> {
   militaryTrack: number = 0; // negative numbers good for player 1, positive for player 2
@@ -269,7 +267,7 @@ export class Card extends Building {
   }
 }
 
-Card.hideAllExcept('age', 'guild');
+Card.revealWhenHidden('age', 'guild');
 
 export class Wonder extends Building {
   type: 'wonder' = 'wonder';
@@ -383,7 +381,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
   const field = board.create(Space, 'field');
 
-  for (const player of board.players) {
+  for (const player of game.players) {
     const mat = board.create(Space, 'mat', { player });
     mat.create(Space, 'wonders', { player });
     mat.create(Space, 'buildings', { player });

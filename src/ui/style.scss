@@ -779,7 +779,7 @@
     .wonder-features {
       width: 100%;
       height: 100%;
-      z-index: 1;
+      z-index: 0;
       position: absolute;
       background-size: cover;
       color: black;
@@ -966,7 +966,7 @@
       position: absolute;
       width: 100%;
       transform: rotate(90deg) !important;
-      z-index: 0 !important;
+      z-index: -1 !important;
       right: -93%;
       bottom: 0;
       /* clip-path: polygon(0% 0%, 0% 20%, 100% 20%, 1000% 0%); */
