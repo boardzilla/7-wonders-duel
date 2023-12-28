@@ -391,7 +391,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
   const deck = board.create(Space, 'deck');
   const discard = board.create(Space, 'discard');
-  field.createGrid({ rows: 7, columns: 11}, CardSlot, 'card-slot', (row, column) => ({ row, column }));
+  field.createGrid({ rows: 7, columns: 11 }, CardSlot, 'card-slot');
   for (const card of cards) deck.create(Card, card.name!, card);
   for (const wonder of wonders) board.pile.create(Wonder, wonder.name!, wonder);
   for (const progress of progressTokens) board.pile.create(ProgressToken, progress.name!, progress);
@@ -400,24 +400,26 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
   game.defineActions({
     pickWonder: player => action({
       prompt: 'Choose a Wonder',
-    }).move(
+    }).chooseOnBoard(
       'wonder', field.all(Wonder),
-      'wonders', player.my('wonders')
+    ).move(
+      'wonder', player.my('wonders')!
     ).message(
       '{{player}} chose {{wonder}}'
     ),
 
     buy: player => action({
       prompt: 'Buy',
-    }).move(
+    }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered() && c.costFor(player) <= player.coins),
-      'buildings', player.my('buildings'),
       {
         confirm: [
           'Buy {{card}} for {{cost}}',
           ({ card }) => ({cost: card.costFor(player) })
         ]
       }
+    ).move(
+      'card', player.my('buildings')!,
     ).do(({ card }) => {
       card.payCostsFor(player);
       card.giveRewardsTo(player);
@@ -453,8 +455,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     buildWonder: player => action({
       prompt: 'Build Wonder',
       condition: board.all(Wonder, {built: true}).length < 7
-    }).move(
+    }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered()),
+    ).chooseOnBoard(
       'wonder', player.allMy(Wonder, {built: false}, wonder => wonder.costFor(player) <= player.coins),
       {
         confirm: [
@@ -462,6 +465,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
           ({ wonder }) => ({cost: wonder.costFor(player) })
         ]
       }
+    ).move(
+      'card', 'wonder'
     ).do(({ wonder, card }) => {
       wonder.built = true;
       card.built = false;
@@ -485,9 +490,10 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeProgress: player => action({
       prompt: 'Select a progress token',
-    }).move(
+    }).chooseOnBoard(
       'token', field.all(ProgressToken),
-      'mat', player.my('mat')
+    ).move(
+      'token', player.my('mat')!
     ).do(({ token }) => {
       token.giveRewardsTo(player);
     }).message(
@@ -496,9 +502,10 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeProgressDiscard: player => action({
       prompt: 'Select a progress token',
-    }).move(
+    }).chooseOnBoard(
       'token', field.all(ProgressToken),
-      'mat', player.my('mat')
+    ).move(
+      'token', player.my('mat')!
     ).do(({ token }) => {
       token.giveRewardsTo(player);
       field.all(ProgressToken).putInto(board.pile);
@@ -509,9 +516,10 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeDiscards: player => action({
       prompt: 'Select a discarded building',
-    }).move(
+    }).chooseOnBoard(
       'card', discard.all(Card),
-      'buildings', player.my('buildings')
+    ).move(
+      'card', player.my('buildings')!
     ).do(({ card }) => {
       card.giveRewardsTo(player);
       player.addVpBonus(card.vpPer);
