@@ -296,10 +296,11 @@
   }
 
   .Card {
-    /* z-index: 10; */
-    perspective: 40vw;
     text-align: left;
     transition: transform .2s;
+    #game:not(.browser-firefox) & {
+      perspective: 40vw;
+    }
 
     &.selectable > div {
       animation: pulse 1.5s infinite;
@@ -310,7 +311,7 @@
       width: 100%;
       height: 100%;
       transition: transform 0.6s;
-      #game.browser-chrome & {
+      #game:not(.browser-firefox) & {
         transform-style: preserve-3d;
       }
       position: relative;
@@ -437,7 +438,6 @@
 
       /* front pane, placed above back */
       .front {
-        /* z-index: 2; */
         /* for firefox 31 */
         /* transform: rotateY(0deg); */
 
@@ -969,7 +969,6 @@
       z-index: -1 !important;
       right: -93%;
       bottom: 0;
-      /* clip-path: polygon(0% 0%, 0% 20%, 100% 20%, 1000% 0%); */
     }
   }
 

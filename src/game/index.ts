@@ -147,7 +147,7 @@ export class Building extends Piece {
   vp?: number = 0;
   description: string;
 
-  giveRewardsTo(player: SevenWondersDuelPlayer) {
+  payCostsFor(player: SevenWondersDuelPlayer) {
     player.coins -= this.costFor(player);
 
     // trade costs to holder of progress token
@@ -155,6 +155,13 @@ export class Building extends Piece {
       player.other().coins += this.tradeCostsFor(player);
     }
 
+    if (this.freeLink && player.has(Card, {link: this.freeLink}) && player.has(ProgressToken, {special: 'free-link-bonus'})) {
+      this.game.message('{{player}} gains 4 coins from linking', {player});
+      player.coins += 4;
+    }
+  }
+
+  giveRewardsTo(player: SevenWondersDuelPlayer) {
     if (this.shields) {
       player.awardShields(this.shields);
     }
@@ -181,11 +188,6 @@ export class Building extends Piece {
         this.game.message('{{player}} gains {{amount}} coins per {{most}} {{type}} buildings', {player, most, amount, type});
         player.coins += amount * most;
       }
-    }
-
-    if (this.freeLink && player.has(Card, {link: this.freeLink}) && player.has(ProgressToken, {special: 'free-link-bonus'})) {
-      this.game.message('{{player}} gains 4 coins from linking', {player});
-      player.coins += 4;
     }
   }
 
@@ -417,6 +419,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         ]
       }
     ).do(({ card }) => {
+      card.payCostsFor(player);
       card.giveRewardsTo(player);
       player.addVpBonus(card.vpPer);
       if (card.science) {
