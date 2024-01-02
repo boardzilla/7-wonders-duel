@@ -548,7 +548,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     })
   });
 
-  game.defineFlow([
+  game.defineFlow(
     () => {
       // set up deck, removing appropriate number of cards
       deck.shuffle();
@@ -622,5 +622,5 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1]);
       game.message(`{{winner}} wins a civilian victory!`, {winner: game.winner[0]});
     }
-  ]);
+  );
 });
