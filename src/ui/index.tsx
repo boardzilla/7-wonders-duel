@@ -245,6 +245,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, {type: 'scientific'}), {
@@ -253,6 +254,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, {type: 'civilian'}), {
@@ -261,6 +263,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, {type: 'military'}), {
@@ -269,6 +272,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, {type: 'commercial'}), {
@@ -277,6 +281,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, {type: 'guild'}), {
@@ -285,6 +290,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {
@@ -293,6 +299,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, {type: 'scientific'}), {
@@ -301,6 +308,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, {type: 'civilian'}), {
@@ -309,6 +317,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, {type: 'military'}), {
@@ -317,6 +326,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, {type: 'commercial'}), {
@@ -325,6 +335,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
 
       p2.my('buildings')!.layout(p2.allMy(Card, {type: 'guild'}), {
@@ -333,6 +344,7 @@ render(setup, {
         offsetRow: {x: 0, y: 25},
         alignment: 'top',
         scaling: 'fill',
+        maxOverlap: 80,
       });
     }
 
@@ -369,6 +381,7 @@ render(setup, {
       margin: 1,
       columns: {min: 4},
       scaling: 'fill',
+      maxOverlap: 80,
     });
 
     board.all('mat').appearance({
@@ -435,7 +448,10 @@ render(setup, {
 
     field.layout(Wonder, {
       area: { left: 10, width: 80, top: 0, height: 100 },
-      gap: 2
+      gap: 2,
+      rows: 2,
+      columns: 2,
+      sticky: true,
     });
 
     field.layout(ProgressToken, {

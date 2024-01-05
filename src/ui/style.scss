@@ -296,6 +296,7 @@
   }
 
   .Card {
+    color: black;
     text-align: left;
     transition: transform .2s;
     #game:not(.browser-firefox) & {
@@ -417,6 +418,10 @@
         border: .1em solid #000c;
         padding: 0.1em 0.1em 0.2em;
 
+        html.dark & {
+          background: #333;
+          color: white;
+        }
         #game.mobile & {
           font-size: 1.5em;
         }
@@ -450,6 +455,9 @@
           height: 100%;
           background-size: cover;
           filter: contrast(.5) brightness(1.2) saturate(.6);
+          html.dark & {
+            filter: contrast(.5) brightness(.9) saturate(.6);
+          }
         }
       }
 
@@ -952,6 +960,10 @@
         border: .1em solid black;
         border-radius: .5em;
         padding: 0.1em 0.1em 0.2em;
+        html.dark & {
+          background: #333;
+          color: white;
+        }
 
         #game.mobile & {
           left: 20%;
