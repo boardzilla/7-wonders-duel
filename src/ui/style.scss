@@ -223,6 +223,17 @@
       }
     }
 
+    #buildings {
+      .transform-wrapper:has(+ .transform-wrapper .Card:hover) .Card {
+        transform: translateY(-30%) scale(1.2);
+        z-index: 2;
+      }
+      .transform-wrapper:has(.Card:hover) + .transform-wrapper .Card {
+        transform: translateY(30%) scale(1.2);
+        z-index: 2;
+      }
+    }
+
     &[data-player="2"] {
       .player-name {
         text-align: left;

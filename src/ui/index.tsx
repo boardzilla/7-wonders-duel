@@ -600,14 +600,14 @@ render(setup, {
     if (player.position === 1) {
       board.layoutAction('buildWonder', {
         element: field,
-        left: 10,
-        top: 18,
+        left: 13,
+        top: 50,
       });
     } else {
       board.layoutAction('buildWonder', {
         element: field,
-        right: 10,
-        top: 18,
+        right: 15,
+        top: 50,
       });
     }
   }

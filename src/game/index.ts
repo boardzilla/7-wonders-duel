@@ -377,7 +377,7 @@ import { cards, progressTokens, wonders } from './cards.js';
 
 export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game => {
 
-  const { board, action } = game;
+  const { board, action, followUp } = game;
 
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
@@ -409,7 +409,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ),
 
     buy: player => action({
-      prompt: 'Buy',
+      prompt: 'Buy Card',
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered() && c.costFor(player) <= player.coins),
       {
@@ -427,7 +427,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       if (card.science) {
         player.checkScience();
         if (player.allMy(Card, {science: card.science, built: true}).length === 2) {
-          return {name: 'takeProgress'};
+          followUp({name: 'takeProgress'});
         }
       }
     }).message(
@@ -591,7 +591,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       eachPlayer({
         name: 'player',
         continueUntil: () => !field.has(Card),
-        startingPlayer: () => board.militaryTrack === 0 ? game.players.current()[0] : game.players[board.militaryTrack > 0 ? 0 : 1],
+        startingPlayer: () => board.militaryTrack === 0 ? game.players.current() : game.players[board.militaryTrack > 0 ? 0 : 1],
         do: [
           () => board.revealUncovered(),
           playerActions({
@@ -607,8 +607,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
                 do: ({ player, buildWonder }) => {
                   if (buildWonder.wonder?.special?.includes('extra-turn') || player.has(ProgressToken, {special: 'extra-turn'})) {
                     game.message('{{player}} takes an extra turn', {player});
-                    board.firstMoveOfAge = false
-                    return Do.repeat
+                    board.firstMoveOfAge = false;
+                    Do.repeat();
                   }
                 }
               }
