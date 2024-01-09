@@ -377,7 +377,7 @@ import { cards, progressTokens, wonders } from './cards.js';
 
 export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game => {
 
-  const { board, action, followUp } = game;
+  const { board, action } = game;
 
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
@@ -427,7 +427,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       if (card.science) {
         player.checkScience();
         if (player.allMy(Card, {science: card.science, built: true}).length === 2) {
-          followUp({name: 'takeProgress'});
+          game.followUp({name: 'takeProgress'});
         }
       }
     }).message(
