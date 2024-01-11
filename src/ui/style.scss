@@ -173,41 +173,21 @@
     font-size: .5em;
     text-align: center;
 
-    .player-name {
-      top: 0;
-      width: 35%;
-      text-align: right;
-      height: 5%;
-      left: 10%;
-      color: white;
-      font-size: .55em;
+    .profile-badge {
       position: absolute;
-      padding: 0.25em 0.4em;
-      border-radius: 0 0.4em 0.4em 0;
-      overflow: hidden;
-      white-space: nowrap;
-      filter: drop-shadow(0 .2em .05em #0006);
+      top: 0;
+      left: 0;
+      font-size: 160%;
 
       #game.mobile & {
-        font-size: .8em;
+        font-size: 320%;
       }
     }
 
-    .avatar {
-      height: 15%;
-      width: 18.76%;
-      position: absolute;
-      left: 1%;
-      top: 0;
-      border-radius: 50%;
-      border: .2em solid;
-      filter: drop-shadow(0 .2em .05em #0006)
-    }
-
     .score {
-      font-size: 1em;
+      font-size: 1.2em;
       position: absolute;
-      left: 47%;
+      left: 33%;
       width: 30%;
       text-align: left;
       .svg-icon {
@@ -219,7 +199,8 @@
 
       #game.mobile & {
         width: 40%;
-        font-size: 2.4em;
+        left: 50%;
+        font-size: 1.8em;
       }
     }
 
@@ -235,22 +216,18 @@
     }
 
     &[data-player="2"] {
-      .player-name {
-        text-align: left;
-        right: 10%;
-        left: auto;
-        border-radius: 0.4em 0 0 0.4em;
+      .profile-badge {
+        left: unset;
+        right: 0;
       }
-
-      .avatar {
-        right: 1%;
-        left: auto;
-      }
-
       .score {
-        right: 47%;
+        right: 33%;
         left: unset;
         text-align: right;
+        #game.mobile & {
+          left: unset;
+          right: 50%;
+        }
       }
     }
   }

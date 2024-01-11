@@ -7,9 +7,56 @@
    viewBox="0 0 193.80508 193.80508"
    version="1.1"
    id="svg1"
+   sodipodi:docname="law.svg"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient1"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#faf69a;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#c6cc52;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="188.05179"
+       y1="20.659336"
+       x2="330.16037"
+       y2="508.03653"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.2352001"
+     inkscape:cx="445.67678"
+     inkscape:cy="450.53429"
+     inkscape:window-width="1712"
+     inkscape:window-height="1040"
+     inkscape:window-x="0"
+     inkscape:window-y="39"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g2" />
   <g
      id="layer1"
      transform="translate(-12.122139,-60.809219)">
@@ -27,8 +74,9 @@
        r="81.869209" />
     <path
        style="fill:#028000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       d="m 44.177473,93.775557 27.7703,1.112115 74.183457,1.355394 29.43658,-3.746466 3.69095,27.43204 15.48937,33.85185 -14.3915,32.05498 -47.47495,36.37167 -5.57842,26.70539 -24.34963,-1.01756 -17.268364,-1.93481 5.109744,-20.63697 -42.571391,-0.0783 12.374044,-33.85671 -23.658694,-14.59773 -10.264072,-21.94701 13.83317,-25.01463 z"
-       id="path89" />
+       d="m 44.177473,93.775557 27.7703,1.112115 74.183457,1.355394 29.43658,-3.746466 3.69095,27.43204 15.48937,33.85185 -14.3915,32.05498 -13.82662,18.88282 -0.82528,18.539 -31.10943,0.66347 -7.29204,24.99177 -24.34963,-1.01756 -17.268364,-1.93481 5.109744,-20.63697 -42.571391,-0.0783 12.374044,-33.85671 -23.658694,-14.59773 -10.264072,-21.94701 13.83317,-25.01463 z"
+       id="path89"
+       sodipodi:nodetypes="cccccccccccccccccccc" />
     <circle
        style="display:inline;fill:none;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="circle1"
@@ -43,7 +91,7 @@
        aria-label="law" />
     <g
        class=""
-       style="font-variation-settings:normal;fill:url(#linearGradient4);fill-opacity:1;stroke:#040404;stroke-width:16.51983726;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
+       style="font-variation-settings:normal;fill:url(#linearGradient2);fill-opacity:1;stroke:#040404;stroke-width:16.51983726;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
        id="g2"
        transform="matrix(0.30266642,0,0,0.30266642,32.883797,72.120079)">
       <path
@@ -51,7 +99,7 @@
          fill="#fff"
          fill-opacity="1"
          id="path2"
-         style="font-variation-settings:normal;fill:url(#linearGradient90);fill-opacity:1;stroke:#040404;stroke-width:16.51983726;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000;stop-opacity:1" />
+         style="font-variation-settings:normal;fill:url(#linearGradient2);fill-opacity:1;stroke:#040404;stroke-width:16.51983726;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000;stop-opacity:1" />
     </g>
   </g>
 </svg>

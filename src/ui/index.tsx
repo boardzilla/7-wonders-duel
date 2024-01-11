@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, times, toggleSetting } from '@boardzilla/core';
+import { ProfileBadge, render, times, toggleSetting } from '@boardzilla/core';
 import { default as setup, Card, CardSlot, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
@@ -45,8 +45,6 @@ render(setup, {
     const p2mat = p2.my('mat')!
 
     board.disableDefaultAppearance();
-
-    board.layout('deck', { });
 
     if (boardSize === 'desktop') {
       board.layout('mat', {
@@ -362,19 +360,38 @@ render(setup, {
       alignment: 'right',
     });
 
-    p1mat.layout(ProgressToken, {
-      area: { left: 22, top: 7, height: 8, width: 43 },
-      gap: .5,
-      rows: 1,
-      alignment: 'top left',
-    });
+    if (boardSize === 'desktop') {
+      p1mat.layout(ProgressToken, {
+        area: { left: 1, top: 10, height: 6.5, width: 50 },
+        gap: .5,
+        rows: 1,
+        alignment: 'top left',
+        showBoundingBox: 'pt'
+      });
 
-    p2mat.layout(ProgressToken, {
-      area: { left: 35, top: 7, height: 8, width: 43 },
-      gap: .5,
-      rows: 1,
-      alignment: 'right',
-    });
+      p2mat.layout(ProgressToken, {
+        area: { left: 45.5, top: 10, height: 6.5, width: 50 },
+        gap: .5,
+        rows: 1,
+        alignment: 'right',
+        showBoundingBox: 'pt'
+      });
+
+    } else {
+      p1mat.layout(ProgressToken, {
+        area: { left: 50, top: 10, height: 6.5, width: 40 },
+        gap: .5,
+        rows: 1,
+        alignment: 'top left',
+      });
+
+      p2mat.layout(ProgressToken, {
+        area: { left: 10, top: 10, height: 6.5, width: 40 },
+        gap: .5,
+        rows: 1,
+        alignment: 'right',
+      });
+    }
 
     board.first('discard')!.layout(Card, {
       rows: 1,
@@ -387,10 +404,7 @@ render(setup, {
     board.all('mat').appearance({
       render: mat => (
         <div>
-          <div className="player-name" style={{background: mat.player!.color}}>
-            {mat.player!.name}<br/>
-          </div>
-          <img className="avatar" style={{borderColor: mat.player!.color}} src={mat.player!.avatar}/>
+          <ProfileBadge player={mat.player!}/>
           <div className="score">
             {board.gameSetting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
             <span style={{marginLeft: '.2em'}} className="svg-icon coins">{mat.player!.coins}</span>

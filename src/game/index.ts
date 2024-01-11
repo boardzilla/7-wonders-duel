@@ -1,13 +1,9 @@
 import {
   createGame,
   Board,
-  createBoardClasses,
   Player,
-  playerActions,
-  eachPlayer,
-  forEach,
+  createBoardClasses,
   Do,
-  forLoop,
 } from '@boardzilla/core';
 
 export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, SevenWondersDuelBoard> {
@@ -114,7 +110,7 @@ class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDu
   }
 
   revealUncovered() {
-    for (const card of this.first('field')!.all(Card, c => !c.isVisible() && c.isUncovered())) {
+    for (const card of $.field.all(Card, c => !c.isVisible() && c.isUncovered())) {
       this.game.message('{{card}} was revealed', {card});
       card.showToAll();
     }
@@ -378,6 +374,12 @@ import { cards, progressTokens, wonders } from './cards.js';
 export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game => {
 
   const { board, action } = game;
+  const {
+    playerActions,
+    eachPlayer,
+    forEach,
+    forLoop,
+  } = game.flowCommands;
 
   board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
@@ -559,6 +561,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       board.pile.shuffle();
       board.pile.firstN(5, ProgressToken).putInto(field);
     },
+
     eachPlayer({
       name: 'turn',
       do: [
