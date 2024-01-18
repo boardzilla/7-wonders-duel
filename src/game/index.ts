@@ -478,14 +478,14 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         game.message(`{{player}} destroys {{amount}} coins`, {player, amount: wonder.destroyCoins});
       }
       if (wonder.destroy && player.other().has(Card, {type: wonder.destroy, built: true})) {
-        return { name: 'destroyBuildings', args: { type: wonder.destroy } };
+        game.followUp({ name: 'destroyBuildings', args: { type: wonder.destroy } });
       }
       if (wonder.special === 'take-progress-discard') {
         field.all(ProgressToken).putInto(deck);
         board.pile.firstN(3, ProgressToken).putInto(field);
-        return { name: 'takeProgressDiscard' };
+        return game.followUp({ name: 'takeProgressDiscard' });
       }
-      if (wonder.special === 'take-discards') return { name: 'takeDiscards' };
+      if (wonder.special === 'take-discards') return game.followUp({ name: 'takeDiscards' });
     }).message(
       '{{player}} used {{card}} to build {{wonder}}!'
     ),
@@ -527,7 +527,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       player.addVpBonus(card.vpPer);
       if (card.science && player.allMy(Card, {science: card.science, built: true}).length === 2) {
         player.checkScience();
-        return {name: 'takeProgress'}
+        return game.followUp({ name: 'takeProgress' });
       }
     }).message(
       `{{player}} takes {{card}} from discard`
@@ -594,7 +594,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       eachPlayer({
         name: 'player',
         continueUntil: () => !field.has(Card),
-        startingPlayer: () => board.militaryTrack === 0 ? game.players.current() : game.players[board.militaryTrack > 0 ? 0 : 1],
+        startingPlayer: () => board.militaryTrack === 0 ? game.players.current()! : game.players[board.militaryTrack > 0 ? 0 : 1],
         do: [
           () => board.revealUncovered(),
           playerActions({

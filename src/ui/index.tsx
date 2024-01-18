@@ -366,7 +366,6 @@ render(setup, {
         gap: .5,
         rows: 1,
         alignment: 'top left',
-        showBoundingBox: 'pt'
       });
 
       p2mat.layout(ProgressToken, {
@@ -374,7 +373,6 @@ render(setup, {
         gap: .5,
         rows: 1,
         alignment: 'right',
-        showBoundingBox: 'pt'
       });
 
     } else {
@@ -406,7 +404,7 @@ render(setup, {
         <div>
           <ProfileBadge player={mat.player!}/>
           <div className="score">
-            {board.gameSetting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
+            {board.game.setting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
             <span style={{marginLeft: '.2em'}} className="svg-icon coins">{mat.player!.coins}</span>
           </div>
         </div>
