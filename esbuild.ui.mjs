@@ -12,6 +12,7 @@ await esbuild.build({
     '.png': 'file',
     '.svg': 'file',
     '.webp': 'file',
+    '.otf': 'file',
     '.scss': 'css',
     '.ogg': 'dataurl',
   },

@@ -1,5 +1,12 @@
-@import url(https://fontlibrary.org//face/cinzel);
-@import url(https://fontlibrary.org//face/libertinus-serif);
+@font-face {
+  font-family: "LibertinusSerifRegular";
+  src: url('./assets/LibertinusSerif.otf');
+}
+
+@font-face {
+  font-family: "CinzelBold";
+  src: url('./assets/Cinzel.otf');
+}
 
 #game {
   font-family: 'CinzelBold';
