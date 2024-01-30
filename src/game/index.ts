@@ -459,6 +459,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       condition: board.all(Wonder, {built: true}).length < 7
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered()),
+      { skipIf: 'never' }
     ).chooseOnBoard(
       'wonder', player.allMy(Wonder, {built: false}, wonder => wonder.costFor(player) <= player.coins),
       {
@@ -472,6 +473,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ).do(({ wonder, card }) => {
       wonder.built = true;
       card.built = false;
+      wonder.payCostsFor(player);
       wonder.giveRewardsTo(player);
       if (wonder.destroyCoins) {
         player.other().coins = Math.max(0, player.other().coins - wonder.destroyCoins);
@@ -621,8 +623,20 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
         ]
       })
     ]}),
+
     () => {
-      game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1]);
+      if (game.players[0].score() !== game.players[1].score()) {
+        game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1]);
+      } else {
+        const bluePoints1 = game.players[0].allMy(Card, {type: 'civilian', built: true}).sum('vp');
+        const bluePoints2 = game.players[1].allMy(Card, {type: 'civilian', built: true}).sum('vp');
+        if (bluePoints1 !== bluePoints2) {
+          game.finish(bluePoints1 > bluePoints2 ? game.players[0] : game.players[1]);
+        } else {
+          game.finish();
+        }
+      }
+
       game.message(`{{winner}} wins a civilian victory!`, {winner: game.winner[0]});
     }
   );
