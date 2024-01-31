@@ -10,7 +10,7 @@
 
 #game {
   font-family: 'CinzelBold';
-  #setup {
+  #setup, .info-text {
     font-family: 'LibertinusSerifRegular';
   }
 }
@@ -51,7 +51,7 @@
   }
 }
 
-#play-area {
+#game {
   #field {
     #military-track {
       background-image: url(./assets/military-track.jpg);
@@ -244,33 +244,17 @@
     text-align: center;
   }
 
-  [data-zoomed] .Card.selectable > div {
-    box-shadow: none;
-  }
-
-  [data-zoomed] > .Card[data-name] {
-    transition: none;
-  }
-
-  :not([data-zoomed]) > .Card[data-name]:hover {
+  .Card[data-name]:hover {
     z-index: 20;
     transform: scale(1.6);
   }
 
-  [data-zoomed] > .ProgressToken {
-    transition: none;
-  }
-
-  :not([data-zoomed]) > .ProgressToken[data-name]:hover {
+  .ProgressToken[data-name]:hover {
     z-index: 20;
     transform: scale(2);
   }
 
-  [data-zoomed] > .Wonder {
-    transition: none;
-  }
-
-  :not([data-zoomed]) > .Wonder:hover {
+  .Wonder:hover {
     z-index: 20;
     transform: scale(1.5);
   }
@@ -1266,15 +1250,34 @@
       transform-origin: left top;
     }
   }
+
+  .player-controls {
+    font-size: .4em;
+
+    #game.mobile & {
+      font-size: 1.2em;
+    }
+
+    background: #fffcdc;
+    color: #330;
+    html.dark & {
+      background: #aa8;
+      color: #110;
+    }
+    box-shadow: inset 0 0 2em #0116, .2em .2em 1em #0008;
+    button {
+      background: #448;
+      color: #fffcdc;
+      html.dark & {
+        background: #114;
+        color: #cc9;
+      }
+      box-shadow: inset -0.2em -0.2em 0.5em -0.2em #000c, inset 0.2em 0.2em 0.5em -0.2em #fffc;
+    }
+  }
 }
 
-.player-controls {
-  font-size: .4em;
-
-  #game.mobile & {
-    font-size: 1.2em;
-  }
-
+#info-modal {
   background: #fffcdc;
   color: #330;
   html.dark & {
@@ -1282,23 +1285,4 @@
     color: #110;
   }
   box-shadow: inset 0 0 2em #0116, .2em .2em 1em #0008;
-  button {
-    background: #448;
-    color: #fffcdc;
-  html.dark & {
-    background: #114;
-    color: #cc9;
-  }
-    box-shadow: inset -0.2em -0.2em 0.5em -0.2em #000c, inset 0.2em 0.2em 0.5em -0.2em #fffc;
-  }
-}
-
-.tooltip {
-  font-family: 'LibertinusSerifRegular';
-  font-size: .6rem;
-  background: #220e;
-  box-shadow: inset 0 0 1rem #220;
-  #game.mobile & {
-    font-size: 1rem;
-  }
 }

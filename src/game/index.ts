@@ -4,6 +4,7 @@ import {
   Player,
   createBoardClasses,
   Do,
+  union
 } from '@boardzilla/core';
 
 export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, SevenWondersDuelBoard> {
@@ -68,7 +69,12 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 
   checkScience() {
-    const numberOfScience = new Set(this.allMy(Piece).filter(p => 'science' in p).map(p => 'science' in p ? p.science : undefined)).size;
+    const numberOfScience = new Set(
+      union(
+        this.allMy(Card, {type: 'scientific', built: true}),
+        this.allMy('Law')
+      ).map(p => 'science' in p ? p.science : undefined)
+    ).size;
     this.science = numberOfScience;
     if (numberOfScience >= 6) {
       this.game.message(`{{player}} wins by scientific supremacy!`, {player: this});
@@ -428,7 +434,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       player.addVpBonus(card.vpPer);
       if (card.science) {
         player.checkScience();
-        if (player.allMy(Card, {science: card.science, built: true}).length === 2) {
+        if (player.allMy(Card, {science: card.science, built: true}).length === 2 && field.has(ProgressToken)) {
           game.followUp({name: 'takeProgress'});
         }
       }

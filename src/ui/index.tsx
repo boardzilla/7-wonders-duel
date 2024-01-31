@@ -48,7 +48,7 @@ render(setup, {
 
     if (boardSize === 'desktop') {
       board.layout('mat', {
-        area: { top: 2, height: 96, left: 2, width: 96 },
+        area: { top: 2, height: 96, left: 3, width: 94 },
       });
     } else {
       board.layout(p1mat, {
@@ -489,12 +489,11 @@ render(setup, {
           {token.name === 'Strategy' && <img src={strategyToken}/>}
         </div>
       ),
-      tooltip: token => <>{token.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
+      info: token => <>{token.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
     board.all(Wonder).appearance({
       aspectRatio: 2,
-      zoomable: true,
       render: wonder => (
         <div className="wonder-features">
           <div className="name">{wonder.name}</div>
@@ -520,7 +519,7 @@ render(setup, {
         attributes: {built: true},
         className: 'newly-built'
       }],
-      tooltip: wonder => <>{wonder.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
+      info: wonder => <>{wonder.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
     board.all(Card).appearance({
@@ -564,10 +563,8 @@ render(setup, {
           <div className="back"></div>
         </div>
       ),
-      tooltip: card => card.description ? <>{card.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</> : null
+      info: card => card.description ? <>{card.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</> : null
     });
-
-    board.all(Card, c => c.name !== undefined).appearance({ zoomable: true });
 
     if (boardSize === 'mobile') {
       board.layoutAction('buy', {
