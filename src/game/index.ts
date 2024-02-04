@@ -13,12 +13,31 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
 
   score() {
-    let score: number = this.allMy(Card, {built: true}).sum('vp') +
-      this.allMy(Wonder, {built: true}).sum('vp') +
-      this.allMy(ProgressToken).sum('vp') +
-      (this.position === (this.board.militaryVp() < 0 ? 1 : 2) ? this.board.militaryVp() : 0) +
-      Math.floor(this.coins / 3);
+    return this.cardVP() + this.wonderVP() + this.progressTokenVP() + this.militaryVP() + this.coinVP() + this.vpPerBonuses();
+  }
 
+  cardVP() {
+    return this.allMy(Card, {built: true}).sum('vp');
+  }
+
+  wonderVP() {
+    return this.allMy(Wonder, {built: true}).sum('vp');
+  }
+
+  progressTokenVP() {
+    return this.allMy(ProgressToken).sum('vp');
+  }
+
+  militaryVP() {
+    return this.position === (this.board.militaryVp() < 0 ? 1 : 2) ? this.board.militaryVp() : 0;
+  }
+
+  coinVP() {
+    return Math.floor(this.coins / 3);
+  }
+
+  vpPerBonuses() {
+    let score = 0;
     if (this.has(Card, {special: 'vp-per-coins'})) {
       score += Math.floor(Math.max(this.coins, this.other().coins) / 3);
     }
@@ -408,6 +427,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
   game.defineActions({
     pickWonder: player => action({
       prompt: 'Choose a Wonder',
+      description: 'picking their Wonder'
     }).chooseOnBoard(
       'wonder', field.all(Wonder),
     ).move(
@@ -500,6 +520,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeProgress: player => action({
       prompt: 'Select a progress token',
+      description: 'selecting a progress token',
     }).chooseOnBoard(
       'token', field.all(ProgressToken),
     ).move(
@@ -512,6 +533,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeProgressDiscard: player => action({
       prompt: 'Select a progress token',
+      description: 'selecting a progress token',
     }).chooseOnBoard(
       'token', field.all(ProgressToken),
     ).move(
@@ -526,6 +548,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     takeDiscards: player => action({
       prompt: 'Select a discarded building',
+      description: 'selecting a discard',
     }).chooseOnBoard(
       'card', discard.all(Card),
     ).move(
@@ -542,7 +565,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ),
 
     destroyBuildings: player => action<{ type: Card['type'] }>({
-      prompt: 'Choose buildings to destroy',
+      prompt: 'Choose a building to destroy',
+      description: 'choosing a building to destroy',
     }).chooseOnBoard(
       'card',
       ({ type }) => player.other().allMy(Card, {type, built: true}),
@@ -608,7 +632,8 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
           playerActions({
             player: ({ player }) => player,
             name: 'play',
-            prompt: 'Choose Card',
+            prompt: 'Choose card',
+            description: 'choosing a card',
             actions: [
               'buy',
               'discard',
@@ -632,14 +657,14 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     () => {
       if (game.players[0].score() !== game.players[1].score()) {
-        game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1]);
+        game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1], 'civilianVictory');
       } else {
         const bluePoints1 = game.players[0].allMy(Card, {type: 'civilian', built: true}).sum('vp');
         const bluePoints2 = game.players[1].allMy(Card, {type: 'civilian', built: true}).sum('vp');
         if (bluePoints1 !== bluePoints2) {
-          game.finish(bluePoints1 > bluePoints2 ? game.players[0] : game.players[1]);
+          game.finish(bluePoints1 > bluePoints2 ? game.players[0] : game.players[1], 'civilianVictory');
         } else {
-          game.finish();
+          game.finish(undefined, 'civilianVictory');
         }
       }
 

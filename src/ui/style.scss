@@ -245,17 +245,17 @@
   }
 
   .Card[data-name]:hover {
-    z-index: 20;
+    z-index: 160;
     transform: scale(1.6);
   }
 
   .ProgressToken[data-name]:hover {
-    z-index: 20;
+    z-index: 160;
     transform: scale(2);
   }
 
   .Wonder:hover {
-    z-index: 20;
+    z-index: 160;
     transform: scale(1.5);
   }
 
@@ -1277,7 +1277,7 @@
   }
 }
 
-#info-modal {
+.modal-popup {
   background: #fffcdc;
   color: #330;
   html.dark & {
@@ -1285,4 +1285,38 @@
     color: #110;
   }
   box-shadow: inset 0 0 2em #0116, .2em .2em 1em #0008;
+
+  h1 {
+    font-size: 120%;
+    margin: .2rem 0;
+  }
+}
+
+table.victory {
+  font-size: 75%;
+  font-family: serif;
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    border-bottom: .1rem solid black;
+  }
+
+  th, td {
+    text-align: center;
+    padding: 0 .25rem;
+    .help-text {
+      font-size: 65%;
+    }
+  }
+
+  tr.totals {
+    border-top: .1rem solid black;
+    font-weight: bold;
+    font-size: 120%;
+  }
+
+  tr:nth-child(even) {
+    background: #dddabb;
+  }
 }

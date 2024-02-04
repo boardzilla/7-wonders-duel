@@ -18,6 +18,7 @@ import philosophyToken from './assets/philosophy.svg';
 import strategyToken from './assets/strategy.svg';
 import theologyToken from './assets/theology.svg';
 import urbanismToken from './assets/urbanism.svg';
+import Victory from './Victory.js';
 
 const resourceIcon = (resource: string, amount = 1):React.JSX.Element => (
   <span key={resource}>{times(amount, n => <span key={n} className={`svg-icon ${resource}`}/>)}</span>
@@ -600,12 +601,6 @@ render(setup, {
       top: 24
     });
 
-    board.layoutStep('out-of-turn', {
-      element: field,
-      left: 10,
-      top: 24
-    });
-
     if (player.position === 1) {
       board.layoutAction('buildWonder', {
         element: field,
@@ -619,5 +614,40 @@ render(setup, {
         top: 50,
       });
     }
-  }
+  },
+
+  announcements: {
+    civilianVictory: board => (
+      <>
+        <h1>
+          {board.game.winner[0] && <span>{board.game.winner[0].name} wins a civilian victory!</span>}
+          {!board.game.winner[0] && <span>Tie game!</span>}
+        </h1>
+        <Victory
+          player1={board.game.players[0]}
+          player2={board.game.players[1]}
+          showVP={true}
+        />
+      </>
+    )
+  },
+
+  infoModals: [
+    {
+      title: 'Victory Points',
+      modal: board => {
+        const showVP = board.game.winner.length || board.game.setting('realtimeVp');
+        return (
+          <>
+            <h1>Victory Points</h1>
+            <Victory
+              player1={board.game.players[0]}
+              player2={board.game.players[1]}
+              showVP={showVP}
+            />
+          </>
+        )
+      }
+    }
+  ]
 });
