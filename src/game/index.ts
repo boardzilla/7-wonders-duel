@@ -556,9 +556,11 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ).do(({ card }) => {
       card.giveRewardsTo(player);
       player.addVpBonus(card.vpPer);
-      if (card.science && player.allMy(Card, {science: card.science, built: true}).length === 2) {
+      if (card.science) {
         player.checkScience();
-        return game.followUp({ name: 'takeProgress' });
+        if (player.allMy(Card, {science: card.science, built: true}).length === 2) {
+          return game.followUp({ name: 'takeProgress' });
+        }
       }
     }).message(
       `{{player}} takes {{card}} from discard`
