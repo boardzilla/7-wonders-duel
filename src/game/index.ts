@@ -1,35 +1,35 @@
 import {
   createGame,
-  Board,
+  Game,
   Player,
-  createBoardClasses,
+  createGameClasses,
   Do,
   union
 } from '@boardzilla/core';
 
-export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, SevenWondersDuelBoard> {
+export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, SevenWondersDuel> {
   coins: number = 7;
   science: number = 0;
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
 
-  score() {
+  score(): number {
     return this.cardVP() + this.wonderVP() + this.progressTokenVP() + this.militaryVP() + this.coinVP() + this.vpPerBonuses();
   }
 
-  cardVP() {
+  cardVP(): number {
     return this.allMy(Card, {built: true}).sum('vp');
   }
 
-  wonderVP() {
+  wonderVP(): number {
     return this.allMy(Wonder, {built: true}).sum('vp');
   }
 
-  progressTokenVP() {
+  progressTokenVP(): number {
     return this.allMy(ProgressToken).sum('vp');
   }
 
   militaryVP() {
-    return this.position === (this.board.militaryVp() < 0 ? 1 : 2) ? this.board.militaryVp() : 0;
+    return this.position === (this.game.militaryVp() < 0 ? 1 : 2) ? this.game.militaryVp() : 0;
   }
 
   coinVP() {
@@ -76,12 +76,12 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   awardShields(shields: number) {
     if (this.has(ProgressToken, {special: 'shield-bonus'})) shields += 1;
     this.game.message('{{player}} advances military by {{shields}}', {player: this, shields});
-    const rewards = this.board.adjustMilitary(shields * (this.position === 1 ? -1 : 1));
+    const rewards = this.game.adjustMilitary(shields * (this.position === 1 ? -1 : 1));
     for (const reward of rewards) {
       this.game.message(`{{player}} forces {{other}} to lose {{reward}} coins`, {player: this, other: this.other(), reward});
       this.other().coins = Math.max(0, this.other().coins - reward);
     }
-    if (this.board.militaryTrack >= 9 || this.board.militaryTrack <= -9) {
+    if (this.game.militaryTrack >= 9 || this.game.militaryTrack <= -9) {
       this.game.message(`{{player}} wins by military supremacy!`, {player: this});
       this.game.finish(this);
     }
@@ -106,7 +106,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 };
 
-class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDuelBoard> {
+class SevenWondersDuel extends Game<SevenWondersDuelPlayer, SevenWondersDuel> {
   militaryTrack: number = 0; // negative numbers good for player 1, positive for player 2
   militaryRewards = [
     {track: -6, coins: 5},
@@ -142,7 +142,7 @@ class SevenWondersDuelBoard extends Board<SevenWondersDuelPlayer, SevenWondersDu
   }
 }
 
-const { Space, Piece } = createBoardClasses<SevenWondersDuelPlayer, SevenWondersDuelBoard>();
+const { Space, Piece } = createGameClasses<SevenWondersDuelPlayer, SevenWondersDuel>();
 
 export { Space };
 
@@ -284,8 +284,8 @@ export class Card extends Building {
     const slot = this.container(CardSlot);
     if (!slot) return false;
     // if both slots below are empty, this is now uncovered
-    const left = this.board.first(CardSlot, { row: slot.row + 1, column: slot.column + 1 });
-    const right = this.board.first(CardSlot, { row: slot.row + 1, column: slot.column - 1 });
+    const left = this.game.first(CardSlot, { row: slot.row + 1, column: slot.column + 1 });
+    const right = this.game.first(CardSlot, { row: slot.row + 1, column: slot.column - 1 });
     return (!left || left.isEmpty()) && (!right || right.isEmpty());
   }
 }
@@ -296,7 +296,7 @@ export class Wonder extends Building {
   type: 'wonder' = 'wonder';
   built: boolean = false;
   special?: 'extra-turn' | 'take-discards' | 'take-progress-discard';
-  destroy?: Card['type'];
+  destroyCard?: Card['type'];
   destroyCoins?: number;
 }
 
@@ -396,9 +396,9 @@ const visibleRows = [
 
 import { cards, progressTokens, wonders } from './cards.js';
 
-export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game => {
+export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
 
-  const { board, action } = game;
+  const { action } = game;
   const {
     playerActions,
     eachPlayer,
@@ -406,22 +406,22 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     forLoop,
   } = game.flowCommands;
 
-  board.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
+  game.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
 
-  const field = board.create(Space, 'field');
+  const field = game.create(Space, 'field');
 
   for (const player of game.players) {
-    const mat = board.create(Space, 'mat', { player });
+    const mat = game.create(Space, 'mat', { player });
     mat.create(Space, 'wonders', { player });
     mat.create(Space, 'buildings', { player });
   }
 
-  const deck = board.create(Space, 'deck');
-  const discard = board.create(Space, 'discard');
+  const deck = game.create(Space, 'deck');
+  const discard = game.create(Space, 'discard');
   field.createGrid({ rows: 7, columns: 11 }, CardSlot, 'card-slot');
   for (const card of cards) deck.create(Card, card.name!, card);
-  for (const wonder of wonders) board.pile.create(Wonder, wonder.name!, wonder);
-  for (const progress of progressTokens) board.pile.create(ProgressToken, progress.name!, progress);
+  for (const wonder of wonders) game.pile.create(Wonder, wonder.name!, wonder);
+  for (const progress of progressTokens) game.pile.create(ProgressToken, progress.name!, progress);
   deck.all(Card).hideFromAll();
 
   game.defineActions({
@@ -482,7 +482,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     buildWonder: player => action({
       prompt: 'Build Wonder',
-      condition: board.all(Wonder, {built: true}).length < 7
+      condition: game.all(Wonder, {built: true}).length < 7
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered()),
       { skipIf: 'never' }
@@ -499,18 +499,19 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
     ).do(({ wonder, card }) => {
       wonder.built = true;
       card.built = false;
+      card.rotation = 90;
       wonder.payCostsFor(player);
       wonder.giveRewardsTo(player);
       if (wonder.destroyCoins) {
         player.other().coins = Math.max(0, player.other().coins - wonder.destroyCoins);
         game.message(`{{player}} destroys {{amount}} coins`, {player, amount: wonder.destroyCoins});
       }
-      if (wonder.destroy && player.other().has(Card, {type: wonder.destroy, built: true})) {
-        game.followUp({ name: 'destroyBuildings', args: { type: wonder.destroy } });
+      if (wonder.destroyCard && player.other().has(Card, {type: wonder.destroyCard, built: true})) {
+        game.followUp({ name: 'destroyBuildings', args: { type: wonder.destroyCard } });
       }
       if (wonder.special === 'take-progress-discard') {
         field.all(ProgressToken).putInto(deck);
-        board.pile.firstN(3, ProgressToken).putInto(field);
+        game.pile.firstN(3, ProgressToken).putInto(field);
         return game.followUp({ name: 'takeProgressDiscard' });
       }
       if (wonder.special === 'take-discards') return game.followUp({ name: 'takeDiscards' });
@@ -540,7 +541,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       'token', player.my('mat')!
     ).do(({ token }) => {
       token.giveRewardsTo(player);
-      field.all(ProgressToken).putInto(board.pile);
+      field.all(ProgressToken).putInto(game.pile);
       deck.all(ProgressToken).putInto(field);
     }).message(
       `{{player}} gains the {{token}} Progress Token`
@@ -580,7 +581,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
 
     pass: () => action({
       prompt: 'Give opponent first move',
-      condition: board.firstMoveOfAge
+      condition: game.firstMoveOfAge
     })
   });
 
@@ -592,14 +593,14 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       deck.firstN(3, Card, {age:2}).remove()
       deck.firstN(3, Card, {age:3}, c => c.type !== 'guild').remove()
       deck.firstN(4, Card, {age:3}, c => c.type === 'guild').remove()
-      board.pile.shuffle();
-      board.pile.firstN(5, ProgressToken).putInto(field);
+      game.pile.shuffle();
+      game.pile.firstN(5, ProgressToken).putInto(field);
     },
 
     eachPlayer({
       name: 'turn',
       do: [
-        () => board.pile.firstN(4, Wonder).putInto(field),
+        () => game.pile.firstN(4, Wonder).putInto(field),
         // alternate players 1-2-2-1 for wonder picking
         forEach({
           name: 'player',
@@ -617,20 +618,20 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
       ({ age }) => {
         const cards = deck.firstN(20, Card, {age});
         for (let i = 0; i !== 20; i++) {
-          cards[i].putInto(board.first(CardSlot, cardPosition[age - 1][i])!);
+          cards[i].putInto(game.first(CardSlot, cardPosition[age - 1][i])!);
         }
         field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
         game.message('Age {{age}} has begun!', {age});
-        if (age > 1) board.firstMoveOfAge = true;
+        if (age > 1) game.firstMoveOfAge = true;
         if (age === 1) game.players[0].setCurrent();
       },
 
       eachPlayer({
         name: 'player',
         continueUntil: () => !field.has(Card),
-        startingPlayer: () => board.militaryTrack === 0 ? game.players.current()! : game.players[board.militaryTrack > 0 ? 0 : 1],
+        startingPlayer: () => game.militaryTrack === 0 ? game.players.current()! : game.players[game.militaryTrack > 0 ? 0 : 1],
         do: [
-          () => board.revealUncovered(),
+          () => game.revealUncovered(),
           playerActions({
             player: ({ player }) => player,
             name: 'play',
@@ -645,32 +646,35 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuelBoard, game =>
                 do: ({ player, buildWonder }) => {
                   if (buildWonder.wonder?.special?.includes('extra-turn') || player.has(ProgressToken, {special: 'extra-turn'})) {
                     game.message('{{player}} takes an extra turn', {player});
-                    board.firstMoveOfAge = false;
+                    game.firstMoveOfAge = false;
                     Do.repeat();
                   }
                 }
               }
             ]
           }),
-          () => { board.firstMoveOfAge = false }
+          () => { game.firstMoveOfAge = false }
         ]
       })
     ]}),
 
     () => {
+      let winner: SevenWondersDuelPlayer | undefined = undefined;
       if (game.players[0].score() !== game.players[1].score()) {
-        game.finish(game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1], 'civilianVictory');
+        winner = game.players[0].score() > game.players[1].score() ? game.players[0] : game.players[1];
+        game.finish(winner, 'civilianVictory');
       } else {
         const bluePoints1 = game.players[0].allMy(Card, {type: 'civilian', built: true}).sum('vp');
         const bluePoints2 = game.players[1].allMy(Card, {type: 'civilian', built: true}).sum('vp');
         if (bluePoints1 !== bluePoints2) {
-          game.finish(bluePoints1 > bluePoints2 ? game.players[0] : game.players[1], 'civilianVictory');
+          winner = bluePoints1 > bluePoints2 ? game.players[0] : game.players[1];
+          game.finish(winner, 'civilianVictory');
         } else {
           game.finish(undefined, 'civilianVictory');
         }
       }
 
-      game.message(`{{winner}} wins a civilian victory!`, {winner: game.winner[0]});
+      if (winner) game.message(`{{winner}} wins a civilian victory!`, {winner});
     }
   );
 });

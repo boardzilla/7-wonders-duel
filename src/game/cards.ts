@@ -526,7 +526,7 @@ export const wonders: Partial<Wonder>[] = [
     cost: {stone: 2, wood: 1, glass: 1},
     shields: 1,
     vp: 3,
-    destroy: 'manufactured',
+    destroyCard: 'manufactured',
   }, {
     name: 'The Colossus',
     description: 'This Wonder is worth 2 Shields.\n\n' +
@@ -596,7 +596,7 @@ export const wonders: Partial<Wonder>[] = [
     cost: {wood: 1, stone: 1, clay: 1, papyrus: 2},
     shields: 1,
     vp: 3,
-    destroy: 'raw',
+    destroyCard: 'raw',
   }, {
     name: 'The Temple of Artemis',
     description: 'Immediately take 12 coins from the Bank.\n\n' +

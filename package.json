@@ -4,8 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@boardzilla/core": "^0.0.87",
-    "@boardzilla/devtools": "^0.0.65",
+    "@boardzilla/core": "^0.1.3",
     "react": "^18.2",
     "react-dom": "^18.2"
   },
@@ -21,9 +20,9 @@
   "scripts": {
     "dev": "bz run -root .",
     "submit": "bz submit -root .",
-    "build:ui": "npx node esbuild.ui.mjs",
-    "build:ui:prod": "NODE_ENV=production npx node esbuild.ui.mjs",
-    "build:game": "npx node esbuild.game.mjs",
-    "build:game:prod": "NODE_ENV=production npx node esbuild.game.mjs"
+    "build:ui": "tsc --noEmit && npx node esbuild.ui.mjs",
+    "build:ui:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.ui.mjs",
+    "build:game": "tsc --noEmit && npx node esbuild.game.mjs",
+    "build:game:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.game.mjs"
   }
 }

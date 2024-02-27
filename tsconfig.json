@@ -7,8 +7,9 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "jsx": "react",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
   },
-  "include": ["src", "./index.d.ts"],
+  "include": ["src", "./index.d.ts", "test"],
   "exclude": ["**/node_modules", "**/.*/"]
 }

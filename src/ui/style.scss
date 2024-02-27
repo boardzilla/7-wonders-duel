@@ -952,13 +952,15 @@
       }
     }
 
+    .transform-wrapper:has(.Card) {
+      z-index: -1;
+    }
+
     .Card {
       position: absolute;
       width: 100%;
-      transform: rotate(90deg) !important;
-      z-index: -1 !important;
-      right: -93%;
-      bottom: 0;
+      bottom: 70%;
+      right: 0;
     }
   }
 

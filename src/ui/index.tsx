@@ -37,38 +37,38 @@ render(setup, {
     realtimeVp: toggleSetting('Show VP in real-time')
   },
 
-  layout: (board, player, boardSize) => {
-    const deck = board.first('deck')!;
-    const field = board.first('field')!;
-    const p1 = board.game.players[0];
-    const p2 = board.game.players[1];
+  layout: (game, player, boardSize) => {
+    const deck = game.first('deck')!;
+    const field = game.first('field')!;
+    const p1 = game.players[0];
+    const p2 = game.players[1];
     const p1mat = p1.my('mat')!
     const p2mat = p2.my('mat')!
 
-    board.disableDefaultAppearance();
+    game.disableDefaultAppearance();
 
     if (boardSize === 'desktop') {
-      board.layout('mat', {
+      game.layout('mat', {
         area: { top: 2, height: 96, left: 3, width: 94 },
       });
     } else {
-      board.layout(p1mat, {
+      game.layout(p1mat, {
         area: { top: 2, height: 96, left: 2, width: 35 },
       });
-      board.layout(p2mat, {
+      game.layout(p2mat, {
         area: { top: 2, height: 96, left: 63, width: 35 },
       });
     }
 
     if (boardSize === 'desktop') {
-      board.layout('field', {
+      game.layout('field', {
         area: {
           top: 2, left: 18, width: 64, height: 78
         },
         alignment: 'center',
       });
     } else {
-      board.layout('field', {
+      game.layout('field', {
         area: {
           top: 2, left: 20, width: 60, height: 98
         },
@@ -76,13 +76,13 @@ render(setup, {
       });
     }
 
-    board.layout('discard', {
+    game.layout('discard', {
       area: {
         top: 60, left: 30, width: 40, height: 40
       },
       drawer: {
         closeDirection: 'down',
-        tab: board => `Discards (${board.first('discard')!.all(Card).length})`,
+        tab: game => `Discards (${game.first('discard')!.all(Card).length})`,
         openIf: actions => actions.some(a => a.name === 'takeDiscards'),
         closeIf: actions => actions.every(a => a.name !== 'takeDiscards'),
       }
@@ -392,7 +392,7 @@ render(setup, {
       });
     }
 
-    board.first('discard')!.layout(Card, {
+    game.first('discard')!.layout(Card, {
       rows: 1,
       margin: 1,
       columns: {min: 4},
@@ -400,12 +400,12 @@ render(setup, {
       maxOverlap: 80,
     });
 
-    board.all('mat').appearance({
+    game.all('mat').appearance({
       render: mat => (
         <div>
           <ProfileBadge player={mat.player!}/>
           <div className="score">
-            {board.game.setting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
+            {game.setting('realtimeVp') && <span className="svg-icon vp"><span className={mat.player!.score() > 9 ? 'two-digit' : ''}>{mat.player!.score()}</span></span>}
             <span style={{marginLeft: '.2em'}} className="svg-icon coins">{mat.player!.coins}</span>
           </div>
         </div>
@@ -425,16 +425,16 @@ render(setup, {
           <div className="band r3"/>
           <div className="band r4"/>
           <img src={militaryTrackSvg} className="icons"/>
-          {board.militaryRewards.find(r => r.track === 6) && <img src={militaryReward5Svg} className="reward-left5"/>}
-          {board.militaryRewards.find(r => r.track === 3) && <img src={militaryReward2Svg} className="reward-left2"/>}
-          {board.militaryRewards.find(r => r.track === -3) && <img src={militaryReward2Svg} className="reward-right2"/>}
-          {board.militaryRewards.find(r => r.track === -6) && <img src={militaryReward5Svg} className="reward-right5"/>}
-          <span className="svg-icon shield" style={{left: 46.01 + (-5.10125 * board.militaryTrack) + '%'}}/>
+          {game.militaryRewards.find(r => r.track === 6) && <img src={militaryReward5Svg} className="reward-left5"/>}
+          {game.militaryRewards.find(r => r.track === 3) && <img src={militaryReward2Svg} className="reward-left2"/>}
+          {game.militaryRewards.find(r => r.track === -3) && <img src={militaryReward2Svg} className="reward-right2"/>}
+          {game.militaryRewards.find(r => r.track === -6) && <img src={militaryReward5Svg} className="reward-right5"/>}
+          <span className="svg-icon shield" style={{left: 46.01 + (-5.10125 * game.militaryTrack) + '%'}}/>
         </div>
       )
     });
 
-    board.all(CardSlot).appearance({
+    game.all(CardSlot).appearance({
       render: () => null,
       aspectRatio: 1,
     });
@@ -474,7 +474,7 @@ render(setup, {
       alignment: 'top',
     });
 
-    board.all(ProgressToken).appearance({
+    game.all(ProgressToken).appearance({
       aspectRatio: 1,
       render: token => (
         <div className="progress-token">
@@ -493,7 +493,7 @@ render(setup, {
       info: token => <>{token.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
-    board.all(Wonder).appearance({
+    game.all(Wonder).appearance({
       aspectRatio: 2,
       render: wonder => (
         <div className="wonder-features">
@@ -518,12 +518,12 @@ render(setup, {
       ),
       effects: [{
         attributes: {built: true},
-        className: 'newly-built'
+        name: 'newly-built'
       }],
       info: wonder => <>{wonder.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
     });
 
-    board.all(Card).appearance({
+    game.all(Card).appearance({
       aspectRatio: 3 / 4,
       render: card => (
         <div>
@@ -568,19 +568,19 @@ render(setup, {
     });
 
     if (boardSize === 'mobile') {
-      board.layoutAction('buy', {
+      game.layoutAction('buy', {
         element: field,
         left: 0,
         top: 24
       });
 
-      board.layoutAction('discard', {
+      game.layoutAction('discard', {
         element: field,
         left: 0,
         top: 24
       });
 
-      board.layoutAction('pickWonder', {
+      game.layoutAction('pickWonder', {
         element: field,
         left: 10,
         bottom: 8,
@@ -588,27 +588,27 @@ render(setup, {
 
     } else {
 
-      board.layoutAction('pickWonder', {
+      game.layoutAction('pickWonder', {
         element: field,
         left: 10,
         bottom: 15
       });
     }
 
-    board.layoutStep('play', {
+    game.layoutStep('play', {
       element: field,
       left: 5,
       top: 24
     });
 
     if (player.position === 1) {
-      board.layoutAction('buildWonder', {
+      game.layoutAction('buildWonder', {
         element: field,
         left: 13,
         top: 50,
       });
     } else {
-      board.layoutAction('buildWonder', {
+      game.layoutAction('buildWonder', {
         element: field,
         right: 15,
         top: 50,
@@ -617,32 +617,35 @@ render(setup, {
   },
 
   announcements: {
-    civilianVictory: board => (
-      <>
-        <h1>
-          {board.game.winner[0] && <span>{board.game.winner[0].name} wins a civilian victory!</span>}
-          {!board.game.winner[0] && <span>Tie game!</span>}
-        </h1>
-        <Victory
-          player1={board.game.players[0]}
-          player2={board.game.players[1]}
-          showVP={true}
-        />
-      </>
-    )
+    civilianVictory: game => {
+      const winner = game.getWinners()?.[0];
+      return (
+        <>
+          <h1>
+            {winner && <span>{winner.name} wins a civilian victory!</span>}
+            {!winner && <span>Tie game!</span>}
+          </h1>
+          <Victory
+            player1={game.players[0]}
+            player2={game.players[1]}
+            showVP={true}
+          />
+        </>
+      );
+    }
   },
 
   infoModals: [
     {
       title: 'Victory Points',
-      modal: board => {
-        const showVP = board.game.winner.length || board.game.setting('realtimeVp');
+      modal: game => {
+        const showVP = game.getWinners() || game.setting('realtimeVp');
         return (
           <>
             <h1>Victory Points</h1>
             <Victory
-              player1={board.game.players[0]}
-              player2={board.game.players[1]}
+              player1={game.players[0]}
+              player2={game.players[1]}
               showVP={showVP}
             />
           </>
