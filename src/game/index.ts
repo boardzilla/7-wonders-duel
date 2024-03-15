@@ -106,7 +106,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 };
 
-class SevenWondersDuel extends Game<SevenWondersDuelPlayer, SevenWondersDuel> {
+export class SevenWondersDuel extends Game<SevenWondersDuelPlayer, SevenWondersDuel> {
   militaryTrack: number = 0; // negative numbers good for player 1, positive for player 2
   militaryRewards = [
     {track: -6, coins: 5},
@@ -254,8 +254,9 @@ export class Building extends Piece {
       let discount = 2;
       for (const resource of neededTypes) {
         if (resourcesNeeded[resource]! > 0) {
-          resourcesNeeded[resource]! -= 1;
-          discount -= 1;
+          const removed = Math.min(discount, resourcesNeeded[resource]!);
+          resourcesNeeded[resource]! -= removed;
+          discount -= removed;
           if (discount === 0) break;
         }
       }
