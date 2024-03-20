@@ -15,7 +15,8 @@
     "commander": "^11.1.0",
     "esbuild": "^0.19.2",
     "esbuild-sass-plugin": "^2.15.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^1.4.0"
   },
   "scripts": {
     "dev": "bz run -root .",
@@ -23,6 +24,7 @@
     "build:ui": "tsc --noEmit && npx node esbuild.ui.mjs",
     "build:ui:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.ui.mjs",
     "build:game": "tsc --noEmit && npx node esbuild.game.mjs",
-    "build:game:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.game.mjs"
+    "build:game:prod": "tsc --noEmit && NODE_ENV=production npx node esbuild.game.mjs",
+    "test": "vitest"
   }
 }
