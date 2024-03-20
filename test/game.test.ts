@@ -2,7 +2,7 @@ import { expect, test, beforeEach } from 'vitest'
 import { TestRunner } from "@boardzilla/core";
 import setup, { SevenWondersDuel, SevenWondersDuelPlayer, Wonder, Card, ProgressToken } from '../src/game/index.js';
 
-let runner: TestRunner<SevenWondersDuelPlayer, SevenWondersDuel>;
+let runner: TestRunner<SevenWondersDuel>;
 
 beforeEach(() => {
   runner = new TestRunner(setup);

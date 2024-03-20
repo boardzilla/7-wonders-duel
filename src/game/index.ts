@@ -2,12 +2,14 @@ import {
   createGame,
   Game,
   Player,
-  createGameClasses,
+  Space,
+  Piece,
   Do,
-  union
+  union,
+  PieceGrid
 } from '@boardzilla/core';
 
-export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, SevenWondersDuel> {
+export class SevenWondersDuelPlayer extends Player<SevenWondersDuel, SevenWondersDuelPlayer> {
   coins: number = 7;
   science: number = 0;
   vpPer: Partial<Record<Card['type'] | 'wonder' | 'progress', number>> = {};
@@ -106,7 +108,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuelPlayer, Seven
   }
 };
 
-export class SevenWondersDuel extends Game<SevenWondersDuelPlayer, SevenWondersDuel> {
+export class SevenWondersDuel extends Game<SevenWondersDuel, SevenWondersDuelPlayer> {
   militaryTrack: number = 0; // negative numbers good for player 1, positive for player 2
   militaryRewards = [
     {track: -6, coins: 5},
@@ -142,18 +144,11 @@ export class SevenWondersDuel extends Game<SevenWondersDuelPlayer, SevenWondersD
   }
 }
 
-const { Space, Piece } = createGameClasses<SevenWondersDuelPlayer, SevenWondersDuel>();
-
 export { Space };
 
 type ResourceType = 'clay' | 'wood' | 'stone' | 'glass' | 'papyrus';
 
-export class CardSlot extends Space {
-  row: number;
-  column: number;
-}
-
-export class Building extends Piece {
+export class Building extends Piece<SevenWondersDuel> {
   type: 'raw' | 'manufactured' | 'civilian' | 'scientific' | 'commercial' | 'military' | 'guild' | 'wonder'
   produces: Partial<Record<ResourceType, number>> = {};
   producesOneOf: ResourceType[] = [];
@@ -282,12 +277,10 @@ export class Card extends Building {
   special?: 'vp-per-coins';
 
   isUncovered() {
-    const slot = this.container(CardSlot);
-    if (!slot) return false;
     // if both slots below are empty, this is now uncovered
-    const left = this.game.first(CardSlot, { row: slot.row + 1, column: slot.column + 1 });
-    const right = this.game.first(CardSlot, { row: slot.row + 1, column: slot.column - 1 });
-    return (!left || left.isEmpty()) && (!right || right.isEmpty());
+    const left = $.cards.first(Card, { row: this.row! + 1, column: this.column! + 1 });
+    const right = $.cards.first(Card, { row: this.row! + 1, column: this.column! - 1 });
+    return !left && !right;
   }
 }
 
@@ -301,7 +294,7 @@ export class Wonder extends Building {
   destroyCoins?: number;
 }
 
-export class ProgressToken extends Piece {
+export class ProgressToken extends Piece<SevenWondersDuel> {
   description: string;
   vp?: number = 0;
   coins?: number;
@@ -407,8 +400,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
     forLoop,
   } = game.flowCommands;
 
-  game.registerClasses(Building, Card, Wonder, CardSlot, ProgressToken);
-
   const field = game.create(Space, 'field');
 
   for (const player of game.players) {
@@ -419,7 +410,7 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
 
   const deck = game.create(Space, 'deck');
   const discard = game.create(Space, 'discard');
-  field.createGrid({ rows: 7, columns: 11 }, CardSlot, 'card-slot');
+  field.create(PieceGrid, 'cards', { rows: 7, columns: 11 });
   for (const card of cards) deck.create(Card, card.name!, card);
   for (const wonder of wonders) game.pile.create(Wonder, wonder.name!, wonder);
   for (const progress of progressTokens) game.pile.create(ProgressToken, progress.name!, progress);
@@ -619,9 +610,9 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
       ({ age }) => {
         const cards = deck.firstN(20, Card, {age});
         for (let i = 0; i !== 20; i++) {
-          cards[i].putInto(game.first(CardSlot, cardPosition[age - 1][i])!);
+          cards[i].putInto($.cards, cardPosition[age - 1][i]);
         }
-        field.all(CardSlot, slot => visibleRows[age - 1].includes(slot.row)).all(Card).showToAll();
+        $.cards.all(Card, card => visibleRows[age - 1].includes(card.row!)).showToAll();
         game.message('Age {{age}} has begun!', {age});
         if (age > 1) game.firstMoveOfAge = true;
         if (age === 1) game.players[0].setCurrent();

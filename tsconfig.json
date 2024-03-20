@@ -9,6 +9,7 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "incremental": true
   },
   "include": ["src", "./index.d.ts", "test"],
   "exclude": ["**/node_modules", "**/.*/"]
