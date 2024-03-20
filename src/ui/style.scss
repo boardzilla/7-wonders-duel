@@ -1275,6 +1275,9 @@
         color: #cc9;
       }
       box-shadow: inset -0.2em -0.2em 0.5em -0.2em #000c, inset 0.2em 0.2em 0.5em -0.2em #fffc;
+      &.cancel {
+        background: #666;
+      }
     }
   }
 }
