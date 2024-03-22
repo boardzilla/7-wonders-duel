@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProfileBadge, render, times, toggleSetting } from '@boardzilla/core';
-import { default as setup, Card, CardSlot, Wonder, ProgressToken } from '../game/index.js';
+import { PieceGrid, ProfileBadge, render, times, toggleSetting } from '@boardzilla/core';
+import { default as setup, Card, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
 import '@boardzilla/core/index.css';
@@ -434,13 +434,8 @@ render(setup, {
       )
     });
 
-    game.all(CardSlot).appearance({
-      render: () => null,
-      aspectRatio: 1,
-    });
-
     if (boardSize === 'desktop') {
-      field.layout(CardSlot, {
+      field.first(PieceGrid)!.configureLayout({
         area: { left: 10, width: 80, top: 24, height: 70 },
         rows: 7,
         columns: 11,
@@ -450,7 +445,7 @@ render(setup, {
 
     } else {
 
-      field.layout(CardSlot, {
+      field.first(PieceGrid)!.configureLayout({
         area: { left: 0, width: 100, top: 18, height: 80 },
         rows: 7,
         columns: 11,

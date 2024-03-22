@@ -5,8 +5,14 @@
   "ui": {
     "root": ".",
     "build": {
-      "dev": "npm run build:ui",
-      "prod": "npm run build:ui:prod"
+      "dev": [
+        "npm run typecheck",
+        "npm run build:ui"
+      ],
+      "prod": [
+        "npm run typecheck",
+        "npm run build:ui:prod"
+      ]
     },
     "watchPaths": [
       "src/ui",
@@ -17,8 +23,14 @@
   "game": {
     "root": ".",
     "build": {
-      "dev": "npm run build:game",
-      "prod": "npm run build:game:prod"
+      "dev": [
+        "npm run typecheck",
+        "npm run build:game"
+      ],
+      "prod": [
+        "npm run typecheck",
+        "npm run build:game:prod"
+      ]
     },
     "watchPaths": [
       "src/game"
