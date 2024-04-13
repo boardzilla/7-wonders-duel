@@ -429,7 +429,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
     ),
 
     buy: player => action({
-      prompt: 'Buy Card',
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered() && c.costFor(player) <= player.coins),
       {
@@ -455,7 +454,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
     ),
 
     discard: player => action({
-      prompt: 'Discard for coins'
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered()),
       {

@@ -25,13 +25,16 @@ const resourceIcon = (resource: string, amount = 1):React.JSX.Element => (
 );
 
 render(setup, {
-  boardSizes: (_screenX, _screenY, mobile) => mobile ? {
+  boardSizes: [{
     name: 'mobile',
-    aspectRatio: 2.2,
-  } : {
+    mobile: true,
+    aspectRatio: { max: 16 / 9, min: 22 / 10 },
+    orientation: 'landscape',
+  }, {
     name: 'desktop',
-    aspectRatio: 8 / 5,
-  },
+    desktop: true,
+    aspectRatio: { min: 8 / 5, max: 2 / 1 },
+  }],
 
   settings: {
     realtimeVp: toggleSetting('Show VP in real-time')
@@ -455,7 +458,7 @@ render(setup, {
     }
 
     field.layout(Wonder, {
-      area: { left: 10, width: 80, top: 0, height: 100 },
+      area: { left: 10, width: 80, top: 10, height: 100 },
       gap: 2,
       rows: 2,
       columns: 2,
@@ -586,7 +589,7 @@ render(setup, {
       game.layoutAction('pickWonder', {
         element: field,
         left: 10,
-        bottom: 15
+        bottom: 0
       });
     }
 
