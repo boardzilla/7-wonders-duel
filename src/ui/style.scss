@@ -166,13 +166,16 @@
 
   #discard {
     .transform-wrapper:has(+ .transform-wrapper .Card:hover) .Card {
-      transform: translateX(-60%) scale(1.1) rotate(-10deg);
       z-index: 2;
+      > div {
+        transform: translateX(-60%) scale(1.1) rotate(-10deg);
+      }
     }
     .transform-wrapper:has(.Card:hover) + .transform-wrapper .Card {
-      transform: translateX(60%) scale(1.1) rotate(10deg);
       z-index: 2;
-
+      > div {
+        transform: translateX(60%) scale(1.1) rotate(10deg);
+      }
     }
   }
 
@@ -213,12 +216,16 @@
 
     #buildings {
       .transform-wrapper:has(+ .transform-wrapper .Card:hover) .Card {
-        transform: translateY(-30%) scale(1.2);
         z-index: 2;
+        > div {
+          transform: translateY(-30%) scale(1.2);
+        }
       }
       .transform-wrapper:has(.Card:hover) + .transform-wrapper .Card {
-        transform: translateY(30%) scale(1.2);
         z-index: 2;
+        > div {
+          transform: translateY(30%) scale(1.2);
+        }
       }
     }
 
@@ -244,26 +251,34 @@
     text-align: center;
   }
 
-  .Card[data-name]:hover {
-    z-index: 160;
-    transform: scale(1.6);
+  #cards, #discard {
+    .Card[data-name]:hover {
+      z-index: 160;
+      > div {
+        transform: scale(1.6);
+      }
+    }
   }
 
   .ProgressToken[data-name]:hover {
     z-index: 160;
-    transform: scale(2);
+    > div {
+      transform: scale(2);
+    }
   }
 
   .Wonder:hover {
     z-index: 160;
-    transform: scale(1.5);
+    > div {
+      transform: scale(1.5);
+    }
   }
 
-  #mat[data-player="1"] .Wonder {
+  #mat[data-player="1"] .Wonder > div {
     transform-origin: left;
   }
 
-  #mat[data-player="2"] .Wonder {
+  #mat[data-player="2"] .Wonder > div {
     transform-origin: right;
   }
 
@@ -277,10 +292,6 @@
   .Card {
     color: black;
     text-align: left;
-    transition: transform .2s;
-    #game:not(.browser-firefox) & {
-      perspective: 40vw;
-    }
 
     &.selectable > div {
       animation: pulse 1.5s infinite;
@@ -288,14 +299,8 @@
     }
 
     > div {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      #game:not(.browser-firefox) & {
-        transform-style: preserve-3d;
-      }
-      position: relative;
       font-size: .8em;
+      transition: transform .3s;
 
       .header {
         padding: 0.2em 0.4em 0;
@@ -412,19 +417,9 @@
         overflow: hidden;
         background: white;
         box-shadow: -.1em -.2em .5em #0008;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
       }
 
-      /* front pane, placed above back */
       .front {
-        /* for firefox 31 */
-        /* transform: rotateY(0deg); */
-
         &::before {
           content: "";
           position: absolute;
@@ -438,11 +433,6 @@
             filter: contrast(.5) brightness(.9) saturate(.6);
           }
         }
-      }
-
-      /* back, initially hidden pane */
-      .back {
-        transform: rotateY(180deg);
       }
     }
 
@@ -753,15 +743,12 @@
     &[data-age="3"][data-guild="true"] .back {
       background: linear-gradient(10deg, #416, #73c);
     }
-
-    &:not([data-type]) > div {
-      transform-style: preserve-3d;
-      transform: rotateY(180deg);
-    }
   }
 
   .Wonder {
-    transition: transform .2s;
+    > div {
+      transition: transform .2s;
+    }
 
     .wonder-features {
       width: 100%;
@@ -774,8 +761,10 @@
     }
 
     &.newly-built {
-      animation: built 2.8s .5s;
       z-index: 10;
+      > div {
+        animation: built 2.8s .5s;
+      }
     }
 
     &[data-name="The Pyramids"] .wonder-features {
@@ -952,23 +941,25 @@
       }
     }
 
-    .transform-wrapper:has(.Card) {
+    .layout-wrapper {
       z-index: -1;
     }
 
     .Card {
       position: absolute;
       width: 100%;
-      bottom: 70%;
-      right: 0;
+      left: 100%;
+      top: 0;
     }
   }
 
   .ProgressToken {
-    transition: transform .2s;
-    transform-origin: top;
     &.selectable {
       filter: drop-shadow(0 0 1em #fff8) drop-shadow(0 0 .6em #fff8);
+    }
+    > div {
+      transition: transform .2s;
+      transform-origin: top;
     }
     img {
       width: 100%;
