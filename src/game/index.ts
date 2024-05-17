@@ -31,7 +31,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuel, SevenWonder
   }
 
   militaryVP() {
-    return this.position === (this.game.militaryVp() < 0 ? 1 : 2) ? this.game.militaryVp() : 0;
+    return this.position === (this.game.militaryVp() < 0 ? 2 : 1) ? this.game.militaryVp() : 0;
   }
 
   coinVP() {
@@ -278,8 +278,8 @@ export class Card extends Building {
 
   isUncovered() {
     // if both slots below are empty, this is now uncovered
-    const left = $.cards.first(Card, { row: this.row! + 1, column: this.column! + 1 });
-    const right = $.cards.first(Card, { row: this.row! + 1, column: this.column! - 1 });
+    const left = $.cards.first(Card, { row: this.row! + 1, column: this.column! - 1 });
+    const right = $.cards.first(Card, { row: this.row! + 1, column: this.column! + 1 });
     return !left && !right;
   }
 }
@@ -429,7 +429,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
     ),
 
     buy: player => action({
-      prompt: 'Buy Card',
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered() && c.costFor(player) <= player.coins),
       {
@@ -455,7 +454,6 @@ export default createGame(SevenWondersDuelPlayer, SevenWondersDuel, game => {
     ),
 
     discard: player => action({
-      prompt: 'Discard for coins'
     }).chooseOnBoard(
       'card', field.all(Card, c => c.isUncovered()),
       {

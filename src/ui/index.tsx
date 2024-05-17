@@ -1,9 +1,9 @@
 import React from 'react';
 import { PieceGrid, ProfileBadge, render, times, toggleSetting } from '@boardzilla/core';
+import { Flippable } from '@boardzilla/core/components';
 import { default as setup, Card, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
-import '@boardzilla/core/index.css';
 
 import militaryTrackSvg from './assets/military-track.svg';
 import militaryReward2Svg from './assets/military-reward-2.svg';
@@ -25,13 +25,16 @@ const resourceIcon = (resource: string, amount = 1):React.JSX.Element => (
 );
 
 render(setup, {
-  boardSizes: (_screenX, _screenY, mobile) => mobile ? {
+  boardSizes: [{
     name: 'mobile',
-    aspectRatio: 2.2,
-  } : {
+    mobile: true,
+    aspectRatio: { max: 16 / 9, min: 22 / 10 },
+    orientation: 'landscape',
+  }, {
     name: 'desktop',
-    aspectRatio: 8 / 5,
-  },
+    desktop: true,
+    aspectRatio: { min: 8 / 5, max: 2 / 1 },
+  }],
 
   settings: {
     realtimeVp: toggleSetting('Show VP in real-time')
@@ -455,7 +458,7 @@ render(setup, {
     }
 
     field.layout(Wonder, {
-      area: { left: 10, width: 80, top: 0, height: 100 },
+      area: { left: 10, width: 80, top: 10, height: 100 },
       gap: 2,
       rows: 2,
       columns: 2,
@@ -495,7 +498,7 @@ render(setup, {
           <div className="name">{wonder.name}</div>
           <div className="cost">
             {wonder.coinCost ? <span className="svg-icon coins">{wonder.coinCost}</span> : null}
-            {Object.entries(wonder.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
+            {wonder.cost && Object.entries(wonder.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
           </div>
           <div className="rewards">
             {wonder.destroyCoins && <><span className="svg-icon coins destroy"/><span className="destroy-amount">{wonder.destroyCoins}</span></>}
@@ -503,16 +506,16 @@ render(setup, {
             {wonder.special === 'extra-turn' && <span className="svg-icon extra-turn"/>}
             {wonder.special === 'take-progress-discard' && <span className="svg-icon take-progress-discard"/>}
             {wonder.special === 'take-discards' && <span className="svg-icon take-discard"/>}
-            {wonder.destroy && <span className={`card-type destroy ${wonder.destroy}`}></span>}
-            {Object.entries(wonder.produces).map(([resource, amount]) => resourceIcon(resource, amount))}
-            {wonder.producesOneOf.map((resource, i) => <div key={i}>{i > 0 ? <div className="slash">/</div> : ''}{resourceIcon(resource)}</div>)}
+            {wonder.destroyCard && <span className={`card-type destroy ${wonder.destroyCard}`}></span>}
+            {wonder.produces && Object.entries(wonder.produces).map(([resource, amount]) => resourceIcon(resource, amount))}
+            {wonder.producesOneOf?.map((resource, i) => <div key={i}>{i > 0 ? <div className="slash">/</div> : ''}{resourceIcon(resource)}</div>)}
             {wonder.shields !== undefined && times(wonder.shields, n => <span key={n} className="svg-icon shield"/>)}
             {wonder.vp ? <span className="svg-icon vp">{wonder.vp}</span> : null}{' '}
           </div>
         </div>
       ),
       effects: [{
-        attributes: {built: true},
+        trigger: (wonder, previously) => !!wonder.built && !previously.built,
         name: 'newly-built'
       }],
       info: wonder => <>{wonder.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</>
@@ -521,12 +524,12 @@ render(setup, {
     game.all(Card).appearance({
       aspectRatio: 3 / 4,
       render: card => (
-        <div>
-          <div className="front">
+        <Flippable>
+          <Flippable.Front>
             <div className={`header ${card.type}`}>
               {card.coins && <span className="svg-icon coins">{card.coins}</span>}
-              {Object.entries(card.produces).map(([resource, amount]) => resourceIcon(resource, amount))}
-              {card.producesOneOf.map((resource, i) => <span key={i}>{i > 0 ? '/' : ''}{resourceIcon(resource)}</span>)}
+              {card.produces && Object.entries(card.produces).map(([resource, amount]) => resourceIcon(resource, amount))}
+              {card.producesOneOf?.map((resource, i) => <span key={i}>{i > 0 ? '/' : ''}{resourceIcon(resource)}</span>)}
               {card.shields !== undefined && times(card.shields, n => <span key={n} className="svg-icon shield"/>)}
               {card.vp ? <span className="svg-icon vp">{card.vp}</span> : null}{' '}
               {card.science && <span className={`svg-icon science-${card.science}`}/>}
@@ -543,11 +546,11 @@ render(setup, {
               {card.name === 'Magistrates Guild' && <span className="svg-icon magistrates"/>}
               {card.name === 'Scientists Guild' && <span className="svg-icon scientists"/>}
             </div>
-            {(!!card.coinCost || !!Object.values(card.cost).length) &&
+            {(!!card.coinCost || (card.cost && !!Object.values(card.cost).length)) &&
               <div>
                 <span className="cost">
                   {!!card.coinCost && <span className="svg-icon coins">{card.coinCost}</span>}
-                  {Object.entries(card.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
+                  {card.cost && Object.entries(card.cost).map(([resource, amount]) => resourceIcon(resource, amount))}
                 </span>
               </div>
             }
@@ -555,9 +558,8 @@ render(setup, {
             <div className='name'>
               {card.name}
             </div>
-          </div>
-          <div className="back"></div>
-        </div>
+          </Flippable.Front>
+        </Flippable>
       ),
       info: card => card.description ? <>{card.description.split('\n').map((p, i) => <p key={i}>{p}</p>)}</> : null
     });
@@ -586,7 +588,7 @@ render(setup, {
       game.layoutAction('pickWonder', {
         element: field,
         left: 10,
-        bottom: 15
+        bottom: 0
       });
     }
 
