@@ -4,7 +4,6 @@ import { Flippable } from '@boardzilla/core/components';
 import { default as setup, Card, Wonder, ProgressToken } from '../game/index.js';
 
 import './style.scss';
-import '@boardzilla/core/index.css';
 
 import militaryTrackSvg from './assets/military-track.svg';
 import militaryReward2Svg from './assets/military-reward-2.svg';
