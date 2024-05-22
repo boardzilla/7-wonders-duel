@@ -251,7 +251,7 @@
     text-align: center;
   }
 
-  #cards, #discard {
+  #buildings, #discard {
     .Card[data-name]:hover {
       z-index: 160;
       > div {
