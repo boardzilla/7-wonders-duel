@@ -31,7 +31,7 @@ export class SevenWondersDuelPlayer extends Player<SevenWondersDuel, SevenWonder
   }
 
   militaryVP() {
-    return this.position === (this.game.militaryVp() < 0 ? 2 : 1) ? this.game.militaryVp() : 0;
+    return this.position === (this.game.militaryVp() < 0 ? 1 : 2) ? this.game.militaryVp() : 0;
   }
 
   coinVP() {
