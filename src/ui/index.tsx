@@ -79,16 +79,14 @@ render(setup, {
       });
     }
 
-    game.layout('discard', {
+    game.layoutAsDrawer('discard', {
       area: {
         top: 60, left: 30, width: 40, height: 40
       },
-      drawer: {
-        closeDirection: 'down',
-        tab: game => `Discards (${game.first('discard')!.all(Card).length})`,
-        openIf: actions => actions.some(a => a.name === 'takeDiscards'),
-        closeIf: actions => actions.every(a => a.name !== 'takeDiscards'),
-      }
+      openDirection: 'up',
+      tab: `Discards (${game.first('discard')!.all(Card).length})`,
+      openIf: actions => actions.some(a => a.name === 'takeDiscards'),
+      closeIf: actions => actions.every(a => a.name !== 'takeDiscards'),
     });
 
     deck?.appearance({
@@ -217,28 +215,24 @@ render(setup, {
         area: { left: 50, top: 18, height: 82, width: 40 },
       });
 
-      p1mat.layout('wonders', {
+      p1mat.layoutAsDrawer('wonders', {
         area: { left: 0, top: 18, height: 82, width: 50 },
-        drawer: {
-          closeDirection: 'left',
-          tab: () => `Wonders`,
-          openIf: actions => {
-            const names = actions.map(a => a.name);
-            return player.position === 1 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
-          },
-        }
+        openDirection: 'right',
+        tab: 'Wonders',
+        openIf: actions => {
+          const names = actions.map(a => a.name);
+          return player.position === 1 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
+        },
       });
 
-      p2mat.layout('wonders', {
+      p2mat.layoutAsDrawer('wonders', {
         area: { left: 50, top: 18, height: 82, width: 50 },
-        drawer: {
-          closeDirection: 'right',
-          tab: () => `Wonders`,
-          openIf: actions => {
-            const names = actions.map(a => a.name);
-            return player.position === 2 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
-          },
-        }
+        openDirection: 'left',
+        tab: 'Wonders',
+        openIf: actions => {
+          const names = actions.map(a => a.name);
+          return player.position === 2 && (names.includes('pickWonder') || names.includes('buildWonder') && names.length === 1);
+        },
       });
 
       p1.my('buildings')!.layout(p1.allMy(Card, c => c.type === 'raw' || c.type === 'manufactured'), {

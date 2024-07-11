@@ -59,7 +59,7 @@
       position: absolute;
       left: 24%;
       width: 52%;
-      height: 10%;
+      aspect-ratio: 7;
       top: 10%;
       clip-path: polygon(4% 0%, 0% 50%, 4% 100%, 96% 100%, 100% 50%, 96% 0%);
       .band {
@@ -251,7 +251,7 @@
     text-align: center;
   }
 
-  #buildings, #discard {
+  #cards, #buildings, #discard {
     .Card[data-name]:hover {
       z-index: 160;
       > div {
